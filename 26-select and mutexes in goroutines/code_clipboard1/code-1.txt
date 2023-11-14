@@ -1,0 +1,23 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	ch := make(chan string, 1)
+
+	go func() {
+		for _, word := range []string{"hello", "world"} {
+			ch <- word
+		}
+		close(ch)
+	}()
+
+	select {
+		case s := <-ch:
+			fmt.Printf("had a string(%s) on the channel\n", s)
+		default:
+			fmt.Println("channel was empty")
+	}
+}

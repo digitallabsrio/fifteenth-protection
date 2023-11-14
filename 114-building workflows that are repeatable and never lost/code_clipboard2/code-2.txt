@@ -1,0 +1,5 @@
+service Workflow {
+     rpc Submit(WorkReq) returns (WorkResp) {};
+     rpc Exec(ExecReq) returns (ExecResp) {};
+     rpc Status(StatusReq) returns (StatusResp) {};
+}

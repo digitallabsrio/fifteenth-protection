@@ -1,0 +1,4 @@
+func SuccessfullyFinishedRequestEvent(span trace.Span, opts...trace.EventOption) {
+  opts = append(opts, trace.WithAttributes(attribute.String("someKey", "someValue")))
+  span.AddEvent("successfully finished request operation",opts...)
+}

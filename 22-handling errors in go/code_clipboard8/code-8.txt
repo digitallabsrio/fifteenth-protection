@@ -1,0 +1,6 @@
+func restCall(data) error {
+	if err := someFunc(data); err != nil {
+		return fmt.Errorf("restCall(%s) had an error: %w",data, err)
+	}
+	return nil
+}

@@ -1,0 +1,2 @@
+cobra init --pkg-name [repo path]
+cobra add get

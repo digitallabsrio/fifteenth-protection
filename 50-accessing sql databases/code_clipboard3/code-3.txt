@@ -1,0 +1,18 @@
+/*
+stmt contains `SELECT "User","DisplayName","ID" FROM users
+WHERE "ID" >= $1 AND "ID" < $2`
+*/
+func (s *Storage) UsersBetween(ctx context.Context, start, end int) ([]UserRec, error) {
+    recs := []UserRec{}
+    rows, err := s.usersBetweenStmt(ctx, start, end)
+    defer rows.Close()
+
+    for rows.Next() {
+        rec := UserRec{}
+        if err := rows.Scan(&rec); err != nil {
+            return nil, err
+        }
+        recs = append(recs, rec)
+    }
+    return recs, nil
+}

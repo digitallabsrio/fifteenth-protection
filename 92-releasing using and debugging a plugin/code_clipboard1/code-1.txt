@@ -1,0 +1,2 @@
+curl -L -o ".goreleaser.yml" \
+https://raw.githubusercontent.com/hashicorp/packer-pluginscaffolding/main/.goreleaser.yml

@@ -1,0 +1,15 @@
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+
+	var sigCh chan os.Signal
+	go func() {
+		handleSignal(ctx, cancel)
+	}()
+
+	cmd.Execute(ctx)
+	cancel()
+
+	if sig := <-sigCh; sig == syscall.SIGQUIT {
+		panic("SIGQUIT")
+	}
+}

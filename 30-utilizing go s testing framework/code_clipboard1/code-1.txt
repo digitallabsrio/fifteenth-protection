@@ -1,0 +1,6 @@
+type Fetch struct{
+ // Some internals, like an http.Client
+}
+func (f *Fetch) Record(name string) (Record, error){
+ // Some code to talk to the server
+}

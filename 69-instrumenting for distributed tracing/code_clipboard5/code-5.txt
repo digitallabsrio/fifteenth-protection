@@ -1,0 +1,11 @@
+func continuouslySendRequests() {
+	tracer := otel.Tracer("demo-client-tracer")
+
+	for {
+		ctx, span := tracer.Start(context.Background(), "ExecuteRequest")
+		makeRequest(ctx)
+		SuccessfullyFinishedRequestEvent(span)
+		span.End()
+		time.Sleep(time.Duration(1) * time.Second)
+	}
+}

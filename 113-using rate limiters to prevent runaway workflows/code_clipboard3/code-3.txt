@@ -1,0 +1,29 @@
+type bucket struct {
+  tokens chan struct{}
+}
+
+func newbucket(size, incr int, interval time.Duration) (*bucket, error) {
+  b := bucket{tokens: make(chan struct{}, size)}
+  go func() {
+      for _ = range time.Tick(interval) {
+        for i := 0; i < incr; i++ {
+            select{
+            case <-b.tokens:
+              continue
+            default:
+            }
+            break 
+        }
+      }
+  }()
+  return &b, nil
+}
+
+func (b *bucket) token(ctx context.Context) error {
+     select {
+     case <-ctx.Done():
+        return ctx.Err()
+     case b.tokens <-struct{}{}:
+     }
+     return nil
+}

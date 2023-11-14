@@ -1,0 +1,6 @@
+for i := 0; i < 10; i++ {
+  if i % 2 == 0 { // Only 0 for even numbers
+    continue
+  }
+  fmt.Println("Odd number: ", i)
+}

@@ -1,0 +1,19 @@
+func uploadBlobs(stack *mgmt.StorageStack) {
+	serviceClient := stack.ServiceClient()
+	containerClient, err := serviceClient.NewContainerClient("jd-imgs")
+	HandleErr(err)
+
+	fmt.Printf("Creating a new container \"jd-imgs\" in the Storage Account...\n")
+	_, err = containerClient.Create(context.Background(), nil)
+	HandleErr(err)
+
+	fmt.Printf("Reading all files ./blobs...\n")
+	files, err := ioutil.ReadDir("./blobs")
+	HandleErr(err)
+	for _, file := range files {
+		fmt.Printf("Uploading file %q to container jd-imgs...\n", file.Name())
+		blobClient := HandleErrWithResult(containerClient.NewBlockBlobClient(file.Name()))
+		osFile := HandleErrWithResult(os.Open(path.Join("./blobs", file.Name())))
+		_ = HandleErrWithResult(blobClient.UploadFile(context.Background(), osFile, azblob.UploadOption{}))
+	}
+}

@@ -1,0 +1,14 @@
+package main
+import "fmt"
+
+type Record struct{
+    Name string
+    Age int
+}
+
+func main() {
+    david := Record{Name: "David Justice", Age: 28}
+    sarah := Record{Name: "Sarah Murphy", Age: 28}
+    fmt.Printf("%+v\n", david)
+    fmt.Printf("%+v\n", sarah)
+}

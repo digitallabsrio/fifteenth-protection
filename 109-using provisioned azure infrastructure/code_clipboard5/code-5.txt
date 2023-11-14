@@ -1,0 +1,6 @@
+func (sf *StorageFactory) getPrimaryAccountKey(ctx context.Context, stack *StorageStack) *armstorage.AccountKey {
+	fmt.Printf("Fetching the Azure Storage Account shared key...\n")
+	res, err := sf.storageClient.ListKeys(ctx, stack.name, *stack.Account.Name, nil)
+	HandleErr(err)
+	return res.Keys[0]
+}

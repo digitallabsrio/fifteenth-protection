@@ -1,0 +1,6 @@
+var listTracesRE = regexp.MustCompile(`(\S+)=(?:(\S+))`)
+
+type opt struct {
+  key string
+  val string
+}

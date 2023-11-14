@@ -1,0 +1,34 @@
+func handleSignal(ctx context.Context, cancel context.CancelFunc) chan os.Signal {
+	out := make(chan os.Signal, 1)
+
+	notify := make(chan os.Signal, 10)
+
+	signal.Notify(
+		notify,
+		syscall.SIGINT,
+		syscall.SIGTERM,
+		syscall.SIGQUIT,
+	)
+
+	go func() {
+		defer close(out)
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case sig := <-notify:
+				switch sig {
+				case syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+					cancel()
+					out <- sig
+					return
+
+				default:
+					log.Println("unhandled signal: ", sig)
+				}
+			}
+		}
+
+	}()
+	return out
+}

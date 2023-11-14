@@ -1,0 +1,34 @@
+// Reconcile moves the current state of the pet to be the desired state described in the pet.spec.
+func (r *PetReconciler) Reconcile(ctx context.Context, req ctrl.Request) (result ctrl.Result, errResult error) {
+  logger := log.FromContext(ctx)
+  pet := &petstorev1.Pet{}
+  if err := r.Get(ctx, req.NamespacedName, pet); err != nil {
+    if apierrors.IsNotFound(err) {
+      logger.Info("object was not found")
+      return reconcile.Result{}, nil
+    }
+    
+    logger.Error(err, "failed to fetch pet from API server")
+    // this will cause this pet resource to be requeued
+    return ctrl.Result{}, err
+    }
+
+    helper, err := patch.NewHelper(pet, r.Client)
+    if err != nil {
+      return ctrl.Result{}, errors.Wrap(err, "failed to create patch helper")
+    }
+    defer func() {
+      // patch the resource
+      if err := helper.Patch(ctx, pet); err != nil {
+          errResult = err
+      }
+    }()
+
+    if pet.DeletionTimestamp.IsZero() {
+          // the pet is not marked for delete
+          return r.ReconcileNormal(ctx, pet)
+    }
+    
+    // pet has been marked for delete
+    return r.ReconcileDelete(ctx, pet)
+}

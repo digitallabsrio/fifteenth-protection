@@ -1,0 +1,3 @@
+func printOutput(key, message string) {
+  fmt.Printf("::set-output name=%s::%s\n", key, message)
+}

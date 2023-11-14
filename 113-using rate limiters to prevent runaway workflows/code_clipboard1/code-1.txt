@@ -1,0 +1,4 @@
+type Job interface {
+  Validate(job *pb.Job) error
+  Run(ctx context.Context, job *pb.Job) error
+}

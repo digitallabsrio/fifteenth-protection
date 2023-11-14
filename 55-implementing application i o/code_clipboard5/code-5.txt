@@ -1,0 +1,4 @@
+func main() {
+  flag.Parse()
+  fmt.Println("server endpoint is: ", *endpoint)
+}

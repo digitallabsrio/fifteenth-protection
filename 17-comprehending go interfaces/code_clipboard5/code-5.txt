@@ -1,0 +1,4 @@
+i = 3
+i = "hello world"
+i = 3.4
+i = Person{First: "John"}

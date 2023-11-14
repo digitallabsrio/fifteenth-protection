@@ -1,0 +1,2 @@
+strings := []string{"hello", "I", "must", "be", "going"}
+SortSlice(strings, orderedCmp)

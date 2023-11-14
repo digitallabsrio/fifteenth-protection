@@ -1,0 +1,4 @@
+provisioner "file" {
+  source = "./files/agent"
+  destination = "/tmp/agent"
+}

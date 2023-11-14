@@ -1,0 +1,7 @@
+git config --global user.name github_user
+git config --global user.email github_email
+git init && git remote add remoterepo github_repo
+git add .
+git commit -am 'my first action'
+git branch main
+git push remoterepo main

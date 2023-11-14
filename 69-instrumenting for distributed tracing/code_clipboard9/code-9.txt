@@ -1,0 +1,19 @@
+func WithCorrelation(span trace.Span, log *zap.Logger) *zap.Logger {
+  return log.With(
+    zap.String("span_id", convertTraceID(span.SpanContext().SpanID().String())), zap.String("trace_id", convertTraceID(span.SpanContext().TraceID().String())),
+  )
+}
+func convertTraceID(id string) string {
+  if len(id) < 16 {
+    return ""
+  }
+  if len(id) > 16 {
+    id = id[16:]
+  }
+
+  intValue, err := strconv.ParseUint(id, 16, 64)
+  if err != nil {
+    return ""
+  }
+  return strconv.FormatUint(intValue, 10)
+}

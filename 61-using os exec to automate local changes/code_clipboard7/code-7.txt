@@ -1,0 +1,21 @@
+func main() {
+  _, err := exec.LookPath(ping)
+  if err != nil {
+    log.Fatal("cannot find ping in our PATH")
+  }
+  _, err := exec.LookPath(ssh)
+  if err != nil {
+    log.Fatal("cannot find ssh in our PATH")
+  }
+  if len(os.Args) != 2 {
+    log.Fatal("error: only one argument allowed, the network CIDR to scan")
+  }
+  ipCh, err := hosts(os.Args[1])
+  if err != nil {
+    log.Fatalf("error: CIDR address did not parse: %s", err)
+  }
+  u, err := user.Current()
+  if err != nil {
+    log.Fatal(err)
+  }
+...

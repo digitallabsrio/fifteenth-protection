@@ -1,0 +1,5 @@
+func divide(num, div int) (res, rem int) {
+    result = num / div
+    remainder = num % div
+    return res, rem
+}

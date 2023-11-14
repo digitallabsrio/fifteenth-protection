@@ -1,0 +1,19 @@
+func (a *Agent) Install(ctx context.Context, req *pb.InstallReq) (*pb.InstallResp, error) {
+  if err := req.Validate(); err != nil {
+    return nil, status.Error(codes.InvalidArgument, err.Error())
+  }
+  a.lock(req.Name)
+  defer a.unlock(req.Name, false)
+  loc, err := a.unpack(req.Name, req.Package)
+  
+  if err != nil {
+    return nil, err
+  }
+  if err := a.migrate(req, loc); err != nil {
+    return nil, err
+  }
+  if err := a.startProgram(ctx, req.Name); err != nil {
+    return nil, err
+  }
+  return &pb.InstallResp{}, nil
+}

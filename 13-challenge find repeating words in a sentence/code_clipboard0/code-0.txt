@@ -1,0 +1,12 @@
+package main
+
+import (
+  "strings"
+  "fmt"
+  // This import will be used while testing your code
+  "encoding/json"
+)
+
+func findRepeatingWords(inputString string) string {
+ //Write your code here
+}

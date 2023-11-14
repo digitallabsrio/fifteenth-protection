@@ -1,0 +1,1 @@
+wget "http://some.server.com" | reformat

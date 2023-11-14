@@ -1,0 +1,2 @@
+cd /usercode/Go-for-DevOps/chapter/14/workloads/
+go run .

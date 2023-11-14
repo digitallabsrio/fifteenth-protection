@@ -1,0 +1,6 @@
+func deployNginx(ctx context.Context, clientSet *kubernetes.Clientset, ns *corev1.Namespace, name string) {
+	deployment := createNginxDeployment(ctx, clientSet, ns, name)
+	waitForReadyReplicas(ctx, clientSet, deployment)
+	createNginxService(ctx, clientSet, ns, name)
+	createNginxIngress(ctx, clientSet, ns, name)
+}

@@ -1,0 +1,16 @@
+f _, _, ecase, err := e.ExpectSwitchCase(
+  []expect.Caser{
+    &expect.Case{
+      R: aptCont,
+      T: expect.OK(),
+    },
+    &expect.Case{
+      R: aptAtNewest,
+      T: expect.OK(),
+    },
+  },
+  10*time.Second,
+)
+if err != nil {
+  return fmt.Errorf("apt-get install did not send what we expected")
+}

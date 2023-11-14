@@ -1,0 +1,12 @@
+func main() {
+	shutdown := initProvider()
+	defer shutdown()
+
+	// create a handler wrapped in OpenTelemetry instrumentation
+	handler := handleRequestWithRandomSleep()
+	wrappedHandler := otelhttp.NewHandler(handler, "/hello")
+
+	// serve up the wrapped handler
+	http.Handle("/hello", wrappedHandler)
+	http.ListenAndServe(":7080", nil)
+}

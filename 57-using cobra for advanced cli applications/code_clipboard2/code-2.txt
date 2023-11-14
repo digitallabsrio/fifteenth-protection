@@ -1,0 +1,3 @@
+author: John Doak myemail@somedomain.com
+year: 2021
+license: MIT

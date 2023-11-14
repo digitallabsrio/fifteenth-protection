@@ -1,0 +1,26 @@
+// dataSourcePetRead finds pets in the pet store given an ID
+func dataSourcePetRead(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	psClient, err := clientFromMeta(meta)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	pets, err := findPetsInStore(ctx, psClient, findPetsRequest{
+		Name:     data.Get("name").(string),
+		Birthday: data.Get("birthday").(string),
+		Type:     PetType(data.Get("type").(string)),
+		ID:       data.Get("pet_id").(string),
+	})
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	// always run
+	data.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+
+	if err := data.Set("pets", flattenPets(pets)); err != nil {
+		return diag.FromErr(err)
+	}
+
+	return nil
+}

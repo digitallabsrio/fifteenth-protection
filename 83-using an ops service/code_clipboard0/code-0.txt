@@ -1,0 +1,7 @@
+service Ops {
+  rpc ListTraces(ListTracesReq) returns (ListTracesResp) {};
+  rpc ShowTrace(ShowTraceReq) returns (ShowTraceResp) {};
+  rpc ChangeSampling(ChangeSamplingReq) returns (ChangeSamplingResp) {};
+  rpc DeployedVersion(DeployedVersionReq) returns (DeployedVersionResp) {};
+  rpc Alerts(AlertsReq) returns (AlertsResp) {};
+}

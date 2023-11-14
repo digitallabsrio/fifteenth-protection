@@ -1,0 +1,1 @@
+goss -g process.yaml autoadd sshd

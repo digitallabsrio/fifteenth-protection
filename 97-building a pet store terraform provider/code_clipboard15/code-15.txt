@@ -1,0 +1,17 @@
+// resourcePetCreate creates a pet in the pet store
+func resourcePetCreate(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	psClient, err := clientFromMeta(meta)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	pet := &client.Pet{Pet: &pb.Pet{}}
+	diags := fillPetFromData(pet, data)
+	ids, err := psClient.AddPets(ctx, []*pb.Pet{pet.Pet})
+	if err != nil {
+		return append(diags, diag.FromErr(err)...)
+	}
+
+	data.SetId(ids[0])
+	return diags
+}

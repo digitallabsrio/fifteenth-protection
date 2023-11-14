@@ -1,0 +1,23 @@
+var help = map[string]string{
+	"list traces": `
+list traces <opt1=val1 op2=val2>
+Ex: list traces operation=AddPets() limit=5
+...
+`,
+}
+
+var cmdList string
+
+func init() {
+  cmds := []string{}
+  for k := range help {
+    cmds = append(cmds, k)
+  }
+  sort.Strings(cmds)
+  b := strings.Builder{}
+  for _, cmd := range cmds {
+    b.WriteString(cmd + "\n")
+  }
+  b.WriteString("You can get more help by saying `help <cmd>` with a command from above.\n")
+  cmdList = b.String()
+}

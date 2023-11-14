@@ -1,0 +1,6 @@
+meter.RecordBatch(
+  ctx,
+  commonLabels,
+  requestLatency.Measurement(latencyMs),
+  requestCount.Measurement(1),
+)

@@ -1,0 +1,9 @@
+func updatePetInStore(ctx context.Context, psc *psclient.Client, pet *petstorev1.Pet, pbPet *pb.Pet) error {
+     pbPet.Name = pet.Spec.Name
+     pbPet.Type = petTypeToProtoPetType(pet.Spec.Type)
+     pbPet.Birthday = timeToPbDate(pet.Spec.Birthday)
+     if err := psc.UpdatePets(ctx, []*pb.Pet{pbPet}); err != nil {
+          return errors.Wrap(err, "failed to update the pet in the store")
+     }
+     return nil 
+}

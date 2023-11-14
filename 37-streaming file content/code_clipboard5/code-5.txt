@@ -1,0 +1,10 @@
+func writeUser(ctx context.Context, w io.Writer, u User) error
+{
+    if ctx.Err() != nil {
+        return ctx.Err()
+    }
+    if _, err := w.Write([]byte(user.String())); err != nil {
+        return err
+    }
+    return nil
+}

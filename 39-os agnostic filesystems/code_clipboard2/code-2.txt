@@ -1,0 +1,6 @@
+import _ "embed"
+
+//go:embed hello.txt
+var s string
+//go:embed world.txt
+var b []byte

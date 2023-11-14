@@ -1,0 +1,5 @@
+# omitted the previous portion of the action.yaml
+runs:
+  using: docker
+  image: docker://ghcr.io/devopsforgo/tweeter:1.0.0
+# omitted the subsequent portion of the action.yaml 

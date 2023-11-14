@@ -1,0 +1,13 @@
+func combinedOutput(conn *ssh.Client, cmd string) (string, error) {
+    sess, err := conn.NewSession()
+    if err != nil {
+    r   eturn "", err
+    }
+    defer sess.Close()
+    
+    b, err := sess.Output(cmd)
+    if err != nil {
+        return "", err
+    }
+    return string(b), nil
+}

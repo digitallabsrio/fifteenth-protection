@@ -1,0 +1,9 @@
+func (p *Provisioner) Prepare(raws ...interface{}) error {
+	c := config.Provisioner{}
+	if err := packerConfig.Decode(&c, nil, raws...); err != nil {
+		return err
+	}
+	c.Defaults()
+	p.conf = &c
+	return nil
+}

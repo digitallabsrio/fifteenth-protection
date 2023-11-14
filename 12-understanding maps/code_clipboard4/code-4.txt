@@ -1,0 +1,15 @@
+package main
+import "fmt"
+
+func main() {
+    modelToMake := map[string]string{
+        "prius": "toyota",
+        "chevelle": "chevy",
+    }
+
+    if carMake, ok := modelToMake["outback"]; ok {
+        fmt.Printf("car model \"outback\" has make %q", carMake)
+    }else{
+        fmt.Printf("car model \"outback\" has an unknown make")
+    }
+}

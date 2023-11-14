@@ -1,0 +1,3 @@
+if err := someFunction(); err != nil {
+  fmt.Println(err)
+}

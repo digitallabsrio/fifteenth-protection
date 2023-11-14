@@ -1,0 +1,22 @@
+// linuxVM builds a Linux Virtual Machine structure
+func linuxVM(vmStack *VirtualMachineStack) armcompute.VirtualMachine {
+	return armcompute.VirtualMachine{
+		Location: to.Ptr(vmStack.Location),
+		Name:     to.Ptr(vmStack.name + "-vm"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD3V2),
+			},
+			NetworkProfile: networkProfile(vmStack),
+			OSProfile:      linuxOSProfile(vmStack),
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Publisher: to.Ptr("Canonical"),
+					Offer:     to.Ptr("UbuntuServer"),
+					SKU:       to.Ptr("18.04-LTS"),
+					Version:   to.Ptr("latest"),
+				},
+			},
+		},
+	}
+}

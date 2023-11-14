@@ -1,0 +1,4 @@
+switch x := someFunc(); x {
+case 3:
+  fmt.Println("x is 3")
+}

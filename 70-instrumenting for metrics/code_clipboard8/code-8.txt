@@ -1,0 +1,41 @@
+func continuouslySendRequests() {
+	var (
+		tracer       = otel.Tracer("demo-client-tracer")
+		meter        = global.Meter("demo-client-meter")
+		instruments  = NewClientInstruments(meter)
+		commonLabels = []attribute.KeyValue{
+			attribute.String("method", "repl"),
+			attribute.String("client", "cli"),
+		}
+		rng = rand.New(rand.NewSource(time.Now().UnixNano()))
+	)
+
+	for {
+		startTime := time.Now()
+		ctx, span := tracer.Start(context.Background(), "ExecuteRequest")
+		makeRequest(ctx)
+		span.End()
+		latencyMs := float64(time.Since(startTime)) / 1e6
+		nr := int(rng.Int31n(7))
+		for i := 0; i < nr; i++ {
+			randLineLength := rng.Int63n(999)
+			meter.RecordBatch(
+				ctx,
+				commonLabels,
+				instruments.LineCounts.Measurement(1),
+				instruments.LineLengths.Measurement(randLineLength),
+			)
+			fmt.Printf("#%d: LineLength: %dBy\n", i, randLineLength)
+		}
+
+		meter.RecordBatch(
+			ctx,
+			commonLabels,
+			instruments.RequestLatency.Measurement(latencyMs),
+			instruments.RequestCount.Measurement(1),
+		)
+
+		fmt.Printf("Latency: %.3fms\n", latencyMs)
+		time.Sleep(time.Duration(1) * time.Second)
+	}
+}

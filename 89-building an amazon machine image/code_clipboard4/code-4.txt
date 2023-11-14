@@ -1,0 +1,19 @@
+// Setup user "agent" with SSH key file
+provisioner "shell" {
+  inline = [
+    "sudo adduser --disabled-password --gecos '' agent",
+  ]
+}
+provisioner "file" {
+  source = "./files/agent.pub"
+  destination = "/tmp/agent.pub"
+}
+provisioner "shell" {
+  inline = [
+    "sudo mkdir /home/agent/.ssh",
+    "sudo mv /tmp/agent.pub /home/agent/.ssh/authorized_keys",
+    "sudo chown agent:agent /home/agent/.ssh",
+    "sudo chown agent:agent /home/agent/.ssh/authorized_keys",
+    "sudo chmod 400 .ssh/authorized_keys",
+  ]
+}

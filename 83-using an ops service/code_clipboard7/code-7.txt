@@ -1,0 +1,21 @@
+func (b *Bot) loop() {
+ for {
+  select {
+  case <-b.ctx.Done():
+    return
+  case evt := <-b.client.Events:
+    switch evt.Type {
+    case socketmode.EventTypeConnectionError:
+      log.Println("connection failed. Retrying later...")
+    case socketmode.EventTypeEventsAPI:
+      data, ok := evt.Data.(slackevents.EventsAPIEvent)
+      if !ok {
+        log.Println("bug: got type(%v) which should be a slackevents.EventsAPIEvent, was %T", evt.Data)
+      continue
+    }
+    b.client.Ack(*evt.Request)
+    go b.appMentioned(data)
+  }
+  }
+ }
+}

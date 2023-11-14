@@ -1,0 +1,5 @@
+type Provisioner interface {
+  ConfigSpec() hcldec.ObjectSpec
+  Prepare(...interface{}) error
+  Provision(context.Context, Ui, Communicator, map[string] interface{}) error
+}

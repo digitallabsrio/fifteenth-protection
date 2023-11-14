@@ -1,0 +1,25 @@
+func scanPrefixes(ipCh chan net.IP) chan record {
+  ch := make(chan record, 1)
+  go func() {
+    defer close(ch)
+    limit := make(chan struct{}, 100)
+    wg := sync.WaitGroup{}
+    for ip := range ipCh {
+      limit <- struct{}{}
+      wg.Add(1)
+      go func(ip net.IP) {
+        defer func() { <-limit }()
+        defer wg.Done()
+        ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second))
+        defer cancel()
+        rec := record{Host: ip}
+        if hostAlive(ctx, ip) {
+          rec.Reachable = true
+        }
+        ch <- rec
+      }(ip)
+    }
+    wg.Wait()
+  }()
+  return ch
+}

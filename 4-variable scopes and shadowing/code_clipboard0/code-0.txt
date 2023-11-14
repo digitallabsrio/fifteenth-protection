@@ -1,0 +1,9 @@
+package main
+
+import "fmt"
+
+var word = "hello"
+
+func main() {
+    fmt.Println(word)
+}

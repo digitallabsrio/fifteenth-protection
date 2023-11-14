@@ -1,0 +1,2 @@
+"system-cpu":{"resolutionSecs":10,"unixTimeNano":"1635015190106788056", "cpu":[{"id":"cpu0","user":13637,"system":10706, "idle":17557545,"ioWait":6663}, {"id":"cpu1","user":12881, "system":22465,"idle":17539705,"ioWait":2997}]}, 
+"system-mem": {"resolutionSecs":10,"unixTimeNano":"1635015190106904757","total":8152984,"free":6594776,"avail":7576540}

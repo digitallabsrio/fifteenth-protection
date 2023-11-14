@@ -1,0 +1,20 @@
+func (o Ops) ListTraces(ctx context.Context, m bot.Message) {
+  sp := strings.Split(m.Text, "list traces")
+  if len(sp) != 2 {
+    o.write(m, "The 'list traces' command is malformed")
+    return
+  }
+
+  t := strings.TrimSpace(sp[1])
+  
+  kvOpts := []opt{}
+  matches := listTracesRE.FindAllStringSubmatch(t, -1)
+  for _, match := range matches {
+    kvOpts = append(
+      kvOpts,
+      opt{
+        strings.TrimSpace(match[1]),
+        strings.TrimSpace(match[2]),
+      },
+    )
+  }

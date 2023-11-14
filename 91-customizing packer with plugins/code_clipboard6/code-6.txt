@@ -1,0 +1,3 @@
+func (p *Provisioner) ConfigSpec() hcldec.ObjectSpec {
+	return new(config.FlatProvisioner).HCL2Spec()
+}

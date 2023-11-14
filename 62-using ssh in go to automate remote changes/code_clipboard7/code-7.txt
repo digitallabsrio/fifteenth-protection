@@ -1,0 +1,3 @@
+if err := e.Send("sudo apt-get install expect\n"); err != nil {
+  return fmt.Errorf("error on send command: %s", err)
+}

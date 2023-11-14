@@ -1,0 +1,34 @@
+type stateFn func(ctx context.Context) (stateFn, error)
+
+type actions struct {
+ ... // Some set of attributes
+}
+
+func (s *actions) run(ctx context.Context) (err error) {
+  fn := s.rmBackend
+  if s.failedState != nil {
+    fn = s.failedState
+  }
+  s.started = true
+  for {
+    if ctx.Err() != nil {
+      s.err = ctx.Err()
+      return ctx.Err()
+    }
+    fn, err = fn(ctx)
+    if err != nil {
+      s.failedState = fn
+      s.err = err
+      return err
+    }
+    if fn == nil {
+      return nil
+    }
+  }
+}
+func (a *actions) rmBackend(ctx context.Context) (stateFn, error) {...}
+func (a *actions) jobKill(ctx context.Context) (stateFn, error) {...}
+func (a *actions) cp(ctx context.Context) (stateFn, error) {...}
+func (a *actions) jobStart(ctx context.Context) (stateFn, error) {...}
+func (a *actions) reachable(ctx context.Context) (stateFn, error) {...}
+func (a *actions) addBackend(ctx context.Context) (stateFn, error) {...}

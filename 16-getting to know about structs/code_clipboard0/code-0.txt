@@ -1,0 +1,7 @@
+var record = struct{
+    Name string
+    Age int
+} {
+    Name: "John Doak",
+    Age: 100, // Yeah, not publishing the real one
+}

@@ -1,0 +1,33 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+)
+
+func quickSort[T any](slice []T, less func(T, T) bool) {
+	if len(slice) < 2 {
+		return
+	}
+
+	left, right, pivot := 0, len(slice)-1, rand.Int()%len(slice)
+
+	slice[right], slice[pivot] = slice[pivot], slice[right]
+
+	for i := range slice {
+		if less(slice[i], slice[right]) {
+			slice[i], slice[left] = slice[left], slice[i]
+			left++
+		}
+	}
+	slice[left], slice[right] = slice[right], slice[left]
+
+	quickSort(slice[:left], less)
+	quickSort(slice[left+1:], less)
+}
+
+func main() {
+	sl := []string{"hello", "I", "must", "be", "going"}
+	quickSort(sl, func(a, b string) bool { return a < b })
+	fmt.Println(sl)
+}

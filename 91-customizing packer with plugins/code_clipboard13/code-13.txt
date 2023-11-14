@@ -1,0 +1,17 @@
+	u.Message("Pushing Go tarball")
+
+	fs := simple.New()
+	fs.WriteFile("/tarball", p.content, 0700)
+	fi, _ := fs.Stat("/tarball")
+
+	err := c.Upload(
+		"/tmp/"+p.fileName,
+		bytes.NewReader(p.content),
+		&fi,
+	)
+	if err != nil {
+		return err
+	}
+	u.Message("Go tarball delivered to: /tmp/" + p.fileName)
+	return nil
+}

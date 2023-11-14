@@ -1,0 +1,39 @@
+type Job interface{
+  Run(ctx context.Context)
+}
+
+type Work struct {
+  name string
+  jobs []Job 
+}
+
+func (w *work) Exec(ctx context.Context) error{
+  esCh, cancelES := es.Data.Subscribe(w.name)
+  defer cancelES() // Stop subscribing
+  if <-esCh != es.Go { // The initial state
+      return fmt.Errorf("es in Stop state")
+  }
+
+  var cancel context.CancelFunc
+  ctx, cancel = context.WithCancel(ctx)
+  defer cancel()
+
+  // If we get an emergency stop, cancel our context.
+  // If the context gets cancelled, then just exit.
+  go func() {
+    select {
+    case <-ctx.Done():
+      return
+    case <-esCh:
+      cancel()
+    }
+  }()
+
+  for _, job := range w.jobs {
+    if err := job(ctx); err != nil {
+        return err
+    } 
+  }
+  
+  return nil
+}

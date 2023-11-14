@@ -1,0 +1,12 @@
+jobs:
+  sample-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sample action step
+        id: sample
+        uses: devopsforgo/sample-action@v1
+        with:
+          sample: 'Hello from the sample!'
+      # Use the output from the `sample` step
+      - name: Get the sample message
+        run: echo "The message is ${{ steps.sample.outputs.sampleOutput }}"

@@ -1,0 +1,7 @@
+// Status indicates the emergency stop status.
+type Status string
+const (
+     Unknown Status = ""
+     Go Status = "go"
+     Stop Status = "stop"
+)

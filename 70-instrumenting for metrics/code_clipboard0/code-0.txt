@@ -1,0 +1,9 @@
+meter := global.Meter("demo-client-meter")
+requestLatency := metric.Must(meter).NewFloat64Histogram(
+  "demo_client/request_latency",
+  metric.WithDescription("The latency of requests processed"),
+)
+requestCount := metric.Must(meter).NewInt64Counter(
+  "demo_client/request_counts",
+  metric.WithDescription("The number of requests processed"),
+)

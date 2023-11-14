@@ -1,0 +1,1 @@
+cmd := exec.CommandContext(ctx, kubectl, "apply", "-f", config)

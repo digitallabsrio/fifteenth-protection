@@ -1,0 +1,1 @@
+qotd --dev "abraham lincoln" "martin king" "mark twain"

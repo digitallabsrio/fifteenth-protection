@@ -1,0 +1,2 @@
+kubectl delete namespace petstore
+kind delete cluster --name kind

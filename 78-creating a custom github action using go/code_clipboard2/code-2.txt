@@ -1,0 +1,2 @@
+docker build . -t tweeter# output from the docker build
+docker run tweeter -h

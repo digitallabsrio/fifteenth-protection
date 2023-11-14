@@ -1,0 +1,11 @@
+package main
+
+import (
+	"fmt"
+	"runtime"
+)
+
+func main() {
+    fmt.Println(runtime.GOOS) // linux, darwin, ...
+    fmt.Println(runtime.GOARCH) // amd64, arm64, ...
+}

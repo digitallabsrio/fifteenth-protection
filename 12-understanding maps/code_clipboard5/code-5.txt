@@ -1,0 +1,2 @@
+modelToMake["outback"] = "subaru"
+counters["pageHits"] = 10

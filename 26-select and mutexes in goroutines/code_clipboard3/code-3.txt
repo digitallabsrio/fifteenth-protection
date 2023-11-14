@@ -1,0 +1,16 @@
+func main() {
+	in1 := make(chan string)
+	in2 := make(chan string)
+	wg := &sync.WaitGroup{}
+	exit := make(chan struct{})
+
+	wg.Add(1)
+	go printWords(in1, in2, exit, wg)
+
+	in1 <- "hello"
+	in2 <- "world"
+
+	close(exit)
+
+	wg.Wait()
+}

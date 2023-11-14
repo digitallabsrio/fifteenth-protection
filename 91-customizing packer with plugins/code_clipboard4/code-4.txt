@@ -1,0 +1,10 @@
+package main
+import (
+  ...
+  "[repo location]/packer/goenv/internal/config"
+  "github.com/hashicorp/packer-plugin-sdk/packer"
+  "github.com/hashicorp/packer-plugin-sdk/plugin"
+  "github.com/hashicorp/packer-plugin-sdk/version"
+  packerConfig "github.com/hashicorp/packer-plugin-sdk/template/config"
+  ...
+)

@@ -1,0 +1,3 @@
+func (o Ops) lastResort(ctx context.Context, m bot.Message) {
+  o.write(m, "%s,\nI don't have anything that handles what you sent. Try the 'help' command", m.User.Name)
+}

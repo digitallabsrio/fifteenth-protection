@@ -1,0 +1,14 @@
+const (
+    UnknownCode = 0
+    UnreachableCode = 1
+    AuthFailureCode = 2
+)
+
+type ErrNetwork struct {
+    Code int
+    Msg string
+}
+
+func (e ErrNetwork) Error() string {
+    return fmt.Sprintf("network error(%d): %s", e.Code, e.Msg) 
+} 

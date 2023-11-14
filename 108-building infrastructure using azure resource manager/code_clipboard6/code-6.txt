@@ -1,0 +1,31 @@
+// createSecurityGroup creates an Azure Network Security Group to allow SSH on port 22
+func (vmf *VirtualMachineFactory) createSecurityGroup(ctx context.Context, name, location string) armnetwork.SecurityGroup {
+	param := armnetwork.SecurityGroup{
+		Location: to.Ptr(location),
+		Name:     to.Ptr(name + "-nsg"),
+		Properties: &armnetwork.SecurityGroupPropertiesFormat{
+			SecurityRules: []*armnetwork.SecurityRule{
+				{
+					Name: to.Ptr("ssh"),
+					Properties: &armnetwork.SecurityRulePropertiesFormat{
+						Access:                   to.Ptr(armnetwork.SecurityRuleAccessAllow),
+						Direction:                to.Ptr(armnetwork.SecurityRuleDirectionInbound),
+						Protocol:                 to.Ptr(armnetwork.SecurityRuleProtocolAsterisk),
+						Description:              to.Ptr("allow ssh on 22"),
+						DestinationAddressPrefix: to.Ptr("*"),
+						DestinationPortRange:     to.Ptr("22"),
+						Priority:                 to.Ptr(int32(101)),
+						SourcePortRange:          to.Ptr("*"),
+						SourceAddressPrefix:      to.Ptr("*"),
+					},
+				},
+			},
+		},
+	}
+
+	fmt.Printf("Building an Azure Network Security Group named %q...\n", *param.Name)
+	poller, err := vmf.nsgClient.BeginCreateOrUpdate(ctx, name, *param.Name, param, nil)
+	HandleErr(err)
+	res := HandleErrPoller(ctx, poller)
+	return res.SecurityGroup
+}

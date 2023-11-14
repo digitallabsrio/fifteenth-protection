@@ -1,0 +1,4 @@
+var (
+    ErrNetwork = errors.New("network error")
+    ErrInput = errors.New("input error")
+)

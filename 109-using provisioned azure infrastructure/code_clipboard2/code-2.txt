@@ -1,0 +1,17 @@
+type StorageFactory struct {
+	subscriptionID string
+	cred           azcore.TokenCredential
+	groupsClient   *armresources.ResourceGroupsClient
+	storageClient  *armstorage.AccountsClient
+}
+
+// NewStorageFactory instantiates an Azure Storage factory for building an Azure Storage playground
+func NewStorageFactory(subscriptionID string) *StorageFactory {
+	cred := HandleErrWithResult(azidentity.NewDefaultAzureCredential(nil))
+	return &StorageFactory{
+		cred:           cred,
+		subscriptionID: subscriptionID,
+		groupsClient:   BuildClient(subscriptionID, cred, armresources.NewResourceGroupsClient),
+		storageClient:  BuildClient(subscriptionID, cred, armstorage.NewAccountsClient),
+	}
+}

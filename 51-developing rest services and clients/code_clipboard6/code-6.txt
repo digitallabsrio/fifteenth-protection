@@ -1,0 +1,4 @@
+type server struct {
+	serv *http.Server
+	quotes map[string][]string
+}

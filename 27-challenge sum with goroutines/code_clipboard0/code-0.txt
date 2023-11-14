@@ -1,0 +1,13 @@
+package main
+
+import "fmt"
+// These imports will be used while testing your code
+import "strconv"
+import "encoding/json"
+
+func sumGoRoutine(inputSlice []int, c chan int) {
+ //Write your code here
+}
+func findParallelSum(items [][]int) int{
+ //Write your code here
+}

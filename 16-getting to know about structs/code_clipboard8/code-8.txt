@@ -1,0 +1,16 @@
+package main
+import "fmt"
+
+type Record struct{
+    Name string
+    Age int
+}
+
+func (r Record) String() string {
+    return fmt.Sprintf("%s,%d", r.Name, r.Age)
+}
+
+func main() {
+    john := Record{Name: "John Doak", Age: 100}
+    fmt.Println(john.String())
+}

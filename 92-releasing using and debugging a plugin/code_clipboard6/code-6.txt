@@ -1,0 +1,2 @@
+packer fmt .
+packer init .

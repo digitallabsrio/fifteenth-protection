@@ -1,0 +1,5 @@
+{
+  "cmdline": ["/tmp/go-build7781/c0021/exe/main"],
+  "cpu": "8",
+  "goroutines": "16",
+}

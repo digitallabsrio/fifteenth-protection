@@ -1,0 +1,19 @@
+// Get fetches a qutoe of the day from the server. If the author is not set, a random one is chosen.
+func (q *QOTD) Get(ctx context.Context, author string) (string, error) {
+	const endpoint = `/qotd/v1/get`
+	ref, _ := url.Parse(endpoint)
+
+	resp := getResp{}
+
+	// Makes a call to the server. The endpoint is the joining of our base url (http://127.0.0.1:80) with
+	// our endpoint constant above (`qotd/v1/get`) to form `http://127.0.0.1:80/qotd/v1/get`.
+	err := q.restCall(ctx, path.Join(q.addr, endpoint), getReq{Author: author}), &resp)
+	switch {
+	case err != nil: // http error
+		return "", err
+	case resp.Error != nil: // server error, such as the author not being found.
+		return "", resp.Error
+	}
+
+	return resp.Quote, nil
+}

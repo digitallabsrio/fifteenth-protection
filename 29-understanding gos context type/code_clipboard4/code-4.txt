@@ -1,0 +1,31 @@
+package main
+import "context"
+import "time"
+import "fmt"
+import "io"
+import "os"
+import "net/http"
+
+func main() {
+    ctx := context.Background()
+
+    client := &http.Client{}
+    req, err := http.NewRequest("GET", "http://www.golang.org", nil)
+    if err != nil {
+    fmt.Println("error: ", err)
+    return
+    }
+    ctx, cancel := context.WithTimeout(context.Background(), 3 * time.Second)
+
+    // Attach it to our request.
+    req = req.WithContext(ctx)
+    // Get our resp.
+    resp, err := client.Do(req)
+    cancel()
+    if err != nil {
+    fmt.Println("error: ", err)
+    return
+    }
+    // Print the page to stdout
+    io.Copy(os.Stdout, resp.Body)
+}

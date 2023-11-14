@@ -1,0 +1,6 @@
+type record struct{
+  Host net.IP
+  Reachable bool
+  LoginSSH bool
+  Uname string
+}

@@ -1,0 +1,10 @@
+provisioner "shell" {
+  inline = [
+    "sudo mkdir /home/agent/bin",
+    "sudo chown agent:agent /home/agent/bin",
+    "sudo chmod ug+rwx /home/agent/bin",
+    "sudo mv /tmp/agent /home/agent/bin/agent",
+    "sudo chown agent:agent /home/agent/bin/agent",
+    "sudo chmod 0770 /home/agent/bin/agent",
+  ]
+}

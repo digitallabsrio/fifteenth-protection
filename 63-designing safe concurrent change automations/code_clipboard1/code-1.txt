@@ -1,0 +1,7 @@
+func (a *actions) rmBackend(ctx context.Context) (stateFn, error) {
+  err := a.lb.RemoveBackend(ctx, a.config.Pattern, a.backend)
+  if err != nil {
+    return nil, fmt.Errorf("problem removing backend from pool: %w", err)
+  }
+  return a.jobKill, nil
+}

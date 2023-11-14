@@ -1,0 +1,6 @@
+func dataSourcePet() *schema.Resource {
+     return &schema.Resource{
+          ReadContext: dataSourcePetRead,
+          Schema:      getPetDataSchema(),
+     }
+}

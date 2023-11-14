@@ -1,0 +1,5 @@
+// The lines beginning with //go: are not comments, but compiler directives
+
+//go:embed image/*
+//go:embed index.html
+var content embed.FS

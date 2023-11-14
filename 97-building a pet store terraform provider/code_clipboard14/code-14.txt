@@ -1,0 +1,18 @@
+// resourcePetRead finds a pet in the pet store by ID and populate the resource data
+func resourcePetRead(ctx context.Context, data *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	psClient, err := clientFromMeta(meta)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	pets, err := findPetsInStore(ctx, psClient, findPetsRequest{ID: data.Id()})
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	if len(pets) == 0 {
+		return nil
+	}
+
+	return setDataFromPet(pets[0], data)
+}

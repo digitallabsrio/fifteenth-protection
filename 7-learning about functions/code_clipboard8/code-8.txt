@@ -1,0 +1,3 @@
+func sum(numbers ...int) int {
+ // Same code
+}

@@ -1,0 +1,2 @@
+cd /usercode/Go-for-DevOps/chapter/14/petstore-operator
+kubectl apply -f config/samples/petstore_v1alpha1_pet.yaml

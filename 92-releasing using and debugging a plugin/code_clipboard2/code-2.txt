@@ -1,0 +1,3 @@
+mkdir -p .github/workflows &&
+ curl -L -o ".github/workflows/release.yml" \
+ https://raw.githubusercontent.com/hashicorp/packer-pluginscaffolding/main/.github/workflows/release.yml

@@ -1,0 +1,15 @@
+func CopyToFile(content []byte, p string) error {
+if _, ok := os.Stat(p); ok {
+          f, err := os.Open(p)
+          if err != nil {
+               return err
+          }
+          h0 := sha256.New()
+          io.Copy(h0, f)
+          h1 := sha256.New()
+          h1.Write(content)
+          if h0.Sum(nil) == h1.Sum(nil) {
+               return nil
+} }
+     return io.WriteFile(p, content)
+}

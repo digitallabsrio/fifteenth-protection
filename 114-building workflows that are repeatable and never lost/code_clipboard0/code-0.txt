@@ -1,0 +1,3 @@
+func CopyToFile(content []byte, p string) error {
+     return io.WriteFile(p, content)
+}

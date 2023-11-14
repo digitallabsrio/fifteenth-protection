@@ -1,0 +1,4 @@
+type StrList []string
+func (s StrList) String() string {
+    return strings.Join(s, ",")
+}

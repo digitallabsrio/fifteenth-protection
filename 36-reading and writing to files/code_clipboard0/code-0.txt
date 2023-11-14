@@ -1,0 +1,1 @@
+data, err := os.ReadFile("path/to/file")

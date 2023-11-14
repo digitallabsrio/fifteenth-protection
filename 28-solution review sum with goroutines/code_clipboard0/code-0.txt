@@ -1,0 +1,37 @@
+package main
+
+import "fmt"
+//import "strconv"
+//import "encoding/json"
+
+func sumGoRoutine(inputSlice []int, c chan int) {
+	sum := 0
+	for _,v := range inputSlice {
+		sum+=v
+	}
+	c <- sum	
+}
+
+func findParallelSum(items [][]int) int{
+	c := make(chan int)
+
+	sum := 0
+	for i, _ := range items {
+		go sumGoRoutine(items[i], c)
+	}
+	for i := 0; i < len(items); i++ {
+		sum += <-c
+	}
+	fmt.Print(sum)
+	return sum
+}
+
+func main() {
+	itemsA := [][]int{
+		[]int{1, 2, 3},
+		[]int{4, 5, 6, 7},
+		[]int{1,1},
+  	}
+	findParallelSum(itemsA)
+	
+}

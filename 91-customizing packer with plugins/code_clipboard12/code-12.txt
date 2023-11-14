@@ -1,0 +1,19 @@
+...
+  url := fmt.Sprintf(goURL, p.conf.Version, platform)
+
+  u.Message("Downloading Go version: " + url)
+  resp, err := http.Get(url)
+  if err != nil {
+    return fmt.Errorf("problem reaching golang.org for version(%s): %s)", p.conf.Version, err)
+  }
+  defer resp.Body.Close()
+
+  p.content, err = io.ReadAll(resp.Body)
+  if err != nil {
+    return fmt.Errorf("problem downloading file: %s", err)
+  }
+  p.fileName = fmt.Sprintf(name, p.conf.Version, platform)
+  u.Message("Downloading complete")
+
+  return nil
+}

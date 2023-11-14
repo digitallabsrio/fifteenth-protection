@@ -1,0 +1,19 @@
+type ValueType interface {
+	string | bool | int
+}
+
+type Value[T ValueType] struct {
+	val T
+}
+
+func New[T ValueType](v T) Value {
+	return Value[T]{val: v}
+}
+
+func (v Value[T]) String() string {
+	return fmt.Sprintf("%v", v.val)
+}
+
+func (v Value[T]) Value() T {
+	return v.val
+}

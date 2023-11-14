@@ -1,0 +1,22 @@
+func (r *PetReconciler) ReconcileNormal(ctx context.Context,
+pet *petstorev1.Pet) (ctrl.Result, error) {
+     controllerutil.AddFinalizer(pet, PetFinalizer)
+     psc, err := getPetstoreClient()
+     if err != nil {
+          return ctrl.Result{}, errors.Wrap(err, "unable to construct petstore client")
+     }
+          psPet, err := findPetInStore(ctx, psc, pet)
+          if err != nil {
+               return ctrl.Result{}, errors.Wrap(err, "failed trying to find pet in pet store")
+     }
+          if psPet == nil {
+               // no pet was found, create a pet in the store
+               err := createPetInStore(ctx, pet, psc)
+               return ctrl.Result{}, err
+     }
+     // pet was found, update the pet in the store
+     if err := updatePetInStore(ctx, psc, pet, psPet.Pet); err != nil {
+          return ctrl.Result{}, err
+     }
+     return ctrl.Result{}, nil
+     }

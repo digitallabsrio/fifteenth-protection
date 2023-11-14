@@ -1,0 +1,19 @@
+func (o Ops) Help(ctx context.Context, m bot.Message) {
+    sp := strings.Split(m.Text, "help")
+    if len(sp) < 2 {
+        o.write(m, "%s,\nYou have to give me a command you want help with", m.User.Name)
+        return
+    }
+    
+    cmd := strings.TrimSpace(strings.Join(sp[1:], ""))
+    if cmd == "" {
+        o.write(m, "Here are all the commands that I can help you with:\n%s", cmdList)
+        return
+    }
+
+    if v, ok := help[cmd]; ok {
+        o.write(m, "I can help you with that:\n%s", v)
+        return
+    }
+    o.write(m, "%s,\nI don't know what %q is to give you help", m.User.Name, cmd)
+}

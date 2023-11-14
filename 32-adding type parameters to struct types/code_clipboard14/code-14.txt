@@ -1,0 +1,17 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Values interface {
+    int8 | int16 | int32 |int64
+    string | []byte
+}
+
+func Print[V Values](v V) {
+    fmt.Println(v)
+}
+func main() {
+    Print[string]("hello")
+}

@@ -1,0 +1,22 @@
+func initTraceAndMetricsProvider() func() {
+	ctx := context.Background()
+	var cancel context.CancelFunc
+	timeout := 1 * time.Second
+	endpoint := "OTEL_EXPORTER_OTLP_ ENDPOINT"
+	
+	otelAgentAddr, ok := os.LookupEnv("OTEL_EXPORTER_OTLP_ENDPOINT")
+	if !ok {
+		otelAgentAddr = "0.0.0.0:4317"
+	}
+
+	closeMetrics := initMetrics(ctx, otelAgentAddr)
+	closeTraces := initTracer(ctx, otelAgentAddr)
+
+	return func() {
+		doneCtx, cancel := context.WithTimeout(ctx, time.Second)
+		defer cancel()
+		// pushes any last exports to the receiver
+		closeTraces(doneCtx)
+		closeMetrics(doneCtx)
+	}
+}

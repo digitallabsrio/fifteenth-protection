@@ -1,0 +1,5 @@
+func recordLess(a, b Record) bool {
+	aCmp := a.Last + a.First
+	bCmp := b.Last + b.First
+	return aCmp < bCmp
+}

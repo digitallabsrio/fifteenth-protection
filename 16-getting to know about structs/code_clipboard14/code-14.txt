@@ -1,0 +1,9 @@
+func NewRecord(name string, age int) (*Record, error) {
+    if name == "" {
+        return nil, fmt.Errorf("name cannot be the empty string")
+    }
+    if age <= 0 {
+        return nil, fmt.Errorf("age cannot be <= 0")
+    }
+    return &Record{Name: name, Age: age}, nil
+}

@@ -1,0 +1,26 @@
+func createNginxService(ctx context.Context, clientSet *kubernetes.Clientset, ns *corev1.Namespace, name string) {
+	var (
+		matchLabel = map[string]string{"app": "nginx"}
+		objMeta    = metav1.ObjectMeta{
+			Name:      name,
+			Namespace: ns.Name,
+			Labels:    matchLabel,
+		}
+	)
+
+	service := &corev1.Service{
+		ObjectMeta: objMeta,
+		Spec: corev1.ServiceSpec{
+			Selector: matchLabel,
+			Ports: []corev1.ServicePort{
+				{
+					Port:     80,
+					Protocol: corev1.ProtocolTCP,
+					Name:     "http",
+				},
+			},
+		},
+	}
+	service, err := clientSet.CoreV1().Services(ns.Name).Create(ctx, service, metav1.CreateOptions{})
+	panicIfError(err)
+}

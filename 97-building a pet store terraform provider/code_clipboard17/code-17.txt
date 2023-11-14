@@ -1,0 +1,5 @@
+az login
+docker-compose up -d
+make
+cd examples
+terraform init && terraform apply

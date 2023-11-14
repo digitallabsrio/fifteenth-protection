@@ -1,0 +1,2 @@
+func functionName([varName] [varType], ...) ([return value],[return value], ...) {
+}

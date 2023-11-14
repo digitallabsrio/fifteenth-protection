@@ -1,0 +1,13 @@
+func Greeter(name string, fetch *client.Fetch) (string, error) {
+	rec, err := fetch.Record(name)
+	if err != nil {
+		return "", err
+	}
+	if rec.Name != name {
+		return "", fmt.Errorf("server returned record for %s, not %s", rec.Name, name)
+	}
+	if rec.Age < 18 {
+		return "Greetings young one", nil
+	}
+	return fmt.Sprintf("Greetings %s", name), nil
+}

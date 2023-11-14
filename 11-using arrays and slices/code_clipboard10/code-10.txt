@@ -1,0 +1,6 @@
+func main() {
+    someSlice := []int{1, 2, 3}
+    for _, val := range someSlice {
+        fmt.Printf("slice entry: %s\n", val)
+    }
+}

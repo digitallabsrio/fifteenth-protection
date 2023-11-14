@@ -1,0 +1,6 @@
+// Package main is the entrance point for our binary.
+// The double slashes provides a comment until the end of the line.
+/*
+This is a comment that lasts until the closing star slash.
+*/
+package main

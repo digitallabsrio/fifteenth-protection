@@ -1,0 +1,36 @@
+func handleRequestWithRandomSleep() http.HandlerFunc {
+	var (
+		meter        = global.Meter("demo-server-meter")
+		instruments  = NewServerInstruments(meter)
+		commonLabels = []attribute.KeyValue{
+			attribute.String("server-attribute", "foo"),
+		}
+	)
+
+	return func(w http.ResponseWriter, req *http.Request) {
+		//  random sleep to simulate latency
+		var sleep int64
+		switch modulus := time.Now().Unix() % 5; modulus {
+		case 0:
+			sleep = rng.Int63n(2000)
+		case 1:
+			sleep = rng.Int63n(15)
+		case 2:
+			sleep = rng.Int63n(917)
+		case 3:
+			sleep = rng.Int63n(87)
+		case 4:
+			sleep = rng.Int63n(1173)
+		}
+		time.Sleep(time.Duration(sleep) * time.Millisecond)
+		ctx := req.Context()
+		meter.RecordBatch(
+			ctx,
+			commonLabels,
+			instruments.RequestCount.Measurement(1),
+		)
+		span := trace.SpanFromContext(ctx)
+		span.SetAttributes(commonLabels...)
+		w.Write([]byte("Hello World"))
+	}
+}

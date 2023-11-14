@@ -1,0 +1,9 @@
+var (
+ promptRE = regexp.MustCompile(`\$ `)
+ aptCont = regexp.MustCompile(`Do you want to continue\? \[Y/n\] `)
+ aptAtNewest = regexp.MustCompile(`is already the newest`)
+)
+_, _, err = e.Expect(promptRE, 10*time.Second)
+if err != nil {
+    return fmt.Errorf("did not get shell prompt")
+}

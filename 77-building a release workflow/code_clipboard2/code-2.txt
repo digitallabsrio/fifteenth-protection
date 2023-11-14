@@ -1,0 +1,8 @@
+# Previous config of the release job omitted for brevity
+steps:
+  - uses: actions/checkout@v2
+  - name: Set RELEASE_VERSION ENV var
+    run: echo "RELEASE_VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
+  - uses: actions/setup-go@v2
+    with:
+      go-version: 1.17.x

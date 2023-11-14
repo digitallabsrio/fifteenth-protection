@@ -1,0 +1,12 @@
+func resourcePet() *schema.Resource {
+	return &schema.Resource{
+		CreateContext: resourcePetCreate,
+		ReadContext:   resourcePetRead,
+		UpdateContext: resourcePetUpdate,
+		DeleteContext: resourcePetDelete,
+		Schema:        getPetResourceSchema(),
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+	}
+}

@@ -1,0 +1,1 @@
+KUBECONFIG=./.tmp-kubeconfig kubectl get namespaces

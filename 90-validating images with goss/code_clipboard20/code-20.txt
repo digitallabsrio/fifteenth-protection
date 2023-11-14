@@ -1,0 +1,14 @@
+==> goBook.amazon-ebs.ubuntu: Running goss tests...
+==> goBook.amazon-ebs.ubuntu: Running GOSS render command: cd /tmp/goss && 
+/tmp/goss-0.3.9-linux-amd64 render > /tmp/gossspec.yaml
+==> goBook.amazon-ebs.ubuntu: Goss render ran successfully
+==> goBook.amazon-ebs.ubuntu: Running GOSS render debug command: cd /tmp/goss 
+&& /tmp/goss-0.3.9-linux-amd64 render -d > /tmp/debug-goss-spec.yaml
+==> goBook.amazon-ebs.ubuntu: Goss render debug ran successfully
+==> goBook.amazon-ebs.ubuntu: Running GOSS validate command: cd /tmp/goss 
+&& /tmp/goss-0.3.9-linux-amd64 validate --retrytimeout 30s --sleep 1s
+ goBook.amazon-ebs.ubuntu: ..........................
+ goBook.amazon-ebs.ubuntu:
+ goBook.amazon-ebs.ubuntu: Total Duration: 0.029s
+ goBook.amazon-ebs.ubuntu: Count: 26, Failed: 0, Skipped: 0
+==> goBook.amazon-ebs.ubuntu: Goss validate ran successfully

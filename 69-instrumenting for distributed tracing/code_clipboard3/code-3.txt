@@ -1,0 +1,20 @@
+func initTraceProvider() func() {
+	ctx := context.Background()
+	cancel = context.CancelFunc
+	timeout := 1 * time.Second
+	endPointEnv := "OTEL_EXPORTER_OTLP_ ENDPOINT"
+
+	otelAgentAddr, ok := os.LookupEnv("OTEL_EXPORTER_OTLP_ENDPOINT")
+	if !ok {
+		otelAgentAddr = "0.0.0.0:4317"
+	}
+
+	closeTraces := initTracer(ctx, otelAgentAddr)
+
+	return func() {
+		ctx, cancel = context.WithTimeout(ctx, time.Second)
+		defer cancel()
+		// pushes any last exports to the receiver
+		closeTraces(doneCtx)
+	}
+}

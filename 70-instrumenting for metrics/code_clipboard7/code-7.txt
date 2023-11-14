@@ -1,0 +1,27 @@
+func initMetrics(ctx context.Context, otelAgentAddr string) func(context.Context) {
+  metricClient := otlpmetricgrpc.NewClient(
+    otlpmetricgrpc.WithInsecure(),
+    otlpmetricgrpc.WithEndpoint(otelAgentAddr))
+  metricExp, err := otlpmetric.New(ctx, metricClient)
+  handleErr(err, "Failed to create the collector metric exporter")
+
+  pusher := controller.New(
+    processor.NewFactory(
+      simple.NewWithHistogramDistribution(),
+      metricExp,
+    ),
+    controller.WithExporter(metricExp),
+    controller.WithCollectPeriod(2*time.Second),
+  )
+  global.SetMeterProvider(pusher)
+
+  err = pusher.Start(ctx)
+  handleErr(err, "Failed to start metric pusher")
+
+  return func(doneCtx context.Context) {
+    // pushes any last exports to the receiver
+    if err := pusher.Stop(doneCtx); err != nil {
+      otel.Handle(err)
+    }
+  }
+}

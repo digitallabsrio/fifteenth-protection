@@ -1,0 +1,13 @@
+func (b *Bot) Register(r *regexp.Regexp, h HandleFunc) {
+  if h == nil {
+    panic("HandleFunc cannot be nil")
+  }
+  if r == nil {
+    if b.defaultHandle != nil {
+      panic("cannot add two default handles")
+    }
+    b.defaultHandle = h
+    return
+  }
+  b.reg = append(b.reg, register{r, h})
+}

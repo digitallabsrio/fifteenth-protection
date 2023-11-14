@@ -1,0 +1,29 @@
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+Outputs:
+all_pets = {
+  "birthday" = tostring(null)
+  "id" = "1648955761"
+  "name" = tostring(null)
+  "pet_id" = tostring(null)
+  "pets" = tolist([
+    {
+      "birthday" = "2020-06-25T00:00:00Z"
+      "id" = "495b1c94-6f67-46f2-9d4d-e84cc182d523"
+      "name" = "Tron"
+      "type" = "cat"
+}, {
+      "birthday" = "2021-04-01T00:00:00Z"
+      "id" = "36e65cb2-18ea-4aec-a410-7bad64d7b00d"
+      "name" = "Thor"
+      "type" = "dog"
+}, ])
+  "type" = tostring(null)
+}
+thor = {
+  "36e65cb2-18ea-4aec-a410-7bad64d7b00d" = {
+  "birthday" = "2021-04-01T00:00:00Z"
+  "id" = "36e65cb2-18ea-4aec-a410-7bad64d7b00d"
+  "name" = "Thor"
+  "type" = "dog"
+}
+}

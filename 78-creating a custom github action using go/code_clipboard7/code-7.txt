@@ -1,0 +1,2 @@
+git tag image-v1.0.0
+git push origin image-v1.0.0

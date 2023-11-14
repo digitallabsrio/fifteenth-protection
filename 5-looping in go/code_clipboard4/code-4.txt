@@ -1,0 +1,6 @@
+for {
+  if err := doSomething(); err != nil {
+    break
+  }
+  fmt.Println("keep going")
+}

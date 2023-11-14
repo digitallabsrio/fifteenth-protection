@@ -1,0 +1,111 @@
+package main
+
+import (
+	"fmt"
+	"context"
+	"io"
+	"bytes"
+	"os"
+)
+
+var users = []User{
+	{Name: "jdoak", ID: 0},
+	{Name: "smurphy", ID: 1},
+	{Name: "djustice", ID: 2},
+}
+
+type User struct {
+	Name string
+	ID int
+}
+
+func (u User) String() string {
+	return fmt.Sprintf("%s:%d", u.Name, u.ID)
+}
+
+// writeUser starts a goroutine that will write User records received on 'in' and
+// write them to 'w'. Any error encountered will write an error to the returned channel.
+// If 'w' also implememnts io.Closer, we will call .Close() on it.
+func writeUser(ctx context.Context, w io.Writer, in chan User) chan error {
+	errCh := make(chan error, 1)
+	go func() {
+		defer func() {
+			if closer, ok := w.(io.Closer); ok {
+				if err := closer.Close(); err != nil{
+					// Try to put an error in our errCh,
+					// but if we can't just ignore it.
+					select{
+					case errCh <-err:
+					default:
+					}
+				}
+			}
+			close(errCh)
+		}()
+
+		writtenLine := false
+		for {
+			select{
+			// If our Context is cancelled, return.
+			case <-ctx.Done():
+				errCh <- ctx.Err()
+				return
+			case user, ok := <-in:
+				if !ok {
+					return
+				}
+				// This puts a carriage return before the next entry unless it
+				// is the first entry.
+				if writtenLine {
+					if _, err := w.Write([]byte("\n")); err != nil {
+						errCh <-err
+						return
+					}
+				}
+				if _, err := w.Write([]byte(user.String())); err != nil {
+					errCh <-err
+					return
+				}
+				
+				writtenLine = true
+			}
+		}
+	}()
+	return errCh
+}
+
+func main() {
+	// A bytes.Buffer{} is an io.Writer. I'm using this to avoid making files on your disk
+	// and so it works in the playground.
+	buff := &bytes.Buffer{}
+	
+	// We will send our User records to be written via in.
+	in := make(chan User, 1)
+	
+	// This starts our goroutine for writing or User records to buff.
+	errCh := writeUser(context.Background(), buff, in)
+	
+	// Go through all our User records and write them to buff.
+	for _, u := range users {
+		select {
+		// We had an error writing our record, so print the error and stop.
+		case err := <-errCh:
+			fmt.Println("had error: ", err)
+			return
+		// Send another record to be written.
+		case in <- u:
+		}
+	}
+	// Let' our goroutine started by writeUser() know we have finished.
+	close(in)
+	
+	// Block here until all our records are written. If the returned value is
+	// not nil, we had some type of error.
+	if err := <-errCh; err != nil {
+		fmt.Println("had error: ", err)
+		return
+	}
+	
+	// Print our output buffer that was written.
+	io.Copy(os.Stdout, buff)
+}

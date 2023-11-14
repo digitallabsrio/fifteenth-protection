@@ -1,0 +1,6 @@
+Build 'goBook.amazon-ebs.ubuntu' finished after 5 minutes 11 seconds.
+
+==> Wait completed after 5 minutes 11 seconds
+==> Builds finished. The artifacts of successful builds are:
+--> goBook.amazon-ebs.ubuntu: AMIs were created:
+us-east-2: ami-0f481c1107e74d987

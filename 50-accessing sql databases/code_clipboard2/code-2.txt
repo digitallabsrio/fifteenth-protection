@@ -1,0 +1,16 @@
+type Storage struct {
+    conn *sql.DB
+    getUserStmt *sql.Stmt
+}
+
+func NewStorage(ctx context.Context, conn *sql.DB) *Storage {
+    return &Storage{
+        getUserStmt: conn.PrepareContext(ctx,`SELECT "User","DisplayName" FROM users WHERE "ID" = $1`,)
+    }
+}
+
+func (s *Storage) GetUser(ctx context.Context, id int)(UserRec, error) {
+    u := UserRec{ID: id}
+    err := s.getUserStmt.QueryRow(id).Scan(&u)
+    return u, err
+}

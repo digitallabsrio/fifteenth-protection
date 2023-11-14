@@ -1,0 +1,2 @@
+# the workflow will execute when a commit is pushed to any branch or pull request is opened
+on: [push, pull_request]

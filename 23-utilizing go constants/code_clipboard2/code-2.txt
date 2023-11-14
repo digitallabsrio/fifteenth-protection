@@ -1,0 +1,11 @@
+type specialStr string
+func printSpecial(str specialStr){
+    fmt.Println(string(str))
+}
+func main() {
+    const constHelloWorld = "hello world"
+    var varHelloWorld = "hello world"
+    printSpecial(varHelloWorld) // Won't compile
+    printSpecial(constHelloWorld) // Will compile
+    printSpecial("hello world") // Will compile
+} 

@@ -1,0 +1,14 @@
+package main
+import "fmt"
+
+const str = "hello world"
+const num = 3
+const num64 int64 = 3
+
+func add(x, y int8) int8 {
+    return x + y
+}
+
+func main() {
+    fmt.Println(add(num, num)) // Print: 6
+}

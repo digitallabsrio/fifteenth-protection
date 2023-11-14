@@ -1,0 +1,19 @@
+go
+wg := sync.WaitGroup{}
+for _, block := range work.Blocks {
+     limit := make(chan struct{}, req.Limit)
+     for _, job := range block.Jobs {
+          job := job
+          limit <- struct{}{}
+          wg.Add()
+          go func() {
+               defer wg.Done()
+               defer func() {
+                    <-limit
+               }()
+               job() 
+          }()
+ 
+     } 
+}
+wg.Wait()

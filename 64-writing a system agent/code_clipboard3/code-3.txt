@@ -1,0 +1,26 @@
+func (a *Agent) collectCPU(resolution int) error {
+  stat, err := linuxproc.ReadStat("/proc/stat")
+  if err != nil {
+    return err
+  }
+
+  v := &pb.CPUPerfs{
+    ResolutionSecs: resolution,
+    UnixTimeNano: time.Now().UnixNano(),
+  }
+
+  for _, p := range stat.CPUStats {
+    c := &pb.CPUPerf{
+      Id: p.Id,
+      User: int32(p.User),
+      System: int32(p.System),
+      Idle: int32(p.Idle),
+      IoWait: int32(p.IOWait),
+      Irq: int32(p.IRQ),
+    }
+    v.Cpu = append(v.Cpu, c)
+  }
+  
+  a.cpuData.Store(v)
+  return nil
+}

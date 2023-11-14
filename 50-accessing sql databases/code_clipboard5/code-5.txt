@@ -1,0 +1,18 @@
+func (s *Storage) AddUser(ctx context.Context, u UserRec) error {
+    _, err := s.addUserStmt.ExecContext(
+        ctx,
+        u.User,
+        u.DisplayName,
+        u.ID,
+    )
+    return err
+}
+
+func (s *Storage) UpdateDisplayName(ctx context.Context, id int, name string) error {
+    _, err := s.updateDisplayName.ExecContext(
+        ctx,
+        name,
+        id,
+    )
+    return err
+}

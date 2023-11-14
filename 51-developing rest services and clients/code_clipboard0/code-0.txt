@@ -1,0 +1,8 @@
+type getReq struct {
+    Author string `json:"author"`
+}
+
+type getResp struct {
+    Quote string `json:"quote"`
+    Error *Error `json:"error"`
+}

@@ -1,0 +1,25 @@
+func (a *actions) jobKill(ctx context.Context) (stateFn, error)
+{
+  pids, err := a.findPIDs(ctx)
+  if err != nil {
+    return nil, fmt.Errorf("problem finding existing PIDs:
+    %w", err)
+  }
+  if len(pids) == 0 {
+    return a.cp, nil
+  }
+  if err := a.killPIDs(ctx, pids, 15); err != nil {
+    return nil, fmt.Errorf("failed to kill existing PIDs: %w", err)
+  }
+  if err := a.waitForDeath(ctx, pids, 30*time.Second); err != nil {
+    if err := a.killPIDs(ctx, pids, 9); err != nil {
+      return nil, fmt.Errorf("failed to kill existing PIDs: %w", err)
+    }
+    if err := a.waitForDeath(ctx, pids, 10*time.Second);
+    err != nil {
+      return nil, fmt.Errorf("failed to kill existing PIDs after -9: %w", err)
+    }
+    return a.cp, nil
+  }
+  return a.cp, nil
+}

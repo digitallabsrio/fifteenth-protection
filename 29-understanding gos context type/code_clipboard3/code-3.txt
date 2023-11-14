@@ -1,0 +1,6 @@
+select {
+case <-ctx.Done():
+    return ctx.Err()
+case data := <-ch:
+    return date, nil
+}

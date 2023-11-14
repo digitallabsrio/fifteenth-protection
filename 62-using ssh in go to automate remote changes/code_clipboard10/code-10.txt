@@ -1,0 +1,5 @@
+_, _, err = e.Expect(promptRE, 10*time.Second)
+if err != nil {
+ return fmt.Errorf("did not get shell prompt")
+}
+return nil

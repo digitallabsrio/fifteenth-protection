@@ -1,0 +1,18 @@
+// createStorageAccount creates an Azure Storage Account
+func (sf *StorageFactory) createStorageAccount(ctx context.Context, name, location string) armstorage.Account {
+	param := armstorage.AccountCreateParameters{
+		Location: to.Ptr(location),
+		Kind:     to.Ptr(armstorage.KindBlockBlobStorage),
+		SKU: &armstorage.SKU{
+			Name: to.Ptr(armstorage.SKUNamePremiumLRS),
+			Tier: to.Ptr(armstorage.SKUTierPremium),
+		},
+	}
+
+	accountName := strings.Replace(name, "-", "", -1)
+	fmt.Printf("Building an Azure Storage Account named %q...\n", accountName)
+	poller, err := sf.storageClient.BeginCreate(ctx, name, accountName, param, nil)
+	HandleErr(err)
+	res := HandleErrPoller(ctx, poller)
+	return res.Account
+}

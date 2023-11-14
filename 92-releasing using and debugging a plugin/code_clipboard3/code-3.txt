@@ -1,0 +1,2 @@
+curl -L -o "GNUmakefile" \
+https://raw.githubusercontent.com/hashicorp/packer-pluginscaffolding/main/GNUmakefile

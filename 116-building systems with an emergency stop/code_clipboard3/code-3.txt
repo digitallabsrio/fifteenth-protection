@@ -1,0 +1,22 @@
+// Data is how to access the emergency stop information.
+var Data *Reader
+
+func init() {
+	d, err := newReader()
+	if err != nil {
+		panic(err)
+	}
+	Data = d
+}
+
+type Reader struct {
+	entries atomic.Value // map[string]Info
+	mu          sync.Mutex
+	subscribers map[string][]chan Status
+}
+
+func newReader() (*Reader, error) {...}
+
+func (r *Reader) Subscribe(name string) (chan Status, Cancel) {...}
+
+func (r *Reader) Status(name string) Status {...}

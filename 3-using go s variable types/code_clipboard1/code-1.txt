@@ -1,0 +1,1 @@
+v := "hello" // also can do: var v string = "hello"

@@ -1,0 +1,4 @@
+type PolicyArgs struct {
+     Name string
+     Settings Settings
+}

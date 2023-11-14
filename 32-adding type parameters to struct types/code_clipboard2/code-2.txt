@@ -1,0 +1,15 @@
+type intAdapter struct {
+    sl []int
+}
+
+func (in intAdapter) Len() int {
+    return len(in.sl)
+}
+
+func (in intAdapter) Swap(i, j int) {
+    in.sl[i], in.sl[j] = in.sl[j], in.sl[i]
+}
+
+func (in intAdapter) Less(i, j int) bool {
+    return in.sl[i] < in.sl[j]
+}

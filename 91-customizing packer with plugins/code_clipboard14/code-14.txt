@@ -1,0 +1,17 @@
+func (p *Provisioner) unpack(ctx context.Context, u packer.Ui, c packer.Communicator) error {
+	const cmd = `sudo tar -C /usr/local -xzf /tmp/%s`
+	u.Message("Unpacking Go tarball to /usr/local")
+
+	b := bytes.Buffer{}
+	rc := &packer.RemoteCmd{
+		Command: fmt.Sprintf(cmd, p.fileName),
+		Stdout:  &b,
+		Stderr:  &b,
+	}
+
+	if err := c.Start(ctx, rc); err != nil {
+		return fmt.Errorf("problem unpacking tarball(%s):\n%s", err, b.String())
+	}
+	u.Message("Unpacked Go tarball")
+	return nil
+}

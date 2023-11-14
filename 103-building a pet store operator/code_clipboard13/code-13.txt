@@ -1,0 +1,2 @@
+ctlptl create cluster kind --name kind-petstore --registry=ctlptl-registry
+tilt up --host 0.0.0.0

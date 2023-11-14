@@ -1,0 +1,1 @@
+wget http://server/log | filter_errors | grep "error 401"

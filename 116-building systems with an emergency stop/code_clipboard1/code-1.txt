@@ -1,0 +1,6 @@
+type Info struct {
+  // Name is the workflow name.
+  Name string
+  // Status is the emergency stop status.
+  Status Status
+}

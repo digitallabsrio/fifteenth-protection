@@ -1,0 +1,2 @@
+myRecord.Name = "Peter Griffin"
+fmt.Println(myRecord.Name) // Prints: Peter Griffin

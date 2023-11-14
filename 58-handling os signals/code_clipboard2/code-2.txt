@@ -1,0 +1,7 @@
+func cleanup(cancel context.CancelFunc, wg *sync.WaitGroup, tmpFiles string) {
+	if err := os.RemoveAll(tmpFiles); err != nil {
+		fmt.Println("problem doing file cleanup: ", err)
+		return
+	}
+	fmt.Println("cleanup done")
+}

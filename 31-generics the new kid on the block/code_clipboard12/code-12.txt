@@ -1,0 +1,5 @@
+func PrintStrings[S StringPrinter](slice []S) {
+    for _, s := range slice {
+        s.Print()
+    }
+}

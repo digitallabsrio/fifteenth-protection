@@ -1,0 +1,3 @@
+func (r Record) IncrAge() {
+    r.Age++
+}

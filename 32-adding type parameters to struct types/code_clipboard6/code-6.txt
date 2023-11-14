@@ -1,0 +1,51 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+// Record is a record of person's first and last names.
+type Record struct {
+	First, Last string
+}
+
+// recordLess returns if Record a is less than Record b. We compare last names and then first names.
+func recordLess(a, b Record) bool {
+	aCmp := a.Last + a.First
+	bCmp := b.Last + b.First
+
+	return aCmp < bCmp
+}
+
+// sortableSlice can be used to convert any slice to one that satisfies the sort.Interface type.
+type sortableSlice[T any] struct {
+	slice []T
+	less  func(T, T) bool
+}
+
+func (s sortableSlice[T]) Len() int {
+	return len(s.slice)
+}
+func (s sortableSlice[T]) Swap(i, j int) {
+	s.slice[i], s.slice[j] = s.slice[j], s.slice[i]
+}
+func (s sortableSlice[T]) Less(i, j int) bool {
+	return s.less(s.slice[i], s.slice[j])
+}
+
+func SortSlice[T any](slice []T, less func(T, T) bool) {
+ 	sort.Sort(sortableSlice[T]{slice: slice, less: less})
+}
+
+func main() {
+	records := []Record{
+		{"Ian", "Taylor"},
+		{"John", "Doak"},
+		{"David", "Justice"},
+	}
+
+	SortSlice(records, recordLess)
+
+	fmt.Println(records)
+}

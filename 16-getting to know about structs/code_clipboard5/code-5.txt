@@ -1,0 +1,1 @@
+myCarAsString := string(myCar)

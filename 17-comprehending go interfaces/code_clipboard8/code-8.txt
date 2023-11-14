@@ -1,0 +1,42 @@
+package main
+import "fmt"
+import "strings"
+
+type Stringer interface {
+    String() string
+}
+
+type Person struct {
+    First, Last string
+}
+func (p Person) String() string {
+    return fmt.Sprintf("%s,%s", p.Last, p.First)
+}
+
+type StrList []string
+func (s StrList) String() string {
+    return strings.Join(s, ",")
+}
+
+func PrintStringer(s Stringer) {
+    fmt.Println(s.String())
+}
+
+
+func main() {
+    var i interface{}
+    i = 3
+    i = "hello world"
+    
+    switch v := i.(type) {
+    case int:
+        fmt.Printf("i was an int, %d/n", v)
+    case string:
+        fmt.Printf("i was a string, %s\n", v)
+    case Person, *Person:
+        fmt.Printf("i was a Person,  %v\n", v)
+    default:
+        // %T will print i's underlying type out
+        fmt.Printf("i was an unsupported type %T\n", i)
+}
+}

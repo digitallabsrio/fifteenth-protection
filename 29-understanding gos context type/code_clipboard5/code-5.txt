@@ -1,0 +1,17 @@
+type key int
+const claimsKey key = 0
+
+type Claims struct {
+	// Define your Claims struct fields here
+	Username string
+	Role     string
+}
+
+func NewContext(ctx context.Context, claims Claims) context.Context {
+	return context.WithValue(ctx, claimsKey, claims)
+}
+
+func ClaimsFromContext(ctx context.Context) (Claims, bool) {
+	claims, ok := ctx.Value(claimsKey).(Claims)
+	return claims, ok
+}

@@ -1,0 +1,37 @@
+func initTracer(ctx context.Context, otelAgentAddr string) func(context.Context) {
+	traceClient := otlptracegrpc.NewClient(
+		otlptracegrpc.WithInsecure(),
+		otlptracegrpc.WithEndpoint(otelAgentAddr),
+		otlptracegrpc.WithDialOption(grpc.WithBlock()))
+	traceExp, err := otlptrace.New(ctx, traceClient)
+	handleErr(err, "Failed to create the collector trace exporter")
+
+	res, err := resource.New(ctx,
+		resource.WithFromEnv(),
+		resource.WithProcess(),
+		resource.WithTelemetrySDK(),
+		resource.WithHost(),
+		resource.WithAttributes(
+			// the service name used to display traces in backends
+			semconv.ServiceNameKey.String("demo-client"),
+		),
+	)
+	handleErr(err, "failed to create resource")
+
+	bsp := sdktrace.NewBatchSpanProcessor(traceExp)
+	tracerProvider := sdktrace.NewTracerProvider(
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		sdktrace.WithResource(res),
+		sdktrace.WithSpanProcessor(bsp),
+	)
+
+	// set global propagator to tracecontext (the default is no-op).
+	otel.SetTextMapPropagator(propagation.TraceContext{})
+	otel.SetTracerProvider(tracerProvider)
+
+	return func(doneCtx context.Context) {
+		if err := traceExp.Shutdown(doneCtx); err != nil {
+			otel.Handle(err)
+		}
+	}
+}

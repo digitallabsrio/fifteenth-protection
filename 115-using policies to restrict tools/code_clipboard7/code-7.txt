@@ -1,0 +1,30 @@
+// Policy implements policy.Policy.
+type Policy struct{}
+
+// New is the constructor for Policy.
+func New() (Policy, error) {
+	return Policy{}, nil
+}
+
+// Run implements Policy.Run().
+func (p Policy) Run(ctx context.Context, req *pb.WorkReq, settings policy.Settings) error {
+	const errMsg = "block(%d)/job(%d) is a type(%s) that is not allowed"
+
+	s, ok := settings.(Settings)
+	if !ok {
+		return fmt.Errorf("settings were not valid type, were %T", settings)
+	}
+
+	for blockNum, block := range req.Blocks {
+		for jobNum, job := range block.Jobs {
+			if ctx.Err() != nil {
+				return ctx.Err()
+			}
+
+			if !s.allowed(job.Name) {
+				return fmt.Errorf(errMsg, blockNum, jobNum, job.Name)
+			}
+		}
+	}
+	return nil
+}

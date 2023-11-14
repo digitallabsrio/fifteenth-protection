@@ -1,0 +1,16 @@
+// CreateVirtualMachineStack creates a virtual machine and networking within a resource group
+func (vmf *VirtualMachineFactory) CreateVirtualMachineStack(ctx context.Context, location string) *VirtualMachineStack {
+	stack := &VirtualMachineStack{
+		Location:   location,
+		name:       haiku.Haikunate(),
+		sshKeyPath: HandleErrWithResult(homedir.Expand(vmf.sshPubKeyPath)),
+	}
+
+	stack.ResourceGroup = vmf.createResourceGroup(ctx, stack.name, stack.Location)
+	stack.SecurityGroup = vmf.createSecurityGroup(ctx, stack.name, stack.Location)
+	stack.VirtualNetwork = vmf.createVirtualNetwork(ctx, stack)
+	stack.VirtualMachine = vmf.createVirtualMachine(ctx, stack)
+	stack.NetworkInterface = vmf.getFirstNetworkInterface(ctx, stack)
+	stack.PublicIP = vmf.getPublicIPAddress(ctx, stack)
+	return stack
+}

@@ -1,0 +1,24 @@
+func (a *Agent) perfLoop() error {
+    const resolutionSecs = 10
+    if err := a.collectCPU(resolutionSecs); err != nil {
+        return err
+    }
+    expvar.Publish(
+        "system-cpu",
+        expvar.Func(
+            func() interface{} {
+                return a.cpuData.Load().(*pb.CPUPerfs)
+            },
+        ),
+    )
+
+    go func() {
+        for {
+            time.Sleep(resolutionSecs * time.Second)
+            if err := a.collectCPU(resolutionSecs); err != nil {
+                log.Println(err)
+            }
+        }
+    }()
+    return nil
+}

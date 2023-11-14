@@ -1,0 +1,33 @@
+// networkProfile builds a Virtual Machine network profile requesting a public IP
+func networkProfile(vmStack *VirtualMachineStack) *armcompute.NetworkProfile {
+	firstSubnet := vmStack.VirtualNetwork.Properties.Subnets[0]
+	return &armcompute.NetworkProfile{
+		NetworkAPIVersion: to.Ptr(armcompute.NetworkAPIVersionTwoThousandTwenty1101),
+		NetworkInterfaceConfigurations: []*armcompute.VirtualMachineNetworkInterfaceConfiguration{
+			{
+				Name: to.Ptr(vmStack.name + "-nic"),
+				Properties: &armcompute.VirtualMachineNetworkInterfaceConfigurationProperties{
+					IPConfigurations: []*armcompute.VirtualMachineNetworkInterfaceIPConfiguration{
+						{
+							Name: to.Ptr(vmStack.name + "-nic-conf"),
+							Properties: &armcompute.VirtualMachineNetworkInterfaceIPConfigurationProperties{
+								Primary: to.Ptr(true),
+								Subnet: &armcompute.SubResource{
+									ID: firstSubnet.ID,
+								},
+								PublicIPAddressConfiguration: &armcompute.VirtualMachinePublicIPAddressConfiguration{
+									Name: to.Ptr(vmStack.name + "-pip"),
+									Properties: &armcompute.VirtualMachinePublicIPAddressConfigurationProperties{
+										PublicIPAllocationMethod: to.Ptr(armcompute.PublicIPAllocationMethodStatic),
+										PublicIPAddressVersion:   to.Ptr(armcompute.IPVersionsIPv4),
+									},
+								},
+							},
+						},
+					},
+					Primary: to.Ptr(true),
+				},
+			},
+		},
+	}
+}

@@ -1,0 +1,8 @@
+...
+ scanResults := scanPrefixes(ipCh)
+ unameResults := unamePrefixes(u.Username, scanResults)
+ for rec := range unameResults {
+ b, _ := json.Marshal(rec)
+ fmt.Printf("%s\n", b)
+ }
+}

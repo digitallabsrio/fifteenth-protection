@@ -1,0 +1,7 @@
+git config --global user.name github_user
+git config --global user.email github_email
+git remote add remoterepo github_repo
+git add .
+git commit -am 'release'
+git tag v0.0.1
+git push remoterepo v0.0.1

@@ -1,0 +1,2 @@
+goss -g dbus.yaml add package dbus
+goss -g dbus.yaml add package dbus-x11

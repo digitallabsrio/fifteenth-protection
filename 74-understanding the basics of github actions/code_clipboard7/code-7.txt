@@ -1,0 +1,13 @@
+jobs:
+  job_one:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go_version: [1.17, 1.16]
+    runs_on: ${{ matrix.os }}
+      steps:
+        - run: echo "${{ matrix.go_version }}"
+  job_two:
+    runs_on: ubuntu-18.04 
+    steps:
+      - run: echo "hello world!"

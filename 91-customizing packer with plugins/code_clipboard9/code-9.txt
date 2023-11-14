@@ -1,0 +1,8 @@
+type Ui interface {
+    Ask(string) (string, error)
+    Say(string)
+    Message(string)
+    Error(string)
+    Machine(string, ...string)
+    getter.ProgressTracker
+}

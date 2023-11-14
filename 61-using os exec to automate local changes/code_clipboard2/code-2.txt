@@ -1,0 +1,7 @@
+func hostAlive(ctx context.Context, host net.IP) bool {
+  cmd := exec.CommandContext(ctx, ping, "-c", "1", "-t", "2", host.String())
+  if err := cmd.Run(); err != nil {
+    return false
+  }
+    return true
+}

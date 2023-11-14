@@ -1,0 +1,44 @@
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+
+// sortInts is a function that sorts a slice of signed integers. It uses reflection to determine the type of the input slice and performs a bubble sort algorithm on the slice.
+func sortInts(slice interface{}) {
+	val := reflect.ValueOf(slice)
+	if val.Kind() != reflect.Slice {
+		panic(fmt.Sprintf("sortInts only works on slices of signed integers, you passed %T", slice))
+	}
+
+	switch val.Type().Elem().Kind() {
+	case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+	default:
+		fmt.Println(reflect.SliceOf(val.Type()).Kind())
+		panic(fmt.Sprintf("sortInts only works on slices of signed integers, you passed %T", slice))
+	}
+
+	sorted := false
+	for !sorted {
+		sorted = true
+		for i := 0; i < val.Len()-1; i++ {
+			if val.Index(i).Int() > val.Index(i+1).Int() {
+				sorted = false
+				holder := val.Index(i + 1).Int()
+				val.Index(i + 1).SetInt(val.Index(i).Int())
+				val.Index(i).SetInt(holder)
+			}
+		}
+	}
+}
+
+func main() {
+	a := []int8{99, 2, 52, 100, 7, 25, 125, 35, 65}
+	b := []int64{1000, 100, 25, 95, 1, 10000, 64}
+	sortInts(a)
+	sortInts(b)
+	fmt.Println(a)
+	fmt.Println(b)
+}

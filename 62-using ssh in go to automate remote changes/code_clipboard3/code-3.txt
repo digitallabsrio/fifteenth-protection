@@ -1,0 +1,6 @@
+conn, err := ssh.Dial("tcp", host, config)
+if err != nil {
+  fmt.Println("Error: could not dial host: ", err)
+  os.Exit(1)
+}
+defer conn.Close()

@@ -1,0 +1,67 @@
+// Run runs all policies runners that are passed concurrently.
+func Run(ctx context.Context, req *pb.WorkReq, args ...PolicyArgs) error {
+	if len(args) == 0 {
+		return nil
+	}
+
+	var cancel context.CancelFunc
+	ctx, cancel = context.WithCancel(ctx)
+	defer cancel()
+
+	// Make a deep clone so that no policy is able to make changes.
+	creq := proto.Clone(req).(*pb.WorkReq)
+
+	// Validate that all the policies actually exist and build runners
+	// to simply run them against the settings in the next part.
+	runners := make([]func() error, 0, len(args))
+	for _, arg := range args {
+		arg := arg
+		r, ok := policies[arg.Name]
+		if !ok {
+			return fmt.Errorf("policy(%s) does not exist", arg.Name)
+		}
+		runners = append(
+			runners,
+			func() error {
+				err := r.policy.Run(ctx, creq, arg.Settings)
+				if err != nil {
+					return fmt.Errorf("policy(%s) violation: %w", arg.Name, err)
+				}
+				return nil
+			},
+		)
+	}
+
+	wg := sync.WaitGroup{}
+	ch := make(chan error, 1)
+
+	// Run all policy invocations concurrently.
+	wg.Add(len(runners))
+	for _, r := range runners {
+		r := r
+		go func() {
+			defer wg.Done()
+			if err := r(); err != nil {
+				select {
+				case ch <- err:
+					cancel()
+				default:
+				}
+				return
+			}
+		}()
+	}
+	wg.Wait()
+
+	select {
+	case err := <-ch:
+		return err
+	default:
+	}
+
+	if !proto.Equal(req, creq) {
+		return fmt.Errorf("a policy tried to modify a request: this is not allowed as it is a security violation")
+	}
+
+	return nil
+}

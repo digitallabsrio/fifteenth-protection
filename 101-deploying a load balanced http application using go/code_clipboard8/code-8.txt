@@ -1,0 +1,21 @@
+func waitForReadyReplicas(ctx context.Context, clientSet *kubernetes.Clientset, deployment *appv1.Deployment) {
+	fmt.Printf("Waiting for ready replicas in deployment %q\n", deployment.Name)
+	for {
+		expectedReplicas := *deployment.Spec.Replicas
+		readyReplicas := getReadyReplicasForDeployment(ctx, clientSet, deployment)
+		if readyReplicas == expectedReplicas {
+			fmt.Printf("replicas are ready!\n\n")
+			break
+		}
+
+		fmt.Printf("replicas are not ready yet. %d/%d\n", readyReplicas, expectedReplicas)
+		time.Sleep(1 * time.Second)
+	}
+}
+
+func getReadyReplicasForDeployment(ctx context.Context, clientSet *kubernetes.Clientset, deployment *appv1.Deployment) int32 {
+	dep, err := clientSet.AppsV1().Deployments(deployment.Namespace).Get(ctx, deployment.Name, metav1.GetOptions{})
+	panicIfError(err)
+
+	return dep.Status.ReadyReplicas
+}

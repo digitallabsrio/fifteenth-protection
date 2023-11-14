@@ -1,0 +1,8 @@
+func validateType() schema.SchemaValidateDiagFunc {
+	return validateDiagFunc(validation.StringInSlice([]string{
+		string(DogPetType),
+		string(CatPetType),
+		string(ReptilePetType),
+		string(BirdPetType),
+	}, true))
+}

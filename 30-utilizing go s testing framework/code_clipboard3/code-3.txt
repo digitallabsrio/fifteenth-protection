@@ -1,0 +1,4 @@
+type recorder interface {
+  Record(name string) (Record, error)
+}
+func Greeter(name string, fetch recorder) (string, error) {

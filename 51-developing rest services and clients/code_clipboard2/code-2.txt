@@ -1,0 +1,11 @@
+type QOTD struct {
+    addr string
+    client *http.Client
+}
+
+func New(addr string) (*QOTD, error) {
+    if _, _, err := net.SplitHostPort(addr); err != nil {
+        return nil, err
+    }
+    return &QOTD{addr: addr, client: &http.Client{}}
+}

@@ -1,0 +1,1 @@
+goss -g files.yaml add file /home/agent/.ssh/authorized_keys 

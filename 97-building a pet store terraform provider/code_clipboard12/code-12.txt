@@ -1,0 +1,24 @@
+func getPetResourceSchema() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": {
+			Type:     schema.TypeString,
+			Optional: true,
+			Computed: true,
+		},
+		"name": {
+			Type:             schema.TypeString,
+			Required:         true,
+			ValidateDiagFunc: validateName(),
+		},
+		"type": {
+			Type:             schema.TypeString,
+			Required:         true,
+			ValidateDiagFunc: validateType(),
+		},
+		"birthday": {
+			Type:             schema.TypeString,
+			Required:         true,
+			ValidateDiagFunc: validateBirthday(),
+		},
+	}
+}

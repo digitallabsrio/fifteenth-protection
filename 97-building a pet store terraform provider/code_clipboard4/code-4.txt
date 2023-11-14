@@ -1,0 +1,19 @@
+// Provider is the entry point for defining the Terraform provider, and will create a new Pet Store provider.
+func Provider() *schema.Provider {
+	return &schema.Provider{
+		Schema: map[string]*schema.Schema{
+			"host": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("PETSTORE_HOST", nil),
+			},
+		},
+		ResourcesMap: map[string]*schema.Resource{
+			"petstore_pet": resourcePet(),
+		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"petstore_pet": dataSourcePet(),
+		},
+		ConfigureContextFunc: configure,
+	}
+}

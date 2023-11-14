@@ -1,0 +1,4 @@
+type StringPrinter interface {
+    ~string
+    Print()
+}

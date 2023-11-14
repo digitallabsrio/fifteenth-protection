@@ -1,0 +1,17 @@
+//A configuration is stored in JSON and looks like:
+{
+	"Name": "SateliteDiskErase",
+	"Policies": [
+		{
+			"Name": "restrictJobTypes",
+			"Settings": {
+				"AllowedJobs": [
+				        "JTValidateDecom",
+        				"JTDiskErase",
+        				"JTSleep",
+        				"JTGetTokenFromBucket"
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,34 @@
+name: Release new tweeter version
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      TAG_NAME:
+        description: 'Tag name that the major tag will point to'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  TAG_NAME: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
+
+jobs:
+  update_tag:
+    name: Update the major tag to include the ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }} changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update the ${{ env.TAG_NAME }} tag
+        uses: actions/publish-action@v0.1.0
+        with:
+          source-tag: ${{ env.TAG_NAME }}
+      - uses: actions/checkout@v2
+      - name: Tweet about the release
+        uses: ./
+        with:
+          message: Hey folks, we just released the ${{ env.TAG_NAME }} for the tweeter GitHub Action!!
+          accessToken: ${{ secrets.ACCESS_TOKEN }}
+          accessTokenSecret: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          apiKey: ${{ secrets.API_KEY }}
+          apiKeySecret: ${{ secrets.API_KEY_SECRET }}

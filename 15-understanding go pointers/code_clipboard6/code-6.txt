@@ -1,0 +1,13 @@
+package main
+import "fmt"
+
+func changeValue(word *string) {
+ // Add "world" to the string pointed to by 'word'
+ *word += "world"
+}
+
+func main() {
+ say := "hello"
+ changeValue(&say) // Pass a pointer
+ fmt.Println(say) // Prints "helloworld"
+}

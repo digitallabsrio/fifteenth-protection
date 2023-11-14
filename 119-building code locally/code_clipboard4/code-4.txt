@@ -1,0 +1,2 @@
+go build hello.go # Builds a program called hello
+./hello # Executes the hello binary

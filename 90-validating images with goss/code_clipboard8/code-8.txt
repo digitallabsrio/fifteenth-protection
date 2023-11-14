@@ -1,0 +1,2 @@
+find /usr/local/go -print0 | xargs -0 -I{} goss -g golang.yaml
+add file {}

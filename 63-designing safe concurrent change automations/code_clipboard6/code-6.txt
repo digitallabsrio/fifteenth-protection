@@ -1,0 +1,23 @@
+limit := make(chan struct{}, w.config.Concurrency)
+wg := sync.WaitGroup{}
+for i := w.config.CanaryNum; int(i) < len(w.actions); i++ {
+  i := i
+  limit <- struct{}{}
+  if atomic.LoadInt32(&w.failures) > w.config.MaxFailures {
+    break
+  }
+  wg.Add(1)
+  go func() {
+    defer func(){<-limit}()
+    defer wg.Done()
+    ctx, cancel := context.WithTimeout(ctx, 10*time.Minute)
+    color.Green("Upgrading endpoint: %s", w.actions[i]. endpoint)
+    err := w.actions[i].run(ctx)
+    cancel()
+    if err != nil {
+      color.Red("Endpoint(%s) had upgrade error: %s", w.actions[i].endpoint, err)
+      atomic.AddInt32(&w.failures, 1)
+    }
+  }()
+}
+wg.Wait()

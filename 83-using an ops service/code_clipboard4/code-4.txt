@@ -1,0 +1,18 @@
+type Bot struct {
+  api *slack.Client
+  client *socketmode.Client
+  ctx context.Context
+  cancel context.CancelFunc
+  defaultHandler HandleFunc
+  reg []register
+  }
+
+func New(api *slack.Client, client *socketmode.Client) (*Bot, error) {
+  b := &Bot{
+  api: api,
+  client: client,
+  ctx: ctx,
+  cancel: cancel,
+ }
+ return b, nil
+}

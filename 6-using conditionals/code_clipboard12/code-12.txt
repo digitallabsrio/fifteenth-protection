@@ -1,0 +1,9 @@
+x:=0
+switch {
+case x > 0:
+  fmt.Println("x is greater than 0")
+case x < 0:
+  fmt.Println("x is less than 0")
+default:
+  fmt.Println("x must be 0")
+}

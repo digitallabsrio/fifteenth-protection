@@ -1,0 +1,13 @@
+...
+for i := 0; i < len(w.actions) && int32(i) < w.config.CanaryNum; i++ {
+  color.Green("Running canary on: %s", w.actions[i].endpoint)
+  ctx, cancel := context.WithTimeout(ctx, 10*time.Minute)
+  err := w.actions[i].run(ctx)
+  cancel()
+  if err != nil {
+    w.endState = esCanaryFailure
+    return fmt.Errorf("canary failure on endpoint(%s): %w\n", w.actions[i].endpoint, err)
+  }
+  color.Yellow("Sleeping after canary for 1 minutes")
+  time.Sleep(1 * time.Minute)
+}

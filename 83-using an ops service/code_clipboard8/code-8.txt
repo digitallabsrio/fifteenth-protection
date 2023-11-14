@@ -1,0 +1,24 @@
+func (b *Bot) appMentioned(ctx context.Context, data slackevents.EventsAPIEvent) {
+  switch data.Type {
+  case slackevents.CallbackEvent:
+    callback := data.Data.(*slackevents.EventsAPICallbackEvent)
+    switch ev := data.InnerEvent.Data.(type) {
+    case *slackevents.AppMentionEvent:
+      msg, err := b.makeMsg(ev)
+      if err != nil {
+        log.Println(err)
+        return
+      }
+      for _, reg := range b.reg {
+        if reg.r.MatchString(m.Text){
+          reg.h(ctx, b.api, b.client, m)
+          return
+        }
+      }
+      if b.defaultHandler != nil {
+        b.defaultHandler(ctx, m)
+      }
+    }
+  default:
+    b.client.Debugf("unsupported Events API event received")
+ }

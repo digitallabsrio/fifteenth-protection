@@ -1,0 +1,10 @@
+type fakeRecorder struct {
+  data Record
+  err bool
+}
+func (f fakeRecorder) Record(name string) (Record, error) {
+  if f.err {
+    return "", errors.New("error")
+  }
+  return f.data, nil
+}

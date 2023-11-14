@@ -1,0 +1,23 @@
+...
+	s.xlsx.SetCellValue(s.sheetName, "D" + strconv.Itoa(s.nextRow), vendor)
+	switch vendor {
+	case Intel:
+		s.sum.cpuVendor.intel++
+	case AMD:
+		s.sum.cpuVendor.amd++
+	default:
+		s.sum.cpuVendor.unknown++
+	}
+	s.nextRow++
+	return nil
+}
+
+func (s *serverSheet) writeSummaries() {
+	s.xlsx.SetCellValue(s.sheetName, "F1", "Vendor Summary")
+	s.xlsx.SetCellValue(s.sheetName, "F2", "Vendor")
+	s.xlsx.SetCellValue(s.sheetName, "G2", "Total")
+	s.xlsx.SetCellValue(s.sheetName, "F3", Intel)
+	s.xlsx.SetCellValue(s.sheetName, "G3", s.summaries.cpuVendor.intel)
+	s.xlsx.SetCellValue(s.sheetName, "F4", AMD)
+	s.xlsx.SetCellValue(s.sheetName, "G4", s.summaries.cpuVendor.amd)
+}

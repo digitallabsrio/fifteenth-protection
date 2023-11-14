@@ -1,0 +1,4 @@
+ssh -i ./.ssh/id_rsa devops@20.225.222.128
+which go /usr/bin/go
+which nginx /usr/sbin/nginx
+cat /var/log/cloud-init-output.log

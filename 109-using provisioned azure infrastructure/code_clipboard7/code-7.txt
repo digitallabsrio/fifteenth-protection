@@ -1,0 +1,7 @@
+func (ss *StorageStack) ServiceClient() *azblob.ServiceClient {
+     cred := HandleErrWithResult(azblob.NewSharedKeyCredential(*ss.Account.Name, *ss.AccountKey.Value))
+     blobURI := *ss.Account.Properties.PrimaryEndpoints.Blob
+     client, err := azblob.NewServiceClientWithSharedKey(blobURI, cred, nil)
+     HandleErr(err)
+     return client
+}

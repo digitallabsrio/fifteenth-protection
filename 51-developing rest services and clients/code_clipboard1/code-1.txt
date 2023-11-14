@@ -1,0 +1,8 @@
+type Error struct {
+    Code ErrCode
+    Msg string
+}
+
+func (e *Error) Error() string {
+    return fmt.Errorf("(code %v): %s", e.Code, e.Msg)
+}

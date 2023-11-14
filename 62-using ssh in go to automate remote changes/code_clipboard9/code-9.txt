@@ -1,0 +1,6 @@
+switch ecase{
+case 0:
+  if err := e.Send("Y\n"); err != nil {
+    return err
+  }
+}

@@ -1,0 +1,4 @@
+cd /home/[user]/packer/files
+mkdir goss
+cd goss
+scp ubuntu@[ip of AMI machine]:/home/ubuntu/*.yaml ./

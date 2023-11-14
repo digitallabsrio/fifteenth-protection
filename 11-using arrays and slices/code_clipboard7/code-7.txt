@@ -1,0 +1,12 @@
+package main
+import "fmt"
+
+func doAppend(sl []int) []int {
+    return append(sl, 100)
+}
+
+func main() {
+    x := []int{1, 2, 3}
+    x = doAppend(x)
+    fmt.Println("outside: ", x) // outside: [1 2 3 100]
+}

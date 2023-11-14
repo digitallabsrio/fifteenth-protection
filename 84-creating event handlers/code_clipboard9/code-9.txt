@@ -1,0 +1,5 @@
+func (o Ops) Register(b *bot.Bot) {
+  b.Register(regexp.MustCompile(`^\s*help`), o.Help)
+  b.Register(regexp.MustCompile(`^\s*list traces`), o.ListTraces)
+  b.Register(nil, o.lastResort)
+}

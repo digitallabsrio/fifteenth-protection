@@ -1,0 +1,5 @@
+if condition {
+  function1()
+} else {
+  function2()
+}

@@ -1,0 +1,6 @@
+type HandleFunc func(ctx context.Context, m Message)
+
+type register struct{
+  r *regexp.Regexp
+  h HandleFunc
+}

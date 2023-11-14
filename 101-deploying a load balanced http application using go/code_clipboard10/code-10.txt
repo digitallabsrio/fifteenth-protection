@@ -1,0 +1,38 @@
+func createNginxIngress(ctx context.Context, clientSet *kubernetes.Clientset, ns *corev1.Namespace, name string) {
+	var (
+		prefix  = netv1.PathTypePrefix
+		objMeta = metav1.ObjectMeta{
+			Name:      name,
+			Namespace: ns.Name,
+		}
+		ingressPath = netv1.HTTPIngressPath{
+			PathType: &prefix,
+			Path:     "/hello",
+			Backend: netv1.IngressBackend{
+				Service: &netv1.IngressServiceBackend{
+					Name: name,
+					Port: netv1.ServiceBackendPort{
+						Name: "http",
+					},
+				},
+			},
+		}
+	)
+
+	ingress := &netv1.Ingress{
+		ObjectMeta: objMeta,
+		Spec: netv1.IngressSpec{
+			Rules: []netv1.IngressRule{
+				{
+					IngressRuleValue: netv1.IngressRuleValue{
+						HTTP: &netv1.HTTPIngressRuleValue{
+							Paths: []netv1.HTTPIngressPath{ingressPath},
+						},
+					},
+				},
+			},
+		},
+	}
+	ingress, err := clientSet.NetworkingV1().Ingresses(ns.Name).Create(ctx, ingress, metav1.CreateOptions{})
+	panicIfError(err)
+}

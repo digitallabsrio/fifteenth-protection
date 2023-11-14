@@ -1,0 +1,10 @@
+// Setup agent binary running with systemd file.
+provisioner "shell" { // This installs dbus-launch
+ environment_vars = [
+    "DEBIAN_FRONTEND=noninteractive",
+ ]
+ inline = [
+    "sudo apt-get install -y dbus",
+    "sudo apt-get install -y dbus-x11",
+ ]
+}

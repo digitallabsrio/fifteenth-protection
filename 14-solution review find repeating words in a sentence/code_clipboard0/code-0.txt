@@ -1,0 +1,34 @@
+package main
+import (
+  "strings"
+  "fmt"
+)
+
+func findRepeatingWords(inputString string) string {
+  inputString = strings.ToLower(inputString)
+  words := strings.Fields(inputString)
+  wordCount := make(map[string]int)
+  for _, word := range words {
+      word = strings.ReplaceAll(word,",","")
+      _, exists := wordCount[word]
+      if exists {
+          wordCount[word] += 1
+      } else {
+          wordCount[word] = 1
+      }
+  }	
+  var wordsList string
+  for word,_ := range wordCount{
+    if (wordCount[word] > 1) {
+      wordsList = wordsList+","+word
+    }
+  }
+  if wordsList != "" {
+    wordsList = wordsList[1:]
+  }
+  return wordsList
+}
+
+func main(){
+  fmt.Printf(findRepeatingWords("The rain poured and poured, making the streets flood"))
+}

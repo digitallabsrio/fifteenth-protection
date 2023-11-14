@@ -1,0 +1,1 @@
+allfiles /usr/local/go > goinstall_files.yaml

@@ -1,0 +1,17 @@
+client := &http.Client{}
+req, err := http.NewRequest("GET", "http://myserver.mydomain/myfile", nil)
+
+if err != nil {
+    return err
+}
+
+req = req.WithContext(ctx)
+resp, err := client.Do(req)
+cancel()
+if err != nil {
+    return err
+}
+
+// resp contains an io.ReadCloser that we can read as a file.
+// Let's use io.ReadAll() to read the entire content to data.
+data, err := io.ReadAll(resp.Body) 

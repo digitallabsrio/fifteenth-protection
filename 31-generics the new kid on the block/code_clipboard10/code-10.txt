@@ -1,0 +1,20 @@
+package main
+import "fmt"
+
+func ExtractMapKeys[K comparable, V any](m map[K]V) []K {
+    var keys = make([]K, 0, len(m))
+    for k := range m {
+        keys = append(keys, k)
+ }
+ return keys
+}
+
+func main() {
+	inventoryCount := map[string]int{
+		"Toyota":  100,
+		"Ferrari": 5,
+		"Ford":    45,
+	}
+
+	fmt.Println(ExtractMapKeys(inventoryCount))
+}

@@ -1,0 +1,4 @@
+modelToMake := map[string]string{
+    "prius": "toyota",
+    "chevelle": "chevy",
+}

@@ -1,0 +1,21 @@
+func (p *Provisioner) Provision(ctx context.Context, u packer.Ui, c packer.Communicator, m map[string]interface{}) error {
+	u.Message("Begin Go environment install")
+	if err := p.fetch(ctx, u, c); err != nil {
+		u.Error(fmt.Sprintf("Error: %s", err))
+		return err
+	}
+	if err := p.push(ctx, u, c); err != nil {
+		u.Error(fmt.Sprintf("Error: %s", err))
+		return err
+	}
+	if err := p.unpack(ctx, u, c); err != nil {
+		u.Error(fmt.Sprintf("Error: %s", err))
+		return err
+	}
+	if err := p.test(ctx, u, c); err != nil {
+		u.Error(fmt.Sprintf("Error: %s", err))
+		return err
+	}
+	u.Message("Go environment install finished")
+	return nil
+}

@@ -1,0 +1,5 @@
+var endpoint = flag.String(
+  "endpoint",
+  "myserver.aws.com",
+  "The server this app will contact",
+)

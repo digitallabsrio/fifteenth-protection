@@ -1,0 +1,14 @@
+config := &ssh.ClientConfig {
+  User: user,
+  Auth: []ssh.AuthMethod{auth},
+  HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+}
+conn, err := ssh.Dial("tcp", host, config)
+if err != nil {
+  return err
+}
+e, _, err := expect.SpawnSSH(conn, 5 * time.Second)
+if err != nil {
+  return err
+}
+defer e.Close()

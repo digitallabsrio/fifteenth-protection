@@ -1,0 +1,4 @@
+import(
+    "github.com/devopsforgo/mypackage"
+    jpackage "github.com/johnsiilver/mypackage"
+)

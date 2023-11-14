@@ -1,0 +1,6 @@
+if v, err := someFunc(); err != nil {
+  return err
+} else {
+  fmt.Println(v)
+  return nil
+}

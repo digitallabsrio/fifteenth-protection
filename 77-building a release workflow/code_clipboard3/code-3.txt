@@ -1,0 +1,11 @@
+steps:
+  # Previous steps of the release job omitted for brevity 
+  - name: install gox
+    run: go install github.com/mitchellh/gox@v1.0.1
+  - name: build cross-platform binaries
+    env:
+      PLATFORMS: darwin/amd64 darwin/arm64 windows/amd64 linux/amd64 linux/arm64
+      VERSION_INJECT: github.com/PacktPublishing/Go-for-DevOps/chapter/10/pkg/tweeter.Version
+      OUTPUT_PATH_FORMAT: ./bin/${{ env.RELEASE_VERSION }}/{{.OS}}/{{.Arch}}/tweeter
+    run: |
+      gox -osarch="${PLATFORMS}" -ldflags "-X ${VERSION_INJECT}=${RELEASE_VERSION}" -output "${OUTPUT_PATH_FORMAT}"

@@ -1,0 +1,7 @@
+type Settings interface{
+  Validate() error
+}
+
+type Policy interface {
+  Run(ctx context.Context, name string, req *pb.WorkReq, settings Settings) error
+}

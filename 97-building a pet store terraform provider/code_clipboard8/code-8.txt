@@ -1,0 +1,26 @@
+          "pets": {
+            Type:     schema.TypeList,
+            Computed: true,
+            Elem: &schema.Resource{
+            Schema: map[string]*schema.Schema{
+					"id": {
+						Type:     schema.TypeString,
+						Computed: true,
+					},
+					"name": {
+						Type:     schema.TypeString,
+						Computed: true,
+					},
+					"type": {
+						Type:     schema.TypeString,
+						Computed: true,
+					},
+					"birthday": {
+						Type:     schema.TypeString,
+						Computed: true,
+					},
+				},
+			},
+		},
+	}
+}

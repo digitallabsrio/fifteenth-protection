@@ -1,0 +1,12 @@
+type VirtualMachineFactory struct {
+    subscriptionID string
+    sshPubKeyPath string
+    cred azcore.TokenCredential
+    groupsClient *armresources.ResourceGroupsClient
+    vmClient *armcompute.VirtualMachinesClient
+    vnetClient *armnetwork.VirtualNetworksClient
+    subnetClient *armnetwork.SubnetsClient
+    nicClient *armnetwork.InterfacesClient
+    nsgClient *armnetwork.SecurityGroupsClient
+    pipClient *armnetwork.PublicIPAddressesClient
+}

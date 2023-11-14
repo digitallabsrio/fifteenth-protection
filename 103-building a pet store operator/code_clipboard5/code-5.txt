@@ -1,0 +1,21 @@
+//+kubebuilder:object:root=true
+//+kubebuilder:subresource:status
+// Pet is the Schema for the pets API
+type Pet struct {
+     metav1.TypeMeta   `json:",inline"`
+     metav1.ObjectMeta `json:"metadata,omitempty"`
+     Spec   PetSpec   `json:"spec,omitempty"`
+     Status PetStatus `json:"status,omitempty"`
+}
+
+//+kubebuilder:object:root=true
+// PetList contains a list of Pet
+type PetList struct {
+     metav1.TypeMeta `json:",inline"`
+     metav1.ListMeta `json:"metadata,omitempty"`
+     Items           []Pet `json:"items"`
+}
+
+func init() {
+     SchemeBuilder.Register(&Pet{}, &PetList{})
+}

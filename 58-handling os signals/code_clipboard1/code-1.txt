@@ -1,0 +1,14 @@
+func createFiles(ctx context.Context, tmpFiles string) error {
+	for i := 0; i < 30; i++ {
+		if err := ctx.Err(); err != nil {
+			return ctx.Err()
+		}
+		_, err := os.Create(filepath.Join(tmpFiles,strconv.Itoa(i)))
+		if err != nil {
+			return err
+		}
+		fmt.Println("Created file: ", i)
+		time.Sleep(1 * time.Second)
+	}
+	return nil
+}

@@ -1,0 +1,9 @@
+x:=4
+switch x {
+case 3:
+  fmt.Println("x is 3")   
+case 4, 5: // executes if x is 4 or 5
+  fmt.Println("x is 4 or 5")
+default:
+  fmt.Println("x is unknown")
+}

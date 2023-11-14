@@ -1,0 +1,4 @@
+operator-sdk create api --group petstore --version v1alpha1 --kind Pet --resource --controller
+go mod tidy
+make generate
+make manifests

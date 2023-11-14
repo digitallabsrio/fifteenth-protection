@@ -1,0 +1,3 @@
+i := 1 // i is the int type
+word := "hello" // word is the string type
+f := 3.2 // f is the float64 type 

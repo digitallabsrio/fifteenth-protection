@@ -1,0 +1,23 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type Record struct {
+	Name string `json:"user_name"`
+	User string `json:"user"`
+	ID   int
+	Age  int `json:"-"`
+}
+
+func main() {
+	b := []byte(`{"user_name":"John Doak","user":"jdoak","ID":23}`)
+	rec := Record{}
+
+	if err := json.Unmarshal(b, &rec); err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v\n", rec)
+}

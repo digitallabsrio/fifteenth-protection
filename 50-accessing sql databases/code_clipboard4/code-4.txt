@@ -1,0 +1,5 @@
+type UserRec struct {
+    User string
+    DisplayName sql.NullString
+    ID int
+}

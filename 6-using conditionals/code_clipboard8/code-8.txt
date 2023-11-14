@@ -1,0 +1,7 @@
+if x > 0
+{ // This must go up on the previous line
+  fmt.Println("hello")
+}
+else { // This line must start on the previous line
+  fmt.Println("world")
+}

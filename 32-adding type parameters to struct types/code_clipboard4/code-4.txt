@@ -1,0 +1,13 @@
+type sortableSlice[T any] struct {
+	slice []T
+	less func(T, T) bool
+}
+func (s sortableSlice[T]) Len() int {
+	return len(s.slice)
+}
+func (s sortableSlice[T]) Swap(i, j int) {
+ 	s.slice[i], s.slice[j] = s.slice[j], s.slice[i]
+}
+func (s sortableSlice[T]) Less(i, j int) bool {
+ 	return s.less(s.slice[i], s.slice[j])
+} 

@@ -1,0 +1,13 @@
+type Ops struct {
+  OpsClient *client.Ops
+  API *slack.Client
+  SMClient *socketmode.Client
+}
+
+func (o Ops) write(m bot.Message, s string, i ...interface{}) error {
+  _, _, err := o.API.PostMessage(
+    m.AppMention.Channel,
+    slack.MsgOptionText(fmt.Sprintf(s, i...), false),
+  )
+  return err
+}

@@ -1,0 +1,47 @@
+...
+	options := []client.CallOption{}
+
+	for _, opt := range kvOpts {
+		switch opt.key {
+		case "operation":
+			options = append(options, client.WithOperation(opt.val))
+		case "start":
+			t, err := time.Parse(`01/02/2006-15:04:05`, opt.val)
+			if err != nil {
+				o.write(m, "The start option must be in the form `01/02/2006-15:04:05` for UTC")
+				return
+			}
+			options = append(options, client.WithStart(t))
+		case "end":
+			if opt.val == "now" {
+				continue
+			}
+			t, err := time.Parse(`01/02/2006-15:04:05`, opt.val)
+			if err != nil {
+				o.write(m, "The end option must be in the form `01/02/2006-15:04:05` for UTC")
+				return
+			}
+			options = append(options, client.WithEnd(t))
+		case "limit":
+			i, err := strconv.Atoi(opt.val)
+			if err != nil {
+				o.write(m, "The limit option must be an integer")
+				return
+			}
+			if i > 100 {
+				o.write(m, "Cannot request more than 100 traces")
+				return
+			}
+			options = append(options, client.WithLimit(int32(i)))
+		case "tags":
+			tags, err := convertList(opt.val)
+			if err != nil {
+				o.write(m, "tags: must enclosed in [], like tags=[tag,tag2]")
+				return
+			}
+			options = append(options, client.WithLabels(tags))
+		default:
+			o.write(m, "don't understand an option type(%s)", opt.key)
+			return
+		}
+	}

@@ -1,0 +1,19 @@
+// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
+// NOTE: json tags are required.  Any new fields you add must
+have json tags for the fields to be serialized.
+
+// PetSpec defines the desired state of Pet
+type PetSpec struct {
+// INSERT ADDITIONAL SPEC FIELDS - desired state of
+cluster
+     // Important: Run "make" to regenerate code after
+modifying this file
+     // Foo is an example field of Pet. Edit pet_types.go to
+remove/update
+     Foo string `json:"foo,omitempty"`
+}
+// PetStatus defines the observed state of Pet
+type PetStatus struct {
+     // INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+     // Important: Run "make" to regenerate code after modifying this file
+}

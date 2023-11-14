@@ -1,0 +1,12 @@
+goBook.amazon-ebs.ubuntu: Begin Go environment install
+goBook.amazon-ebs.ubuntu: Go version to use is: 1.17.5
+goBook.amazon-ebs.ubuntu: Downloading Go version: https://golang.org/dl/go1.17.5.
+linux-amd64.tar.gz
+goBook.amazon-ebs.ubuntu: Downloading complete
+goBook.amazon-ebs.ubuntu: Pushing Go tarball
+goBook.amazon-ebs.ubuntu: Go tarball delivered to: /tmp/go1.17.5.linux-amd64.tar.gz
+goBook.amazon-ebs.ubuntu: Unpacking Go tarball to /usr/local
+goBook.amazon-ebs.ubuntu: Unpacked Go tarball
+goBook.amazon-ebs.ubuntu: Testing Go install
+goBook.amazon-ebs.ubuntu: Go installed successfully
+goBook.amazon-ebs.ubuntu: Go environment install finished

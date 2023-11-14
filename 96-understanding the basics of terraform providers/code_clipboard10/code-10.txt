@@ -1,0 +1,1 @@
+terraform import azurerm_resource_group.mygroup /subscriptions/{your-subscription-id}/resourceGroups/mygroup

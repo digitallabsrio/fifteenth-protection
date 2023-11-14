@@ -1,0 +1,12 @@
+package main
+import "fmt"
+
+func main() {
+    modelToMake := map[string]string{
+        "prius": "toyota",
+        "chevelle": "chevy",
+    }
+
+    carMake := modelToMake["chevelle"]
+    fmt.Println(carMake) // Prints "chevy"
+}

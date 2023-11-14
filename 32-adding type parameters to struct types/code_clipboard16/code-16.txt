@@ -1,0 +1,1 @@
+func New[T ValueType](v T) Value[T] {

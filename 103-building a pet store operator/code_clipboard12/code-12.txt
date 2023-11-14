@@ -1,0 +1,17 @@
+// ReconcileDelete deletes the pet from the petstore and removes the finalizer.
+func (r *PetReconciler) ReconcileDelete(ctx context.Context, pet *petstorev1.Pet) (ctrl.Result, error) {
+     psc, err := getPetstoreClient()
+     if err != nil {
+          return ctrl.Result{}, errors.Wrap(err, "unable to construct petstore client")
+     }
+
+     if pet.Status.ID != "" {
+          if err := psc.DeletePets(ctx, []string{pet.Status.ID}); err != nil {
+               return ctrl.Result{}, errors.Wrap(err, "failed to delete pet")
+          } 
+     }
+
+     // remove finalizer, so K8s can garbage collect the resource.
+     controllerutil.RemoveFinalizer(pet, PetFinalizer)
+     return ctrl.Result{}, nil
+}

@@ -1,0 +1,20 @@
+func newServer(port int) (*server, error) {
+	s := &server{
+		serv: &http.Server{
+			Addr: ":" + strconv.Itoa(port),
+		},
+		quotes: map[string][]string{
+			// Add quotes here
+		},
+	}
+	mux := http.NewServeMux()
+	mux.HandleFunc(`/qotd/v1/get`, s.qotdGet)
+	// The muxer implements http.Handler 
+	// and we assign it for our server’s URL handling.
+	s.serv.Handler = mux
+	return s, nil
+}
+
+func (s *server) start() error {
+	return s.serv.ListenAndServe()
+}

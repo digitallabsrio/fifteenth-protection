@@ -1,0 +1,7 @@
+f, err := os.Open("path/to/file")
+if err != nil {
+    return err
+}
+if err := io.Copy(os.Stdout, f); err != nil {
+    return err
+}

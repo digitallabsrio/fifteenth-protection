@@ -1,0 +1,22 @@
+// linuxOSProfile creates an Azure VM OS profile with only SSH access for the devops admin user
+func linuxOSProfile(vmStack *VirtualMachineStack) *armcompute.OSProfile {
+	sshKeyData := HandleErrWithResult(ioutil.ReadFile(vmStack.sshKeyPath))
+	cloudInitContent := HandleErrWithResult(ioutil.ReadFile("./cloud-init/init.yml"))
+	b64EncodedInitScript := base64.StdEncoding.EncodeToString(cloudInitContent)
+	return &armcompute.OSProfile{
+		AdminUsername: to.Ptr("devops"),
+		ComputerName:  to.Ptr(vmStack.name),
+		CustomData:    to.Ptr(b64EncodedInitScript),
+		LinuxConfiguration: &armcompute.LinuxConfiguration{
+			DisablePasswordAuthentication: to.Ptr(true),
+			SSH: &armcompute.SSHConfiguration{
+				PublicKeys: []*armcompute.SSHPublicKey{
+					{
+						Path:    to.Ptr("/home/devops/.ssh/authorized_keys"),
+						KeyData: to.Ptr(string(sshKeyData)),
+					},
+				},
+			},
+		},
+	}
+}

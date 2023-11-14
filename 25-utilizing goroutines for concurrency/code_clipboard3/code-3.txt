@@ -1,0 +1,3 @@
+for val := range ch { // Acts like a <-ch
+    fmt.Println(val)
+}

@@ -1,0 +1,25 @@
+// PetType is the type of the pet. For example, a dog.
+// +kubebuilder:validation:Enum=dog;cat;bird;reptile
+type PetType string
+
+const (
+    DogPetType PetType = "dog"
+    CatPetType PetType = "cat"
+    BirdPetType PetType = "bird"
+    ReptilePetType PetType = "reptile"
+)
+
+// PetSpec defines the desired state of Pet
+type PetSpec struct {
+    // Name is the name of the pet
+    Name string `json:"name"`
+    // Type is the type of pet Type PetType `json:"type"`
+    // Birthday is the date the pet was born
+    Birthday metav1.Time `json:"birthday"`
+}
+
+// PetStatus defines the observed state of Pet
+type PetStatus struct {
+    // ID is the unique ID for the pet
+    ID string `json:"id,omitempty"`
+}

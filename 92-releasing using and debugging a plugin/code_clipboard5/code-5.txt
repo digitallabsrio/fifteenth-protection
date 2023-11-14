@@ -1,0 +1,3 @@
+provisioner "goenv-goenv" {
+  version = "1.17.5"
+}

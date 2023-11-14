@@ -1,0 +1,8 @@
+switch [value] {
+case [match]:
+  [statement]
+case [match], [match]:
+  [statement]
+default:
+  [statement]
+}

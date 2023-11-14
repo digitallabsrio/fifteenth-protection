@@ -1,0 +1,21 @@
+func runUname(ctx context.Context, host net.IP, user string) (string, error) {
+  if _, ok := ctx.Deadline(); !ok {
+    var cancel context.CancelFunc
+    ctx, cancel = context.WithTimeout(ctx, 5*time.Second)
+    defer cancel()
+  }
+  login := fmt.Sprintf("%s@%s", user, host)
+  cmd := exec.CommandContext(
+    ctx,
+    ssh,
+    "-o StrictHostKeyChecking=no",
+    "-o BatchMode=yes",
+    login,
+    "uname -a",
+  )
+  out, err := cmd.CombinedOutput()
+  if err != nil {
+    return "", err
+  }
+  return string(out), nil
+}

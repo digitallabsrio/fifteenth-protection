@@ -1,0 +1,15 @@
+func (p *Provisioner) test(ctx context.Context, u packer.Ui, c packer.Communicator) error {
+	u.Message("Testing Go install")
+
+	b := bytes.Buffer{}
+	rc := &packer.RemoteCmd{
+		Command: `/usr/local/go/bin/go version`,
+		Stdout:  &b,
+		Stderr:  &b,
+	}
+	if err := c.Start(ctx, rc); err != nil {
+		return fmt.Errorf("problem testing Go install(%s):\n%s", err, b.String())
+	}
+	u.Message("Go installed successfully")
+	return nil
+}

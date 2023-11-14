@@ -1,0 +1,3 @@
+if err := yaml.Marshal(data); err != nil {
+ 	return err
+}

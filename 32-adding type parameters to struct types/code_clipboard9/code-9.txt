@@ -1,0 +1,3 @@
+func orderedCmp[O constraints.Ordered](a O, b O) bool {
+ 	return a < b
+}

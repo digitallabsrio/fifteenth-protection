@@ -1,0 +1,4 @@
+// PrintStringer prints the value of a Stringer to stdout.
+func PrintStringer(s Stringer) {
+    fmt.Println(s.String())
+}

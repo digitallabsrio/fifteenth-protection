@@ -1,0 +1,15 @@
+package main
+
+import (
+  "fmt"
+  // These imports will be used while testing your code
+  "encoding/json"
+  "strconv"
+)
+
+type Item struct {
+	Course string
+  Author string
+}
+
+//Write your code here

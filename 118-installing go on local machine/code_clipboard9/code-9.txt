@@ -1,0 +1,1 @@
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.5.linuxamd64.tar.gz

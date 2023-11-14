@@ -1,0 +1,3 @@
+if diff := pretty.Compare(want, got); diff != "" {
+  t.Errorf("TestSomeFunc(%s): -want/+got:\n%s", diff)
+}

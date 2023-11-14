@@ -1,0 +1,26 @@
+package main
+
+import (
+  "fmt"
+  // "encoding/json"
+  // "strconv"
+)
+
+type Item struct {
+	Course string
+  Author string
+}
+
+func (i Item) String() string {
+  if i.Author == "" {
+    i.Author = "Educative"
+  }
+	return fmt.Sprintf("%v by %v", i.Course, i.Author)
+}
+
+func main() {
+  itemA := Item{Course: "CourseA", Author:"Adam"}
+  itemB := Item{Course: "CourseB"}  
+  fmt.Print(itemA)
+  fmt.Print(itemB)
+}

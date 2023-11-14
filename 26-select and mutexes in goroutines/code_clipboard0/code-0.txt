@@ -1,0 +1,29 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	inCh1 := make(chan string, 1)
+	inCh2 := make(chan string, 1)
+
+
+	go func() {
+		for _, word := range []string{"hello", "world"} {
+			inCh1 <- word
+			return
+		}
+		close(inCh1)
+		return
+	}()
+
+	for {
+		select {
+		case v := <-inCh1:
+			go fmt.Println("received(inCh1): ", v)
+		case v := <-inCh2:
+			go fmt.Println("received(inCh2): ", v)
+		}
+	}
+}

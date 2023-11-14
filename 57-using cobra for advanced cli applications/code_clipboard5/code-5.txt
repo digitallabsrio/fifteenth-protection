@@ -1,0 +1,3 @@
+cobra add serve
+cobra add config
+cobra add create -p 'configCmd'

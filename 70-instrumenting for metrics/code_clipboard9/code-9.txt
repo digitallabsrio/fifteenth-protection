@@ -1,0 +1,24 @@
+func NewClientInstruments(meter metric.Meter) ClientInstruments {
+	return ClientInstruments{
+		RequestLatency: metric.Must(meter).
+			NewFloat64Histogram(
+				"demo_client/request_latency",
+				metric.WithDescription("The latency of requests processed"),
+			),
+		RequestCount: metric.Must(meter).
+			NewInt64Counter(
+				"demo_client/request_counts",
+				metric.WithDescription("The number of requests processed"),
+			),
+		LineLengths: metric.Must(meter).
+			NewInt64Histogram(
+				"demo_client/line_lengths",
+				metric.WithDescription("The lengths of the various lines in"),
+			),
+		LineCounts: metric.Must(meter).
+			NewInt64Counter(
+				"demo_client/line_counts",
+				metric.WithDescription("The counts of the lines in"),
+			),
+	}
+}

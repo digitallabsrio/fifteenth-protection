@@ -1,0 +1,2 @@
+func TestFuncName(t *testing.T) {
+}

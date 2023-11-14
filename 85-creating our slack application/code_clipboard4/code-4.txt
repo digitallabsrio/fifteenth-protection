@@ -1,0 +1,2 @@
+AUTH_TOKEN=xoxb-[the rest of the token]
+APP_TOKEN=xapp-[the rest of the token]

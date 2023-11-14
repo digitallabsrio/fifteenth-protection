@@ -1,0 +1,9 @@
+// clientFromMeta casts meta into a Pet Store client or returns an error
+func clientFromMeta(meta interface{}) (*client.Client, error) {
+	psClient, ok := meta.(*client.Client)
+	if !ok {
+		return nil, errors.New("meta does not contain a Pet Store client")
+	}
+
+	return psClient, nil
+}

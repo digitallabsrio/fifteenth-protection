@@ -1,0 +1,7 @@
+type summaries struct {
+ 	cpuVendor cpuVendorSum
+}
+
+type cpuVendorSum struct {
+ 	unknown, intel, amd int
+}

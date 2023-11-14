@@ -1,0 +1,5 @@
+[manager] 1.6466368389433222e+09     INFO     controller.pet
+finding pets in store     {"reconciler group": "petstore.
+example.com", "reconciler kind": "Pet", "name": "pet-sample1",
+"namespace": "default", "pet": "Thorbert", "id": "cef9499f-
+6214-4227-b217-265fd8f196e6"}

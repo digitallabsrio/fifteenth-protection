@@ -1,0 +1,22 @@
+...
+  traces, err := o.OpsClient.ListTraces(ctx, options...)
+	if err != nil {
+		o.write(m, "Ops server had an error: %s", err)
+		return
+	}
+	b := strings.Builder{}
+	b.WriteString("Here are the traces you requested:\n")
+
+	table := tablewriter.NewWriter(&b)
+	table.SetHeader([]string{"Start Time(UTC)", "Trace ID"})
+	for _, item := range traces {
+		table.Append(
+			[]string{
+				item.Start.Format("01/02/2006 04:05"),
+				"http://127.0.0.1:16686/trace/" + item.ID,
+			},
+		)
+	}
+	table.Render()
+	o.write(m, b.String())
+}

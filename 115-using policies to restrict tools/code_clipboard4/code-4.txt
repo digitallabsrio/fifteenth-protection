@@ -1,0 +1,6 @@
+var policies = map[string]registration{}
+
+type registration struct {
+     Policy Policy
+     Settings Settings
+}

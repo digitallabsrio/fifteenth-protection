@@ -1,0 +1,13 @@
+package main
+import "fmt"
+
+func main() {
+    var x int = 23
+    var intPtr *int
+    intPtr = &x
+
+    fmt.Println(x) // Will print 23
+    fmt.Println(*intPtr) // Will print 23, the value at x
+    *intPtr = 80 // Changes the value at x to 80
+    fmt.Println(x) // Will print 80 
+}

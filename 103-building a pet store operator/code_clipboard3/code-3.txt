@@ -1,0 +1,17 @@
+M  PROJECT
+A  api/v1alpha1/groupversion_info.go
+A  api/v1alpha1/pet_types.go
+A  api/v1alpha1/zz_generated.deepcopy.go
+A  config/crd/bases/petstore.example.com_pets.yaml
+A  config/crd/kustomization.yaml
+A  config/crd/kustomizeconfig.yaml
+A  config/crd/patches/cainjection_in_pets.yaml
+A  config/crd/patches/webhook_in_pets.yaml
+A  config/rbac/pet_editor_role.yaml
+A  config/rbac/pet_viewer_role.yaml
+A  config/samples/kustomization.yaml
+A  config/samples/petstore_v1alpha1_pet.yaml
+A  controllers/pet_controller.go
+A  controllers/suite_test.go
+M  go.mod
+M main.go

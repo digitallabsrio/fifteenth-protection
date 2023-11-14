@@ -1,0 +1,9 @@
+func main() {
+    flag.Parse()
+
+    authors := flag.Args
+    if len(authors) == 0 {
+        log.Println("did not pass any authors")
+        os.Exit(1)
+    }
+    ...

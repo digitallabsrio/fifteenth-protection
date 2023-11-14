@@ -1,0 +1,10 @@
+mkdir packer
+cd packer
+touch amazon.pkr.hcl
+mkdir files
+cd files
+ssh-keygen -t rsa -N "" -C "agent.pem" -f agent
+mv agent ~/.ssh/agent.pem
+wget https://raw.githubusercontent.com/PacktPublishing/Go-for-DevOps/rev0/chapter/8/agent/bin/linux_amd64/agent
+wget https://raw.githubusercontent.com/PacktPublishing/Go-for-DevOps/rev0/chapter/12/agent.service
+cd ..

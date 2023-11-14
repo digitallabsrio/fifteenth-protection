@@ -1,0 +1,6 @@
+mkdir ~/tmp
+cd ~/tmp
+wget https://github.com/YaleUniversity/packer-provisioner-goss/releases/download/v3.1.2/packer-provisioner-goss-v3.1.2-linuxamd64.tar.gz
+sudo tar -xzf packer-provisioner-goss-v3.1.2-linux-amd64.tar.gz
+cp sudo packer-provisioner-goss /usr/bin/packer-provisionergoss
+rm -rf ~/tmp

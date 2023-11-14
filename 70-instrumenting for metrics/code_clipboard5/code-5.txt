@@ -1,0 +1,6 @@
+func main() {
+  shutdown := initTraceAndMetricsProvider()
+  defer shutdown()
+  
+  continuouslySendRequests()
+}

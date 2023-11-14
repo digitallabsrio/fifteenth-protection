@@ -1,0 +1,22 @@
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	clientSet := getClientSet()
+
+	// create a namespace named "foo" and delete it when main exits
+	nsFoo := createNamespace(ctx, clientSet, "foo")
+	defer func() {
+		deleteNamespace(ctx, clientSet, nsFoo)
+	}()
+
+	// create an nginx deployment named "hello-world" in the nsFoo namespace
+	deployNginx(ctx, clientSet, nsFoo, "hello-world")
+	fmt.Printf("You can now see your running service")
+
+	// listen to pod logs from namespace foo
+	listenToPodLogs(ctx, clientSet, nsFoo, "hello-world")
+
+	// wait for ctrl-c to exit the program
+	waitForExitSignal()
+}

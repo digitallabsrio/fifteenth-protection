@@ -1,0 +1,9 @@
+var i int
+for i < 10 {
+  i++
+}
+b := true
+
+for b { // This will loop forever
+  fmt.Println("hello")
+}

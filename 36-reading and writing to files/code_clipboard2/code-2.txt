@@ -1,0 +1,11 @@
+flags := os.O_CREATE|os.O_WRONLY|os.O_TRUNC
+f, err := os.OpenFile("path/to/file", flags, 0644)
+
+if err != nil {
+    return err
+}
+defer f.Close()
+
+if err := io.Copy(f, resp.Body); err != nil {
+    return err
+} 

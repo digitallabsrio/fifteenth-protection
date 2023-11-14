@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    :root {
+      --docsifytabs-border-color: #ededed;
+      --docsifytabs-border-px: 1px;
+      --docsifytabs-border-radius-px: ;
+      --docsifytabs-margin: 1.5em 0;
+      --docsifytabs-tab-background: #f8f8f8;
+      --docsifytabs-tab-background--active: var(--docsifytabs-content-background);
+      --docsifytabs-tab-color: #999;
+      --docsifytabs-tab-color--active: inherit;
+      --docsifytabs-tab-highlight-px: 3px;
+      --docsifytabs-tab-highlight-color: var(--theme-color, currentColor);
+      --docsifytabs-tab-padding: 0.6em 1em;
+      --docsifytabs-content-background: inherit;
+      --docsifytabs-content-padding: 1.5rem
+    }
+
+    .docsify-tabs:before,
+    .docsify-tabs__tab {
+      z-index: 1
+    }
+
+    .docsify-tabs__tab--active,
+    .docsify-tabs__tab:focus {
+      z-index: 2
+    }
+
+    .docsify-tabs {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      position: relative
+    }
+
+    .docsify-tabs:before {
+      -ms-flex-order: 0;
+      content: "";
+      -ms-flex: 1 1;
+      flex: 1 1;
+      order: 0
+    }
+
+    .docsify-tabs__tab {
+      -ms-flex-order: -1;
+      appearance: none;
+      font-size: inherit;
+      margin: 0;
+      order: -1;
+      position: relative
+    }
+
+    .docsify-tabs__content[class] {
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      visibility: hidden;
+      width: 100%
+    }
+
+    .docsify-tabs__content[class]>:first-child {
+      margin-top: 0
+    }
+
+    .docsify-tabs__content[class]>:last-child {
+      margin-bottom: 0
+    }
+
+    .docsify-tabs__tab--active+.docsify-tabs__content[class] {
+      height: auto;
+      overflow: auto;
+      position: relative;
+      visibility: visible
+    }
+
+    [class*=docsify-tabs--] {
+      margin: 1.5em 0;
+      margin: var(--docsifytabs-margin)
+    }
+
+    [class*=docsify-tabs--]>.docsify-tabs__tab {
+      background: #f8f8f8;
+      background: var(--docsifytabs-tab-background);
+      color: #999;
+      color: var(--docsifytabs-tab-color);
+      padding: .6em 1em;
+      padding: var(--docsifytabs-tab-padding)
+    }
+
+    [class*=docsify-tabs--]>.docsify-tabs__tab--active {
+      background: inherit;
+      background: var(--docsifytabs-tab-background--active);
+      color: inherit;
+      color: var(--docsifytabs-tab-color--active)
+    }
+
+    [class*=docsify-tabs--]>.docsify-tabs__content {
+      background: inherit;
+      background: var(--docsifytabs-content-background)
+    }
+
+    [class*=docsify-tabs--]>.docsify-tabs__tab--active+.docsify-tabs__content {
+      padding: 1.5rem;
+      padding: var(--docsifytabs-content-padding)
+    }
+
+    .docsify-tabs--classic:before,
+    .docsify-tabs--classic>.docsify-tabs__content,
+    .docsify-tabs--classic>.docsify-tabs__tab {
+      border-color: #ededed;
+      border-color: var(--docsifytabs-border-color);
+      border-style: solid;
+      border-width: 1px;
+      border-width: var(--docsifytabs-border-px)
+    }
+
+    .docsify-tabs--classic:before {
+      border-left-width: 0;
+      border-right-width: 0;
+      border-top-width: 0;
+      margin-right: 1px;
+      margin-right: var(--docsifytabs-border-px)
+    }
+
+    .docsify-tabs--classic>.docsify-tabs__tab:first-of-type {
+      border-top-left-radius: var(--docsifytabs-border-radius-px)
+    }
+
+    .docsify-tabs--classic>.docsify-tabs__tab:last-of-type {
+      border-top-right-radius: var(--docsifytabs-border-radius-px)
+    }
+
+    .docsify-tabs--classic>.docsify-tabs__tab~.docsify-tabs__tab {
+      margin-left: -1px;
+      margin-left: calc(0px - var(--docsifytabs-border-px))
+    }
+
+    .docsify-tabs--classic>.docsify-tabs__tab--active {
+      border-bottom-width: 0;
+      box-shadow: inset 0 3px 0 0 currentColor;
+      box-shadow: inset 0 var(--docsifytabs-tab-highlight-px) 0 0 var(--docsifytabs-tab-highlight-color)
+    }
+
+    .docsify-tabs--classic>.docsify-tabs__content {
+      border-radius: 0;
+      border-radius: 0 var(--docsifytabs-border-radius-px) var(--docsifytabs-border-radius-px) var(--docsifytabs-border-radius-px);
+      border-top: 0;
+      margin-top: -1px;
+      margin-top: calc(0px - var(--docsifytabs-border-px))
+    }
+
+    .docsify-tabs--material>.docsify-tabs__tab {
+      background: transparent;
+      border: 0;
+      margin-bottom: 2px;
+      margin-bottom: calc(var(--docsifytabs-tab-highlight-px) - var(--docsifytabs-border-px))
+    }
+
+    .docsify-tabs--material>.docsify-tabs__tab--active {
+      background: transparent;
+      box-shadow: 0 3px 0 0 currentColor;
+      box-shadow: 0 var(--docsifytabs-tab-highlight-px) 0 0 var(--docsifytabs-tab-highlight-color)
+    }
+
+    .docsify-tabs--material>.docsify-tabs__content {
+      border-color: #ededed;
+      border-color: var(--docsifytabs-border-color);
+      border-style: solid;
+      border-width: 1px 0;
+      border-width: var(--docsifytabs-border-px) 0
+    }
+  </style>
+  <!-- UPDATE: Add description, author, og:site_name, og:title, and og:description text for your course. -->
+  <!-- NOTE: Text presented in ALL_CAPS indicate values you should replace. -->
+  <title>Project</title>
+  <link rel="stylesheet" href="/fifteenth-protection/static/vue.css">
+  <link rel="stylesheet" href="/fifteenth-protection/static/style.min.css" title="docsify-darklight-theme" type="text/css">
+  <link rel="stylesheet" href="/fifteenth-protection/static/style.css">
+  <style type="text/css">
+    .docsify-copy-code-button,
+    .docsify-copy-code-button span {
+      cursor: pointer;
+      transition: all .25s ease
+    }
+
+    .docsify-copy-code-button {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      overflow: visible;
+      padding: .65em .8em;
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+      font-size: 1em;
+      background: grey;
+      background: var(--theme-color, grey);
+      color: #fff;
+      opacity: 0
+    }
+
+    .docsify-copy-code-button span {
+      border-radius: 3px;
+      background: inherit;
+      pointer-events: none
+    }
+
+    .docsify-copy-code-button .error,
+    .docsify-copy-code-button .success {
+      position: absolute;
+      z-index: -100;
+      top: 50%;
+      right: 0;
+      padding: .5em .65em;
+      font-size: .825em;
+      opacity: 0;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%)
+    }
+
+    .docsify-copy-code-button.error .error,
+    .docsify-copy-code-button.success .success {
+      right: 100%;
+      opacity: 1;
+      -webkit-transform: translate(-115%, -50%);
+      transform: translate(-115%, -50%)
+    }
+
+    .docsify-copy-code-button:focus,
+    pre:hover .docsify-copy-code-button {
+      opacity: 1
+    }
+  </style>
+  <style type="text/css">
+    .alert {
+      word-wrap: break-word;
+      display: block;
+      margin-bottom: 1rem !important;
+      padding: .75rem 1.25rem !important;
+      position: relative;
+      word-break: break-word
+    }
+
+    .alert>* {
+      max-width: 100%
+    }
+
+    .alert>:first-child {
+      margin-top: 0
+    }
+
+    .alert>:last-child {
+      margin-bottom: 0
+    }
+
+    .alert:before {
+      content: unset !important
+    }
+
+    .alert+.alert {
+      margin-top: -.25rem !important
+    }
+
+    .alert p {
+      margin-bottom: .5rem;
+      margin-top: .5rem
+    }
+
+    .alert .title {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      font-weight: 600;
+      margin: 0
+    }
+
+    .icon {
+      background-repeat: no-repeat;
+      display: inline-block;
+      height: 16px;
+      margin-right: .5rem;
+      width: 16px
+    }
+
+    .alert.callout {
+      background: var(--background);
+      border: 1px solid #eee;
+      border-left-width: .25rem;
+      border-radius: .25rem
+    }
+
+    .alert.callout.note {
+      border-left-color: #17a2b8 !important
+    }
+
+    .alert.callout.note .title {
+      color: #17a2b8
+    }
+
+    .alert.callout.note .icon-note {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%2317a2b8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E")
+    }
+
+    .alert.callout.tip {
+      border-left-color: #28a745 !important
+    }
+
+    .alert.callout.tip .title {
+      color: #28a745
+    }
+
+    .alert.callout.tip .icon-tip {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 352 512' fill='%2328a745' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z'/%3E%3C/svg%3E")
+    }
+
+    .alert.callout.warning {
+      border-left-color: #f0ad4e !important
+    }
+
+    .alert.callout.warning .title {
+      color: #f0ad4e
+    }
+
+    .alert.callout.warning .icon-warning {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 17 16' fill='%23f0ad4e' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'/%3E%3C/svg%3E")
+    }
+
+    .alert.callout.attention {
+      border-left-color: #dc3545 !important
+    }
+
+    .alert.callout.attention .title {
+      color: #dc3545
+    }
+
+    .alert.callout.attention .icon-attention {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%23dc3545' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3E%3Cpath fill-rule='evenodd' d='M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E")
+    }
+
+    .alert.flat {
+      background-color: #e2e3e5;
+      border: 1px solid #d6d8db;
+      border-radius: .125rem;
+      color: #383d41
+    }
+
+    .alert.flat.note {
+      background-color: #cdeefd;
+      border-color: #b4e6fc;
+      color: #02587f
+    }
+
+    .alert.flat.note .title {
+      color: #01354d
+    }
+
+    .alert.flat.note .icon-note {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%2301354d' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E")
+    }
+
+    .alert.flat.tip {
+      background-color: #dbefdc;
+      border-color: #c9e7cb;
+      color: #285b2a
+    }
+
+    .alert.flat.tip .title {
+      color: #18381a
+    }
+
+    .alert.flat.tip .icon-tip {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 352 512' fill='%2318381a' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z'/%3E%3C/svg%3E")
+    }
+
+    .alert.flat.warning {
+      background-color: #ffddd3;
+      border-color: #ffc9ba;
+      color: #852d12
+    }
+
+    .alert.flat.warning .title {
+      color: #581e0c
+    }
+
+    .alert.flat.warning .icon-warning {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 17 16' fill='%23581e0c' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'/%3E%3C/svg%3E")
+    }
+
+    .alert.flat.attention {
+      background-color: #fdd9d7;
+      border-color: #fcc2bf;
+      color: #7f231c
+    }
+
+    .alert.flat.attention .title {
+      color: #551713
+    }
+
+    .alert.flat.attention .icon-attention {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%23551713' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3E%3Cpath fill-rule='evenodd' d='M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E")
+    }
+  </style>
+  <style>
+    :root {
+      --theme-color: #126893;
+    }
+  </style>
+  <style>
+    .sidebar {
+      padding-top: 0;
+    }
+
+    .search {
+      margin-bottom: 20px;
+      padding: 6px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .search .input-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .search .results-panel {
+      display: none;
+    }
+
+    .search .results-panel.show {
+      display: block;
+    }
+
+    .search input {
+      outline: none;
+      border: none;
+      width: 100%;
+      padding: 0.6em 7px;
+      font-size: inherit;
+      border: 1px solid transparent;
+    }
+
+    .search input:focus {
+      box-shadow: 0 0 5px var(--theme-color, #42b983);
+      border: 1px solid var(--theme-color, #42b983);
+    }
+
+    .search input::-webkit-search-decoration,
+    .search input::-webkit-search-cancel-button,
+    .search input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    .search input::-ms-clear {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+
+    .search .clear-button {
+      cursor: pointer;
+      width: 36px;
+      text-align: right;
+      display: none;
+    }
+
+    .search .clear-button.show {
+      display: block;
+    }
+
+    .search .clear-button svg {
+      transform: scale(.5);
+    }
+
+    .search h2 {
+      font-size: 17px;
+      margin: 10px 0;
+    }
+
+    .search a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .search .matching-post {
+      border-bottom: 1px solid #eee;
+    }
+
+    .search .matching-post:last-child {
+      border-bottom: 0;
+    }
+
+    .search p {
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .search p.empty {
+      text-align: center;
+    }
+
+    .app-name.hide,
+    .sidebar-nav.hide {
+      display: none;
+    }
+  </style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+  <style></style>
+</head>
+
+<body class="ready sticky ready-fix close" data-page="Assignments/Sample_Project.md">
+  <nav class="app-nav"></nav>
+  <main><button class="sidebar-toggle" aria-label="Menu">
+      <div class="sidebar-toggle-button"><span></span><span></span><span></span></div>
+    </button>
+    <aside class="sidebar">
+      <h1 class="app-name"><a class="app-name-link" data-nosearch="" href="/"><img alt="Syllabus Template"
+            src="/fifteenth-protection/static/logo-icononly.svg"></a></h1>
+      <div class="sidebar-nav">
+    <ul>
+        <li><strong><a href="/" title="Syllabus">Syllabus</a></strong></li>
+        <li><strong>Lessons</strong>
+            <ul>
+                
+                
+                <li><a href="/fifteenth-protection/0-go and devops/0-go and devops.html" title="Go And Devops">Go And Devops</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/1-introduction/1-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/2-utilizing go packages/2-utilizing go packages.html" title="Utilizing Go Packages">Utilizing Go Packages</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/3-using go s variable types/3-using go s variable types.html" title="Using Go S Variable Types">Using Go S Variable Types</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/4-variable scopes and shadowing/4-variable scopes and shadowing.html" title="Variable Scopes And Shadowing">Variable Scopes And Shadowing</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/5-looping in go/5-looping in go.html" title="Looping In Go">Looping In Go</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/6-using conditionals/6-using conditionals.html" title="Using Conditionals">Using Conditionals</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/7-learning about functions/7-learning about functions.html" title="Learning About Functions">Learning About Functions</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/8-challenge armstrong numbers/8-challenge armstrong numbers.html" title="Challenge Armstrong Numbers">Challenge Armstrong Numbers</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/9-solution review armstrong numbers/9-solution review armstrong numbers.html" title="Solution Review Armstrong Numbers">Solution Review Armstrong Numbers</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/10-public and private declarations/10-public and private declarations.html" title="Public And Private Declarations">Public And Private Declarations</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/11-using arrays and slices/11-using arrays and slices.html" title="Using Arrays And Slices">Using Arrays And Slices</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/12-understanding maps/12-understanding maps.html" title="Understanding Maps">Understanding Maps</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/13-challenge find repeating words in a sentence/13-challenge find repeating words in a sentence.html" title="Challenge Find Repeating Words In A Sentence">Challenge Find Repeating Words In A Sentence</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/14-solution review find repeating words in a sentence/14-solution review find repeating words in a sentence.html" title="Solution Review Find Repeating Words In A Sentence">Solution Review Find Repeating Words In A Sentence</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/15-understanding go pointers/15-understanding go pointers.html" title="Understanding Go Pointers">Understanding Go Pointers</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/16-getting to know about structs/16-getting to know about structs.html" title="Getting To Know About Structs">Getting To Know About Structs</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/17-comprehending go interfaces/17-comprehending go interfaces.html" title="Comprehending Go Interfaces">Comprehending Go Interfaces</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/18-challenge implement the stringer interface/18-challenge implement the stringer interface.html" title="Challenge Implement The Stringer Interface">Challenge Implement The Stringer Interface</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/19-solution review implement stringer interface/19-solution review implement stringer interface.html" title="Solution Review Implement Stringer Interface">Solution Review Implement Stringer Interface</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/20-summary and quiz on the go language basics/20-summary and quiz on the go language basics.html" title="Summary And Quiz On The Go Language Basics">Summary And Quiz On The Go Language Basics</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/21-introduction/21-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/22-handling errors in go/22-handling errors in go.html" title="Handling Errors In Go">Handling Errors In Go</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/23-utilizing go constants/23-utilizing go constants.html" title="Utilizing Go Constants">Utilizing Go Constants</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/24-using defer panic and recover/24-using defer panic and recover.html" title="Using Defer Panic And Recover">Using Defer Panic And Recover</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/25-utilizing goroutines for concurrency/25-utilizing goroutines for concurrency.html" title="Utilizing Goroutines For Concurrency">Utilizing Goroutines For Concurrency</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/26-select and mutexes in goroutines/26-select and mutexes in goroutines.html" title="Select And Mutexes In Goroutines">Select And Mutexes In Goroutines</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/27-challenge sum with goroutines/27-challenge sum with goroutines.html" title="Challenge Sum With Goroutines">Challenge Sum With Goroutines</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/28-solution review sum with goroutines/28-solution review sum with goroutines.html" title="Solution Review Sum With Goroutines">Solution Review Sum With Goroutines</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/29-understanding gos context type/29-understanding gos context type.html" title="Understanding Gos Context Type">Understanding Gos Context Type</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/30-utilizing go s testing framework/30-utilizing go s testing framework.html" title="Utilizing Go S Testing Framework">Utilizing Go S Testing Framework</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/31-generics the new kid on the block/31-generics the new kid on the block.html" title="Generics The New Kid On The Block">Generics The New Kid On The Block</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/32-adding type parameters to struct types/32-adding type parameters to struct types.html" title="Adding Type Parameters To Struct Types">Adding Type Parameters To Struct Types</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/33-summary and quiz on the go language basics/33-summary and quiz on the go language basics.html" title="Summary And Quiz On The Go Language Basics">Summary And Quiz On The Go Language Basics</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/34-introduction/34-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/35-i o interfaces in go/35-i o interfaces in go.html" title="I O Interfaces In Go">I O Interfaces In Go</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/36-reading and writing to files/36-reading and writing to files.html" title="Reading And Writing To Files">Reading And Writing To Files</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/37-streaming file content/37-streaming file content.html" title="Streaming File Content">Streaming File Content</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/38-os agnostic pathing/38-os agnostic pathing.html" title="Os Agnostic Pathing">Os Agnostic Pathing</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/39-os agnostic filesystems/39-os agnostic filesystems.html" title="Os Agnostic Filesystems">Os Agnostic Filesystems</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/40-summary and quiz on filesystem interactions/40-summary and quiz on filesystem interactions.html" title="Summary And Quiz On Filesystem Interactions">Summary And Quiz On Filesystem Interactions</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/41-introduction/41-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/42-csv files/42-csv files.html" title="Csv Files">Csv Files</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/43-using excelize when dealing with excel/43-using excelize when dealing with excel.html" title="Using Excelize When Dealing With Excel">Using Excelize When Dealing With Excel</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/44-popular encoding formats json/44-popular encoding formats json.html" title="Popular Encoding Formats Json">Popular Encoding Formats Json</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/45-challenge process json data/45-challenge process json data.html" title="Challenge Process Json Data">Challenge Process Json Data</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/46-solution review process json data/46-solution review process json data.html" title="Solution Review Process Json Data">Solution Review Process Json Data</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/47-popular encoding formats yaml/47-popular encoding formats yaml.html" title="Popular Encoding Formats Yaml">Popular Encoding Formats Yaml</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/48-summary and quiz on using common data formats/48-summary and quiz on using common data formats.html" title="Summary And Quiz On Using Common Data Formats">Summary And Quiz On Using Common Data Formats</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/49-introduction/49-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/50-accessing sql databases/50-accessing sql databases.html" title="Accessing Sql Databases">Accessing Sql Databases</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/51-developing rest services and clients/51-developing rest services and clients.html" title="Developing Rest Services And Clients">Developing Rest Services And Clients</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/52-developing grpc services and clients/52-developing grpc services and clients.html" title="Developing Grpc Services And Clients">Developing Grpc Services And Clients</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/53-summary and quiz on interacting with remote data sources/53-summary and quiz on interacting with remote data sources.html" title="Summary And Quiz On Interacting With Remote Data Sources">Summary And Quiz On Interacting With Remote Data Sources</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/54-introduction/54-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/55-implementing application i o/55-implementing application i o.html" title="Implementing Application I O">Implementing Application I O</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/56-accessing non flag arguments/56-accessing non flag arguments.html" title="Accessing Non Flag Arguments">Accessing Non Flag Arguments</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/57-using cobra for advanced cli applications/57-using cobra for advanced cli applications.html" title="Using Cobra For Advanced Cli Applications">Using Cobra For Advanced Cli Applications</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/58-handling os signals/58-handling os signals.html" title="Handling Os Signals">Handling Os Signals</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/59-summary and quiz on writing command line tooling/59-summary and quiz on writing command line tooling.html" title="Summary And Quiz On Writing Command Line Tooling">Summary And Quiz On Writing Command Line Tooling</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/60-introduction/60-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/61-using os exec to automate local changes/61-using os exec to automate local changes.html" title="Using Os Exec To Automate Local Changes">Using Os Exec To Automate Local Changes</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/62-using ssh in go to automate remote changes/62-using ssh in go to automate remote changes.html" title="Using Ssh In Go To Automate Remote Changes">Using Ssh In Go To Automate Remote Changes</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/63-designing safe concurrent change automations/63-designing safe concurrent change automations.html" title="Designing Safe Concurrent Change Automations">Designing Safe Concurrent Change Automations</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/64-writing a system agent/64-writing a system agent.html" title="Writing A System Agent">Writing A System Agent</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/65-summary and quiz on automating command line tasks/65-summary and quiz on automating command line tasks.html" title="Summary And Quiz On Automating Command Line Tasks">Summary And Quiz On Automating Command Line Tasks</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/66-introduction/66-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/67-an overview of opentelemetry/67-an overview of opentelemetry.html" title="An Overview Of Opentelemetry">An Overview Of Opentelemetry</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/68-logging with context/68-logging with context.html" title="Logging With Context">Logging With Context</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/69-instrumenting for distributed tracing/69-instrumenting for distributed tracing.html" title="Instrumenting For Distributed Tracing">Instrumenting For Distributed Tracing</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/70-instrumenting for metrics/70-instrumenting for metrics.html" title="Instrumenting For Metrics">Instrumenting For Metrics</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/71-alerting on metrics abnormalities/71-alerting on metrics abnormalities.html" title="Alerting On Metrics Abnormalities">Alerting On Metrics Abnormalities</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/72-summary and quiz on observability with opentelemetry/72-summary and quiz on observability with opentelemetry.html" title="Summary And Quiz On Observability With Opentelemetry">Summary And Quiz On Observability With Opentelemetry</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/73-introduction/73-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/74-understanding the basics of github actions/74-understanding the basics of github actions.html" title="Understanding The Basics Of Github Actions">Understanding The Basics Of Github Actions</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/75-build and trigger our first github action/75-build and trigger our first github action.html" title="Build And Trigger Our First Github Action">Build And Trigger Our First Github Action</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/76-building a continuous integration workflow/76-building a continuous integration workflow.html" title="Building A Continuous Integration Workflow">Building A Continuous Integration Workflow</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/77-building a release workflow/77-building a release workflow.html" title="Building A Release Workflow">Building A Release Workflow</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/78-creating a custom github action using go/78-creating a custom github action using go.html" title="Creating A Custom Github Action Using Go">Creating A Custom Github Action Using Go</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/79-publishing a custom go github action/79-publishing a custom go github action.html" title="Publishing A Custom Go Github Action">Publishing A Custom Go Github Action</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/80-summary and quiz on automating workflows with github actions/80-summary and quiz on automating workflows with github actions.html" title="Summary And Quiz On Automating Workflows With Github Actions">Summary And Quiz On Automating Workflows With Github Actions</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/81-introduction/81-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/82-environment architecture/82-environment architecture.html" title="Environment Architecture">Environment Architecture</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/83-using an ops service/83-using an ops service.html" title="Using An Ops Service">Using An Ops Service</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/84-creating event handlers/84-creating event handlers.html" title="Creating Event Handlers">Creating Event Handlers</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/85-creating our slack application/85-creating our slack application.html" title="Creating Our Slack Application">Creating Our Slack Application</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/86-summary/86-summary.html" title="Summary">Summary</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/87-introduction/87-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/88-initializing packer/88-initializing packer.html" title="Initializing Packer">Initializing Packer</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/89-building an amazon machine image/89-building an amazon machine image.html" title="Building An Amazon Machine Image">Building An Amazon Machine Image</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/90-validating images with goss/90-validating images with goss.html" title="Validating Images With Goss">Validating Images With Goss</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/91-customizing packer with plugins/91-customizing packer with plugins.html" title="Customizing Packer With Plugins">Customizing Packer With Plugins</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/92-releasing using and debugging a plugin/92-releasing using and debugging a plugin.html" title="Releasing Using And Debugging A Plugin">Releasing Using And Debugging A Plugin</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/93-summary and quiz on creating infrastructure using packer/93-summary and quiz on creating infrastructure using packer.html" title="Summary And Quiz On Creating Infrastructure Using Packer">Summary And Quiz On Creating Infrastructure Using Packer</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/94-introduction/94-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/95-an introduction to iac/95-an introduction to iac.html" title="An Introduction To Iac">An Introduction To Iac</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/96-understanding the basics of terraform providers/96-understanding the basics of terraform providers.html" title="Understanding The Basics Of Terraform Providers">Understanding The Basics Of Terraform Providers</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/97-building a pet store terraform provider/97-building a pet store terraform provider.html" title="Building A Pet Store Terraform Provider">Building A Pet Store Terraform Provider</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/98-summary and quiz on infrastructure as code with terraform/98-summary and quiz on infrastructure as code with terraform.html" title="Summary And Quiz On Infrastructure As Code With Terraform">Summary And Quiz On Infrastructure As Code With Terraform</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/99-introduction/99-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/100-interacting with the kubernetes api/100-interacting with the kubernetes api.html" title="Interacting With The Kubernetes Api">Interacting With The Kubernetes Api</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/101-deploying a load balanced http application using go/101-deploying a load balanced http application using go.html" title="Deploying A Load Balanced Http Application Using Go">Deploying A Load Balanced Http Application Using Go</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/102-extending kubernetes with custom resources and operators/102-extending kubernetes with custom resources and operators.html" title="Extending Kubernetes With Custom Resources And Operators">Extending Kubernetes With Custom Resources And Operators</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/103-building a pet store operator/103-building a pet store operator.html" title="Building A Pet Store Operator">Building A Pet Store Operator</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/104-summary and quiz on applications in kubernetes/104-summary and quiz on applications in kubernetes.html" title="Summary And Quiz On Applications In Kubernetes">Summary And Quiz On Applications In Kubernetes</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/105-introduction/105-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/106-what is the cloud/106-what is the cloud.html" title="What Is The Cloud">What Is The Cloud</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/107-learning the basics of the azure apis/107-learning the basics of the azure apis.html" title="Learning The Basics Of The Azure Apis">Learning The Basics Of The Azure Apis</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/108-building infrastructure using azure resource manager/108-building infrastructure using azure resource manager.html" title="Building Infrastructure Using Azure Resource Manager">Building Infrastructure Using Azure Resource Manager</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/109-using provisioned azure infrastructure/109-using provisioned azure infrastructure.html" title="Using Provisioned Azure Infrastructure">Using Provisioned Azure Infrastructure</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/110-summary and quiz on programming the cloud/110-summary and quiz on programming the cloud.html" title="Summary And Quiz On Programming The Cloud">Summary And Quiz On Programming The Cloud</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/111-introduction/111-introduction.html" title="Introduction">Introduction</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/112-using overload prevention mechanisms/112-using overload prevention mechanisms.html" title="Using Overload Prevention Mechanisms">Using Overload Prevention Mechanisms</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/113-using rate limiters to prevent runaway workflows/113-using rate limiters to prevent runaway workflows.html" title="Using Rate Limiters To Prevent Runaway Workflows">Using Rate Limiters To Prevent Runaway Workflows</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/114-building workflows that are repeatable and never lost/114-building workflows that are repeatable and never lost.html" title="Building Workflows That Are Repeatable And Never Lost">Building Workflows That Are Repeatable And Never Lost</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/115-using policies to restrict tools/115-using policies to restrict tools.html" title="Using Policies To Restrict Tools">Using Policies To Restrict Tools</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/116-building systems with an emergency stop/116-building systems with an emergency stop.html" title="Building Systems With An Emergency Stop">Building Systems With An Emergency Stop</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/117-summary and quiz on designing for chaos/117-summary and quiz on designing for chaos.html" title="Summary And Quiz On Designing For Chaos">Summary And Quiz On Designing For Chaos</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/118-installing go on local machine/118-installing go on local machine.html" title="Installing Go On Local Machine">Installing Go On Local Machine</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/119-building code locally/119-building code locally.html" title="Building Code Locally">Building Code Locally</a></li>
+                
+                
+                <li><a href="/fifteenth-protection/120-wrap up/120-wrap up.html" title="Wrap Up">Wrap Up</a></li>
+                
+            </ul>
+        </li>
+    </ul>
+</div>
+    </aside>
+    <section class="content">
+      <article class="markdown-section" id="main">
+        <h1 id="class-assignment-title"><a href="/Assignments/Sample_Project?id=class-assignment-title"
+            data-id="class-assignment-title" class="anchor"><span>Go for DevOps - Learn Interactively</span></a></h1>
+        <h2 id="description"><span>Course Overview</span></a></h2>
+        <p>Go is a type-safe concurrent language. It is easy to develop and extremely performant. This course covers using the Go language to automate servers, cloud, Kubernetes, GitHub, Packer, and Terraform. 
+
+You’ll start by learning the basics of the Go language, such as concurrency and the context package. You’ll learn to interact with the local and remote filesystem using methods such as REST and gRPC. Then, you’ll learn how to use OpenTelemetry for distribution application observability and automate application release workflows with Go and GitHub Actions. Lastly, you’ll learn how to automate the process of creating system images using Packer on the AWS platform, use Go with Terraform to create your custom Terraform provider, program the Kubernetes API to extend its capabilities for your needs, provision resources using Azure's cloud SDK, and design resilient DevOps.
+
+By the end of this course, you’ll be able to use the Go language to develop your DevOps tooling or integrate custom features with DevOps tools.</p>
+      </article>
+      <article class="markdown-section" id="main">
+        <h2 id="description"><span>Course Content</span></a></h2>
+        <div class="table-wrapper">
+          <table id="_eiwfoklkm">
+            <thead>
+              <tr>
+                <th align="center">#</th>
+                <th align="center">Lesson</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              
+              <tr>
+                <td align="center">0</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/0-go and devops/0-go and devops.html"
+                      title="Go And Devops">Go And Devops</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">1</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/1-introduction/1-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">2</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/2-utilizing go packages/2-utilizing go packages.html"
+                      title="Utilizing Go Packages">Utilizing Go Packages</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">3</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/3-using go s variable types/3-using go s variable types.html"
+                      title="Using Go S Variable Types">Using Go S Variable Types</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">4</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/4-variable scopes and shadowing/4-variable scopes and shadowing.html"
+                      title="Variable Scopes And Shadowing">Variable Scopes And Shadowing</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">5</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/5-looping in go/5-looping in go.html"
+                      title="Looping In Go">Looping In Go</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">6</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/6-using conditionals/6-using conditionals.html"
+                      title="Using Conditionals">Using Conditionals</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">7</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/7-learning about functions/7-learning about functions.html"
+                      title="Learning About Functions">Learning About Functions</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">8</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/8-challenge armstrong numbers/8-challenge armstrong numbers.html"
+                      title="Challenge Armstrong Numbers">Challenge Armstrong Numbers</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">9</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/9-solution review armstrong numbers/9-solution review armstrong numbers.html"
+                      title="Solution Review Armstrong Numbers">Solution Review Armstrong Numbers</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">10</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/10-public and private declarations/10-public and private declarations.html"
+                      title="Public And Private Declarations">Public And Private Declarations</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">11</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/11-using arrays and slices/11-using arrays and slices.html"
+                      title="Using Arrays And Slices">Using Arrays And Slices</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">12</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/12-understanding maps/12-understanding maps.html"
+                      title="Understanding Maps">Understanding Maps</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">13</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/13-challenge find repeating words in a sentence/13-challenge find repeating words in a sentence.html"
+                      title="Challenge Find Repeating Words In A Sentence">Challenge Find Repeating Words In A Sentence</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">14</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/14-solution review find repeating words in a sentence/14-solution review find repeating words in a sentence.html"
+                      title="Solution Review Find Repeating Words In A Sentence">Solution Review Find Repeating Words In A Sentence</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">15</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/15-understanding go pointers/15-understanding go pointers.html"
+                      title="Understanding Go Pointers">Understanding Go Pointers</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">16</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/16-getting to know about structs/16-getting to know about structs.html"
+                      title="Getting To Know About Structs">Getting To Know About Structs</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">17</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/17-comprehending go interfaces/17-comprehending go interfaces.html"
+                      title="Comprehending Go Interfaces">Comprehending Go Interfaces</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">18</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/18-challenge implement the stringer interface/18-challenge implement the stringer interface.html"
+                      title="Challenge Implement The Stringer Interface">Challenge Implement The Stringer Interface</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">19</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/19-solution review implement stringer interface/19-solution review implement stringer interface.html"
+                      title="Solution Review Implement Stringer Interface">Solution Review Implement Stringer Interface</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">20</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/20-summary and quiz on the go language basics/20-summary and quiz on the go language basics.html"
+                      title="Summary And Quiz On The Go Language Basics">Summary And Quiz On The Go Language Basics</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">21</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/21-introduction/21-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">22</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/22-handling errors in go/22-handling errors in go.html"
+                      title="Handling Errors In Go">Handling Errors In Go</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">23</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/23-utilizing go constants/23-utilizing go constants.html"
+                      title="Utilizing Go Constants">Utilizing Go Constants</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">24</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/24-using defer panic and recover/24-using defer panic and recover.html"
+                      title="Using Defer Panic And Recover">Using Defer Panic And Recover</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">25</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/25-utilizing goroutines for concurrency/25-utilizing goroutines for concurrency.html"
+                      title="Utilizing Goroutines For Concurrency">Utilizing Goroutines For Concurrency</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">26</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/26-select and mutexes in goroutines/26-select and mutexes in goroutines.html"
+                      title="Select And Mutexes In Goroutines">Select And Mutexes In Goroutines</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">27</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/27-challenge sum with goroutines/27-challenge sum with goroutines.html"
+                      title="Challenge Sum With Goroutines">Challenge Sum With Goroutines</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">28</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/28-solution review sum with goroutines/28-solution review sum with goroutines.html"
+                      title="Solution Review Sum With Goroutines">Solution Review Sum With Goroutines</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">29</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/29-understanding gos context type/29-understanding gos context type.html"
+                      title="Understanding Gos Context Type">Understanding Gos Context Type</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">30</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/30-utilizing go s testing framework/30-utilizing go s testing framework.html"
+                      title="Utilizing Go S Testing Framework">Utilizing Go S Testing Framework</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">31</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/31-generics the new kid on the block/31-generics the new kid on the block.html"
+                      title="Generics The New Kid On The Block">Generics The New Kid On The Block</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">32</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/32-adding type parameters to struct types/32-adding type parameters to struct types.html"
+                      title="Adding Type Parameters To Struct Types">Adding Type Parameters To Struct Types</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">33</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/33-summary and quiz on the go language basics/33-summary and quiz on the go language basics.html"
+                      title="Summary And Quiz On The Go Language Basics">Summary And Quiz On The Go Language Basics</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">34</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/34-introduction/34-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">35</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/35-i o interfaces in go/35-i o interfaces in go.html"
+                      title="I O Interfaces In Go">I O Interfaces In Go</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">36</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/36-reading and writing to files/36-reading and writing to files.html"
+                      title="Reading And Writing To Files">Reading And Writing To Files</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">37</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/37-streaming file content/37-streaming file content.html"
+                      title="Streaming File Content">Streaming File Content</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">38</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/38-os agnostic pathing/38-os agnostic pathing.html"
+                      title="Os Agnostic Pathing">Os Agnostic Pathing</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">39</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/39-os agnostic filesystems/39-os agnostic filesystems.html"
+                      title="Os Agnostic Filesystems">Os Agnostic Filesystems</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">40</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/40-summary and quiz on filesystem interactions/40-summary and quiz on filesystem interactions.html"
+                      title="Summary And Quiz On Filesystem Interactions">Summary And Quiz On Filesystem Interactions</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">41</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/41-introduction/41-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">42</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/42-csv files/42-csv files.html"
+                      title="Csv Files">Csv Files</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">43</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/43-using excelize when dealing with excel/43-using excelize when dealing with excel.html"
+                      title="Using Excelize When Dealing With Excel">Using Excelize When Dealing With Excel</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">44</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/44-popular encoding formats json/44-popular encoding formats json.html"
+                      title="Popular Encoding Formats Json">Popular Encoding Formats Json</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">45</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/45-challenge process json data/45-challenge process json data.html"
+                      title="Challenge Process Json Data">Challenge Process Json Data</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">46</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/46-solution review process json data/46-solution review process json data.html"
+                      title="Solution Review Process Json Data">Solution Review Process Json Data</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">47</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/47-popular encoding formats yaml/47-popular encoding formats yaml.html"
+                      title="Popular Encoding Formats Yaml">Popular Encoding Formats Yaml</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">48</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/48-summary and quiz on using common data formats/48-summary and quiz on using common data formats.html"
+                      title="Summary And Quiz On Using Common Data Formats">Summary And Quiz On Using Common Data Formats</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">49</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/49-introduction/49-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">50</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/50-accessing sql databases/50-accessing sql databases.html"
+                      title="Accessing Sql Databases">Accessing Sql Databases</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">51</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/51-developing rest services and clients/51-developing rest services and clients.html"
+                      title="Developing Rest Services And Clients">Developing Rest Services And Clients</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">52</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/52-developing grpc services and clients/52-developing grpc services and clients.html"
+                      title="Developing Grpc Services And Clients">Developing Grpc Services And Clients</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">53</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/53-summary and quiz on interacting with remote data sources/53-summary and quiz on interacting with remote data sources.html"
+                      title="Summary And Quiz On Interacting With Remote Data Sources">Summary And Quiz On Interacting With Remote Data Sources</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">54</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/54-introduction/54-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">55</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/55-implementing application i o/55-implementing application i o.html"
+                      title="Implementing Application I O">Implementing Application I O</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">56</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/56-accessing non flag arguments/56-accessing non flag arguments.html"
+                      title="Accessing Non Flag Arguments">Accessing Non Flag Arguments</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">57</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/57-using cobra for advanced cli applications/57-using cobra for advanced cli applications.html"
+                      title="Using Cobra For Advanced Cli Applications">Using Cobra For Advanced Cli Applications</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">58</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/58-handling os signals/58-handling os signals.html"
+                      title="Handling Os Signals">Handling Os Signals</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">59</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/59-summary and quiz on writing command line tooling/59-summary and quiz on writing command line tooling.html"
+                      title="Summary And Quiz On Writing Command Line Tooling">Summary And Quiz On Writing Command Line Tooling</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">60</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/60-introduction/60-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">61</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/61-using os exec to automate local changes/61-using os exec to automate local changes.html"
+                      title="Using Os Exec To Automate Local Changes">Using Os Exec To Automate Local Changes</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">62</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/62-using ssh in go to automate remote changes/62-using ssh in go to automate remote changes.html"
+                      title="Using Ssh In Go To Automate Remote Changes">Using Ssh In Go To Automate Remote Changes</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">63</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/63-designing safe concurrent change automations/63-designing safe concurrent change automations.html"
+                      title="Designing Safe Concurrent Change Automations">Designing Safe Concurrent Change Automations</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">64</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/64-writing a system agent/64-writing a system agent.html"
+                      title="Writing A System Agent">Writing A System Agent</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">65</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/65-summary and quiz on automating command line tasks/65-summary and quiz on automating command line tasks.html"
+                      title="Summary And Quiz On Automating Command Line Tasks">Summary And Quiz On Automating Command Line Tasks</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">66</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/66-introduction/66-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">67</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/67-an overview of opentelemetry/67-an overview of opentelemetry.html"
+                      title="An Overview Of Opentelemetry">An Overview Of Opentelemetry</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">68</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/68-logging with context/68-logging with context.html"
+                      title="Logging With Context">Logging With Context</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">69</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/69-instrumenting for distributed tracing/69-instrumenting for distributed tracing.html"
+                      title="Instrumenting For Distributed Tracing">Instrumenting For Distributed Tracing</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">70</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/70-instrumenting for metrics/70-instrumenting for metrics.html"
+                      title="Instrumenting For Metrics">Instrumenting For Metrics</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">71</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/71-alerting on metrics abnormalities/71-alerting on metrics abnormalities.html"
+                      title="Alerting On Metrics Abnormalities">Alerting On Metrics Abnormalities</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">72</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/72-summary and quiz on observability with opentelemetry/72-summary and quiz on observability with opentelemetry.html"
+                      title="Summary And Quiz On Observability With Opentelemetry">Summary And Quiz On Observability With Opentelemetry</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">73</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/73-introduction/73-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">74</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/74-understanding the basics of github actions/74-understanding the basics of github actions.html"
+                      title="Understanding The Basics Of Github Actions">Understanding The Basics Of Github Actions</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">75</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/75-build and trigger our first github action/75-build and trigger our first github action.html"
+                      title="Build And Trigger Our First Github Action">Build And Trigger Our First Github Action</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">76</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/76-building a continuous integration workflow/76-building a continuous integration workflow.html"
+                      title="Building A Continuous Integration Workflow">Building A Continuous Integration Workflow</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">77</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/77-building a release workflow/77-building a release workflow.html"
+                      title="Building A Release Workflow">Building A Release Workflow</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">78</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/78-creating a custom github action using go/78-creating a custom github action using go.html"
+                      title="Creating A Custom Github Action Using Go">Creating A Custom Github Action Using Go</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">79</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/79-publishing a custom go github action/79-publishing a custom go github action.html"
+                      title="Publishing A Custom Go Github Action">Publishing A Custom Go Github Action</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">80</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/80-summary and quiz on automating workflows with github actions/80-summary and quiz on automating workflows with github actions.html"
+                      title="Summary And Quiz On Automating Workflows With Github Actions">Summary And Quiz On Automating Workflows With Github Actions</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">81</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/81-introduction/81-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">82</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/82-environment architecture/82-environment architecture.html"
+                      title="Environment Architecture">Environment Architecture</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">83</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/83-using an ops service/83-using an ops service.html"
+                      title="Using An Ops Service">Using An Ops Service</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">84</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/84-creating event handlers/84-creating event handlers.html"
+                      title="Creating Event Handlers">Creating Event Handlers</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">85</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/85-creating our slack application/85-creating our slack application.html"
+                      title="Creating Our Slack Application">Creating Our Slack Application</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">86</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/86-summary/86-summary.html"
+                      title="Summary">Summary</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">87</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/87-introduction/87-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">88</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/88-initializing packer/88-initializing packer.html"
+                      title="Initializing Packer">Initializing Packer</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">89</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/89-building an amazon machine image/89-building an amazon machine image.html"
+                      title="Building An Amazon Machine Image">Building An Amazon Machine Image</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">90</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/90-validating images with goss/90-validating images with goss.html"
+                      title="Validating Images With Goss">Validating Images With Goss</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">91</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/91-customizing packer with plugins/91-customizing packer with plugins.html"
+                      title="Customizing Packer With Plugins">Customizing Packer With Plugins</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">92</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/92-releasing using and debugging a plugin/92-releasing using and debugging a plugin.html"
+                      title="Releasing Using And Debugging A Plugin">Releasing Using And Debugging A Plugin</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">93</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/93-summary and quiz on creating infrastructure using packer/93-summary and quiz on creating infrastructure using packer.html"
+                      title="Summary And Quiz On Creating Infrastructure Using Packer">Summary And Quiz On Creating Infrastructure Using Packer</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">94</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/94-introduction/94-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">95</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/95-an introduction to iac/95-an introduction to iac.html"
+                      title="An Introduction To Iac">An Introduction To Iac</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">96</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/96-understanding the basics of terraform providers/96-understanding the basics of terraform providers.html"
+                      title="Understanding The Basics Of Terraform Providers">Understanding The Basics Of Terraform Providers</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">97</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/97-building a pet store terraform provider/97-building a pet store terraform provider.html"
+                      title="Building A Pet Store Terraform Provider">Building A Pet Store Terraform Provider</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">98</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/98-summary and quiz on infrastructure as code with terraform/98-summary and quiz on infrastructure as code with terraform.html"
+                      title="Summary And Quiz On Infrastructure As Code With Terraform">Summary And Quiz On Infrastructure As Code With Terraform</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">99</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/99-introduction/99-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">100</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/100-interacting with the kubernetes api/100-interacting with the kubernetes api.html"
+                      title="Interacting With The Kubernetes Api">Interacting With The Kubernetes Api</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">101</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/101-deploying a load balanced http application using go/101-deploying a load balanced http application using go.html"
+                      title="Deploying A Load Balanced Http Application Using Go">Deploying A Load Balanced Http Application Using Go</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">102</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/102-extending kubernetes with custom resources and operators/102-extending kubernetes with custom resources and operators.html"
+                      title="Extending Kubernetes With Custom Resources And Operators">Extending Kubernetes With Custom Resources And Operators</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">103</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/103-building a pet store operator/103-building a pet store operator.html"
+                      title="Building A Pet Store Operator">Building A Pet Store Operator</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">104</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/104-summary and quiz on applications in kubernetes/104-summary and quiz on applications in kubernetes.html"
+                      title="Summary And Quiz On Applications In Kubernetes">Summary And Quiz On Applications In Kubernetes</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">105</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/105-introduction/105-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">106</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/106-what is the cloud/106-what is the cloud.html"
+                      title="What Is The Cloud">What Is The Cloud</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">107</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/107-learning the basics of the azure apis/107-learning the basics of the azure apis.html"
+                      title="Learning The Basics Of The Azure Apis">Learning The Basics Of The Azure Apis</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">108</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/108-building infrastructure using azure resource manager/108-building infrastructure using azure resource manager.html"
+                      title="Building Infrastructure Using Azure Resource Manager">Building Infrastructure Using Azure Resource Manager</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">109</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/109-using provisioned azure infrastructure/109-using provisioned azure infrastructure.html"
+                      title="Using Provisioned Azure Infrastructure">Using Provisioned Azure Infrastructure</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">110</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/110-summary and quiz on programming the cloud/110-summary and quiz on programming the cloud.html"
+                      title="Summary And Quiz On Programming The Cloud">Summary And Quiz On Programming The Cloud</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">111</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/111-introduction/111-introduction.html"
+                      title="Introduction">Introduction</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">112</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/112-using overload prevention mechanisms/112-using overload prevention mechanisms.html"
+                      title="Using Overload Prevention Mechanisms">Using Overload Prevention Mechanisms</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">113</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/113-using rate limiters to prevent runaway workflows/113-using rate limiters to prevent runaway workflows.html"
+                      title="Using Rate Limiters To Prevent Runaway Workflows">Using Rate Limiters To Prevent Runaway Workflows</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">114</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/114-building workflows that are repeatable and never lost/114-building workflows that are repeatable and never lost.html"
+                      title="Building Workflows That Are Repeatable And Never Lost">Building Workflows That Are Repeatable And Never Lost</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">115</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/115-using policies to restrict tools/115-using policies to restrict tools.html"
+                      title="Using Policies To Restrict Tools">Using Policies To Restrict Tools</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">116</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/116-building systems with an emergency stop/116-building systems with an emergency stop.html"
+                      title="Building Systems With An Emergency Stop">Building Systems With An Emergency Stop</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">117</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/117-summary and quiz on designing for chaos/117-summary and quiz on designing for chaos.html"
+                      title="Summary And Quiz On Designing For Chaos">Summary And Quiz On Designing For Chaos</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">118</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/118-installing go on local machine/118-installing go on local machine.html"
+                      title="Installing Go On Local Machine">Installing Go On Local Machine</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">119</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/119-building code locally/119-building code locally.html"
+                      title="Building Code Locally">Building Code Locally</a>
+                  </strong>
+                </td>
+              </tr>
+              
+              
+              <tr>
+                <td align="center">120</td>
+                <td align="center">
+                  <strong>
+                    <a href="/fifteenth-protection/120-wrap up/120-wrap up.html"
+                      title="Wrap Up">Wrap Up</a>
+                  </strong>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+  <!-- UPDATE: Make sure to update NAME, REPO, and NAMESPACE below-->
+  <script>
+
+  </script>
+  <script src="/fifteenth-protection/static/docsify.min.js"></script>
+  <script src="/fifteenth-protection/static/index.js"></script>
+  <script src="/fifteenth-protection/static/emoji.min.js"></script>
+  <script src="/fifteenth-protection/static/external-script.min.js"></script>
+  <script src="/fifteenth-protection/static/docsify-copy-code@2"></script>
+  <script src="/fifteenth-protection/static/docsify-tabs@1"></script>
+  <script src="/fifteenth-protection/static/docsify-plugin-flexible-alerts"></script>
+  <script src="/fifteenth-protection/static/prism-bash.min.js"></script>
+  <script src="/fifteenth-protection/static/prism-handlebars.min.js"></script>
+  <script src="/fifteenth-protection/static/prism-javascript.min.js"></script>
+  <script src="/fifteenth-protection/static/prism-json.min.js"></script>
+  <script src="/fifteenth-protection/static/prism-markdown.min.js"></script>
+  <script src="/fifteenth-protection/static/index.min.js" type="text/javascript">
+  </script>
+</body>
+
+</html>

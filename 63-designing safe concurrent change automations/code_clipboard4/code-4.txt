@@ -1,0 +1,9 @@
+func (w *workflow) run(ctx context.Context) error {
+  preCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+  if err := w.checkLBState(preCtx); err != nil {
+    w.endState = esPreconditionFailure
+    return fmt.Errorf("checkLBState precondition fail: %s",
+    err)
+  }
+  cancel()
+...

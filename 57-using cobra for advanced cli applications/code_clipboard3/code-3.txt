@@ -1,0 +1,2 @@
+go get github.com/spf13/cobra/cobra
+go install github.com/spf13/cobra/cobra

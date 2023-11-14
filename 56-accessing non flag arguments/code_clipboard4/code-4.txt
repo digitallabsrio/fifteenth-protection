@@ -1,0 +1,1 @@
+run main.go log.txt | grep "error 401"

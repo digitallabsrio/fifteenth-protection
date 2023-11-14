@@ -1,0 +1,9 @@
+func (sf *StorageFactory) CreateStorageStack(ctx context.Context, location string) *StorageStack {
+	stack := &StorageStack{
+		name: haiku.Haikunate(),
+	}
+	stack.ResourceGroup = sf.createResourceGroup(ctx, stack.name, location)
+	stack.Account = sf.createStorageAccount(ctx, stack.name, location)
+	stack.AccountKey = sf.getPrimaryAccountKey(ctx, stack)
+	return stack
+}

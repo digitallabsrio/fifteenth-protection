@@ -1,0 +1,40 @@
+package main
+import "fmt"
+import "encoding/json"
+
+
+type Item struct {
+  Title   string 	`json:"title"`
+  Price   int     `json:"price"`
+}
+
+func getMostExpensive(jsonString string) string  {
+  var items []Item
+  json.Unmarshal([]byte(jsonString), &items)
+  
+  mostExpensive := items[0]
+  for _, currItem:= range items {
+    if mostExpensive.Price < currItem.Price {
+     	mostExpensive = currItem
+    }
+  }
+  jsonData,_ := json.Marshal(mostExpensive)
+  return string(jsonData)
+}
+
+func main(){
+  inputA := `[
+    {"title":"ItemA","price":42},
+    {"title":"ItemB","price":99}
+  ]`
+
+ inputB := `[
+    {"title":"ItemA","price":42},
+    {"title":"ItemB"},
+    {"title":"ItemC","price":11}
+  ]`
+
+  inputs := [2]string{inputA, inputB}
+  fmt.Printf(getMostExpensive(inputs[0]))
+  fmt.Printf(getMostExpensive(inputs[1])) 
+}

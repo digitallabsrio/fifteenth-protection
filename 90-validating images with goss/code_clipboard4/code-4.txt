@@ -1,0 +1,9 @@
+file:
+  /home/agent/bin/agent:
+    exists: true
+    mode: "0700"
+    size: 14429561
+    owner: agent
+    group: agent
+    filetype: file
+    contains: []

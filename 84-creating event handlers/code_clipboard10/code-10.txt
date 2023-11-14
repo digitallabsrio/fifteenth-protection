@@ -1,0 +1,14 @@
+func main() {
+  ... // Other setup like slack client init
+  b, err := bot.New(api, client)
+  if err != nil {
+  panic(err)
+  }
+  h := handlers.Ops{
+  OpsClient: opsClient,
+  API: api,
+  SMClient: smClient,
+  }
+  h.Register(b)
+  b.Start()
+} 

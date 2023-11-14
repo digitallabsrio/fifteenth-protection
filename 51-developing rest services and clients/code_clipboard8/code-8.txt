@@ -1,0 +1,66 @@
+// qotdGet provides an http.HandleFunc for receiving REST requests for a quote of the day.
+func (s *server) qotdGet(w http.ResponseWriter, r *http.Request) {
+	// Get the Context for the request.
+	ctx := r.Context()
+
+	// If no deadline is set, set one.
+	if _, ok := ctx.Deadline(); !ok {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, 2*time.Second)
+		defer cancel()
+	}
+
+	// read our http.Request's body as JSON into our request object.
+	req := getReq{}
+	if err := req.fromReader(r.Body); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	var quotes []string
+
+	// No author was requested so we'll randomly choose one.
+	if req.Author == "" {
+		// To get a value from a map, you must know the key.
+		// Since we are trying to get a quote from a random author,
+		// we'll simply do a single loop using range that extracts
+		// from the map in random order.
+		for _, quotes = range s.quotes {
+			break
+		}
+	} else { // Author was requested.
+		// Find the authors.
+		var ok bool
+		quotes, ok = s.quotes[req.Author]
+		// Not author was found, send a custom error message back.
+		if !ok {
+			b, err := json.Marshal(
+				getResp{
+					Error: &Error{
+						Code: UnknownAuthor,
+						Msg:  fmt.Sprintf("Author %q was not found", req.Author),
+					},
+				},
+			)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			w.Write(b)
+			return
+		}
+	}
+
+	// This chooses a random number whose maximum value is the length of our quotes slice.
+	// Note that `math/rand` calls vs `crypto/rand` calls are not cryptographically secure.
+	i := rand.Intn(len(quotes))
+
+	// Send our quote back to the client.
+	b, err := json.Marshal(getResp{Quote: quotes[i]})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	w.Write(b)
+	return
+}

@@ -1,0 +1,84 @@
+package main
+
+import "fmt"
+
+// nonGenericSortInts is a function that sorts a slice of signed integers. It uses type assertions to determine the type of the input slice and calls the appropriate sorting function for that type.
+func nonGenericSortInts(slice interface{}) {
+	switch v := slice.(type) {
+	case []int8:
+		sortInt8Slice(v)
+	case []int16:
+		sortInt16Slice(v)
+	case []int32:
+		sortInt32Slice(v)
+	case []int64:
+		sortInt64Slice(v)
+	default:
+		panic(fmt.Sprintf("passed a value %T which is not a slice of signed integers"))
+	}
+}
+
+// sortInt8Slice is a sorting function for a slice of int32 values.
+func sortInt8Slice(slice []int8) {
+	sorted := false
+	for !sorted {
+		sorted = true
+		for i := range slice[:len(slice)-1] {
+			if slice[i] > slice[i+1] {
+				sorted = false
+				slice[i], slice[i+1] = slice[i+1], slice[i]
+			}
+		}
+	}
+}
+
+// sortInt16Slice is a sorting function for a slice of int8 values.
+func sortInt16Slice(slice []int16) {
+	sorted := false
+	for !sorted {
+		sorted = true
+		for i := range slice[:len(slice)-1] {
+			if slice[i] > slice[i+1] {
+				sorted = false
+				slice[i], slice[i+1] = slice[i+1], slice[i]
+			}
+		}
+	}
+}
+
+// sortInt32Slice is a sorting function for a slice of int16 values.
+func sortInt32Slice(slice []int32) {
+	sorted := false
+	for !sorted {
+		sorted = true
+		for i := range slice[:len(slice)-1] {
+			if slice[i] > slice[i+1] {
+				sorted = false
+				slice[i], slice[i+1] = slice[i+1], slice[i]
+			}
+		}
+	}
+}
+
+// sortInt64Slice is a sorting function for a slice of int32 values.
+func sortInt64Slice(slice []int64) {
+	sorted := false
+	for !sorted {
+		sorted = true
+		for i := range slice[:len(slice)-1] {
+			if slice[i] > slice[i+1] {
+				sorted = false
+				slice[i], slice[i+1] = slice[i+1], slice[i]
+			}
+		}
+	}
+}
+
+func main() {
+	a := []int8{99, 2, 52, 100, 7, 25, 125, 35, 65}
+	b := []int64{1000, 100, 25, 95, 1, 10000, 64}
+	nonGenericSortInts(a)
+	nonGenericSortInts(b)
+	fmt.Println(a)
+	fmt.Println(b)
+}

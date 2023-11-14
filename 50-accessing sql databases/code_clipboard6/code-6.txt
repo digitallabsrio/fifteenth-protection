@@ -1,0 +1,5 @@
+type UserStorage interface {
+    User(ctx context.Context, id string) (UserRec, error)
+    AddUser(ctx context.Context, u UserRec) error
+    UpdateDisplayName(ctx context.Context, id string, name string) error
+}

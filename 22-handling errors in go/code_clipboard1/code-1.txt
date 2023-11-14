@@ -1,0 +1,2 @@
+err := errors.New("this is an error")
+err := fmt.Errorf("user %s had an error: %s", user, msg)

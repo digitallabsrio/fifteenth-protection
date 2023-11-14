@@ -1,0 +1,41 @@
+Run: func(cmd *cobra.Command, args []string) {
+		const devAddr = "127.0.0.1:3450"
+
+		fs := cmd.Flags()
+
+		addr := mustString(fs, "addr")
+
+		if mustBool(fs, "dev") {
+			addr = devAddr
+		}
+
+		c, err := client.New(addr)
+		if err != nil {
+			fmt.Println("error: ", err)
+			os.Exit(1)
+		}
+
+		a, q, err := c.QOTD(cmd.Context(), mustString(fs, "author"))
+		if err != nil {
+			fmt.Println("error: ", err)
+			os.Exit(1)
+		}
+
+		switch {
+		case mustBool(fs, "json"):
+			b, err := json.Marshal(
+				struct {
+					Author string
+					Quote  string
+				}{a, q},
+			)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("%s\n", b)
+		default:
+			fmt.Println("Author: ", a)
+			fmt.Println("Quote: ", q)
+		}
+	},
+}

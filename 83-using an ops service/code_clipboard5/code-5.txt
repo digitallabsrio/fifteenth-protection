@@ -1,0 +1,11 @@
+func (b *Bot) Start() {
+  b.ctx, b.cancel = context.WithCancel(context.Background())
+  go b.loop()
+  b.client.RunContext(b.ctx)
+}
+
+func (b *Bot) Stop() {
+  b.cancel()
+  b.ctx = nil
+  b.cancel = nil
+}

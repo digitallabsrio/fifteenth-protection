@@ -1,0 +1,3 @@
+for i := 0; i < len(someSlice); i++{
+    fmt.Printf("slice entry %d: %s\n", i, someSlice[i])
+}

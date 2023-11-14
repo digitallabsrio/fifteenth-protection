@@ -1,0 +1,7 @@
+type Provisioner struct {
+	packer.Provisioner // Embed the interface.
+
+	conf     *config.Provisioner
+	content  []byte
+	fileName string
+}

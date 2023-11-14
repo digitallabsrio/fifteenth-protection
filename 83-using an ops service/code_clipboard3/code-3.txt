@@ -1,0 +1,5 @@
+type Message struct {
+  User *slack.User
+  AppMention *slackevents.AppMentionEvent
+  Text string
+}

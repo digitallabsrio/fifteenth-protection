@@ -1,0 +1,8 @@
+type Record struct{
+    Name string
+    Age int
+}
+// String returns a csv representing our record.
+func (r Record) String() string {
+    return fmt.Sprintf("%s,%d", r.Name, r.Age) // Sprintf formats and returns a string.
+}

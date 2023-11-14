@@ -1,0 +1,9 @@
+func (vmf *VirtualMachineFactory) createResourceGroup(ctx context.Context, name, location string) armresources.ResourceGroup {
+     param := armresources.ResourceGroup{
+          Location: to.Ptr(location),
+     }
+     fmt.Printf("Building an Azure Resource Group named %q...\n", name)
+     res, err := vmf.groupsClient.CreateOrUpdate(ctx, name, param, nil)
+     HandleErr(err)
+     return res.ResourceGroup
+}

@@ -1,0 +1,13 @@
+func createPetInStore(ctx context.Context, pet *petstorev1.Pet, psc *psclient.Client) error {
+     pbPet := &pb.Pet{
+          Name:     pet.Spec.Name,
+          Type:     petTypeToProtoPetType(pet.Spec.Type),
+          Birthday: timeToPbDate(pet.Spec.Birthday),
+     }
+     ids, err := psc.AddPets(ctx, []*pb.Pet{pbPet})
+     if err != nil {
+          return errors.Wrap(err, "failed to create new pet")
+     }
+     pet.Status.ID = ids[0]
+     return nil 
+}

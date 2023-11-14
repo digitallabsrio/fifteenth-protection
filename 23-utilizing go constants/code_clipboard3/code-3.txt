@@ -1,0 +1,5 @@
+const (
+    a = iota // 0
+    b = iota // 1
+    d = iota // 2
+)

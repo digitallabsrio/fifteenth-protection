@@ -1,0 +1,27 @@
+// createVirtualNetwork creates an Azure Virtual Network with a 10.0.0.0/16 CIDR with a 10.0.0.0/24 subnet
+func (vmf *VirtualMachineFactory) createVirtualNetwork(ctx context.Context, vmStack *VirtualMachineStack) armnetwork.VirtualNetwork {
+	param := armnetwork.VirtualNetwork{
+		Location: to.Ptr(vmStack.Location),
+		Name:     to.Ptr(vmStack.name + "-vnet"),
+		Properties: &armnetwork.VirtualNetworkPropertiesFormat{
+			AddressSpace: &armnetwork.AddressSpace{
+				AddressPrefixes: []*string{to.Ptr("10.0.0.0/16")},
+			},
+			Subnets: []*armnetwork.Subnet{
+				{
+					Name: to.Ptr("subnet1"),
+					Properties: &armnetwork.SubnetPropertiesFormat{
+						AddressPrefix:        to.Ptr("10.0.0.0/24"),
+						NetworkSecurityGroup: &vmStack.SecurityGroup,
+					},
+				},
+			},
+		},
+	}
+
+	fmt.Printf("Building an Azure Virtual Network named %q...\n", *param.Name)
+	poller, err := vmf.vnetClient.BeginCreateOrUpdate(ctx, vmStack.name, *param.Name, param, nil)
+	HandleErr(err)
+	res := HandleErrPoller(ctx, poller)
+	return res.VirtualNetwork
+}

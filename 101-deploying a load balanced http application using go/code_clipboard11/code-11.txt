@@ -1,0 +1,30 @@
+func listenToPodLogs(ctx context.Context, clientSet *kubernetes.Clientset, ns *corev1.Namespace, containerName string) {
+	// list all the pods in namespace foo
+	podList := listPods(ctx, clientSet, ns)
+
+	for _, pod := range podList.Items {
+		podName := pod.Name
+		go func() {
+			opts := &corev1.PodLogOptions{
+				Container: containerName,
+				Follow:    true,
+			}
+			podLogs, err := clientSet.CoreV1().Pods(ns.Name).GetLogs(podName, opts).Stream(ctx)
+			panicIfError(err)
+
+			_, _ = os.Stdout.ReadFrom(podLogs)
+		}()
+	}
+}
+
+func listPods(ctx context.Context, clientSet *kubernetes.Clientset, ns *corev1.Namespace) *corev1.PodList {
+	podList, err := clientSet.CoreV1().Pods(ns.Name).List(ctx, metav1.ListOptions{})
+	panicIfError(err)
+
+	fmt.Printf("Listing pods in %q namespace.\n", ns.Name)
+	for _, pod := range podList.Items {
+		fmt.Printf("# Pod: \n## namespace/name: %q\n## spec.containers[0].name: %q\n## spec.containers[0].image: %q\n", path.Join(pod.Namespace, pod.Name), pod.Spec.Containers[0].Name, pod.Spec.Containers[0].Image)
+	}
+	fmt.Printf("\n\n")
+	return podList
+}

@@ -1,0 +1,7 @@
+type workflow struct {
+  config *config
+  lb *client.Client
+  failures int32
+  endState endState
+  actions []*actions
+}

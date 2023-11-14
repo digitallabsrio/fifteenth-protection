@@ -1,0 +1,15 @@
+func NewVirtualMachineFactory(subscriptionID, sshPubKeyPath string) *VirtualMachineFactory {
+     cred := HandleErrWithResult(azidentity.NewDefaultAzureCredential(nil))
+     return &VirtualMachineFactory{
+          cred:           cred,
+          subscriptionID: subscriptionID,
+          sshPubKeyPath:  sshPubKeyPath,
+          groupsClient:   BuildClient(subscriptionID, cred, armresources.NewResourceGroupsClient),
+          vmClient:       BuildClient(subscriptionID, cred, armcompute.NewVirtualMachinesClient),
+          vnetClient:     BuildClient(subscriptionID, cred, armnetwork.NewVirtualNetworksClient),
+          subnetClient:   BuildClient(subscriptionID, cred, armnetwork.NewSubnetsClient),
+          nsgClient:      BuildClient(subscriptionID, cred, armnetwork.NewSecurityGroupsClient),
+          nicClient:      BuildClient(subscriptionID, cred, armnetwork.NewInterfacesClient),
+          pipClient:      BuildClient(subscriptionID, cred, armnetwork.NewPublicIPAddressesClient),
+     }
+}

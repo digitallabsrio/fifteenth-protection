@@ -1,0 +1,3 @@
+jobs:
+  job_with_secrets:
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test')

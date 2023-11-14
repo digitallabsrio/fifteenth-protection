@@ -1,0 +1,7 @@
+func main() {
+	ints := []int{5, 3, 7, 1}
+
+	sort.Sort(intAdapter{ints})
+
+	fmt.Println(ints)
+}

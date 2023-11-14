@@ -1,0 +1,19 @@
+type serverSheet struct {
+	mu sync.Mutex
+	sheetName string
+	xlsx *excelize.File
+	nextRow int
+}
+
+func newServerSheet() (*serverSheet, error) {
+	s := &serverSheet{
+		sheetName: "Sheet1",
+		xlsx: excelize.NewFile(),
+		nextRow: 2,
+	}
+	s.xlsx.SetCellValue(s.sheetName, "A1", "Server Name")
+	s.xlsx.SetCellValue(s.sheetName, "B1", "Generation")
+	s.xlsx.SetCellValue(s.sheetName, "C1", "Acquisition")
+	s.xlsx.SetCellValue(s.sheetName, "D1", "CPU Vendor")
+	return s, nil
+}

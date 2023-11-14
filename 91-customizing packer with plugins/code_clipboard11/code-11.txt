@@ -1,0 +1,27 @@
+func (p *Provisioner) fetch(ctx context.Context, u packer.Ui, c packer.Communicator) error {
+	const (
+		goURL = `https://golang.org/dl/go%s.linux-%s.tar.gz`
+		name  = `go%s.linux-%s.tar.gz`
+	)
+
+	platform := runtime.GOARCH
+
+	if p.conf.Version == "latest" {
+		u.Message("Determining latest Go version")
+		resp, err := http.Get("https://golang.org/VERSION?m=text")
+		if err != nil {
+			u.Error("http get problem: " + err.Error())
+			return fmt.Errorf("problem asking Google for latest Go version: %s", err)
+		}
+		ver, err := io.ReadAll(resp.Body)
+		if err != nil {
+			u.Error("io read problem: " + err.Error())
+			return fmt.Errorf("problem reading latest Go version: %s", err)
+		}
+
+		p.conf.Version = strings.TrimPrefix(string(ver), "go")
+		u.Message("Latest Go version: " + p.conf.Version)
+	} else {
+		u.Message("Go version to use is: " + p.conf.Version)
+	}
+...

@@ -1,0 +1,3 @@
+goss add goss process.yaml
+goss add goss files.yaml
+goss add goss dbus.yaml

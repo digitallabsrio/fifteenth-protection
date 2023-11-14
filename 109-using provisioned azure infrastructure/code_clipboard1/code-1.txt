@@ -1,0 +1,18 @@
+func init() {
+	_ = godotenv.Load()
+}
+
+func main() {
+	subscriptionID := MustGetenv("AZURE_SUBSCRIPTION_ID")
+	factory := mgmt.NewStorageFactory(subscriptionID)
+	fmt.Println("Staring to build Azure resources...")
+	stack := factory.CreateStorageStack(context.Background(), "southcentralus")
+
+	uploadBlobs(stack)
+	printSASUris(stack)
+
+	fmt.Println("Press enter to delete the infrastructure.")
+	reader := bufio.NewReader(os.Stdin)
+	_, _ = reader.ReadString('\n')
+	factory.DestroyStorageStack(context.Background(), stack)
+}

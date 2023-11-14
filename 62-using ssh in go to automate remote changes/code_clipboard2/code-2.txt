@@ -1,0 +1,6 @@
+config := &ssh.ClientConfig {
+  User: user,
+  Auth: []ssh.AuthMethod{auth},
+  HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+  Timeout: 5 * time.Second,
+}

@@ -1,0 +1,3 @@
+if [init statement];[statement that evaluates to boolean] {
+  ...
+}

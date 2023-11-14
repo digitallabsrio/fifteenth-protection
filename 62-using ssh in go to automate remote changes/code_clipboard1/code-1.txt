@@ -1,0 +1,11 @@
+func publicKey(privateKeyFile string) (ssh.AuthMethod, error) {
+  k, err := os.ReadFile(privateKeyFile)
+  if err != nil {
+    return nil, err
+  }
+  signer, err := ssh.ParsePrivateKey(k)
+  if err != nil {
+    return nil, err
+  }
+  return ssh.PublicKeys(signer), nil
+}

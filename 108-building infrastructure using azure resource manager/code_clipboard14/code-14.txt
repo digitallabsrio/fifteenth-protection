@@ -1,0 +1,6 @@
+// DestroyVirtualMachineStack deletes a virtual machine and networking within a resource group.
+// This function does not wait for completion. Once the delete operation is accepted, the function returns.
+func (vmf *VirtualMachineFactory) DestroyVirtualMachineStack(ctx context.Context, vmStack *VirtualMachineStack) {
+	_, err := vmf.groupsClient.BeginDelete(ctx, vmStack.name, nil)
+	HandleErr(err)
+}
